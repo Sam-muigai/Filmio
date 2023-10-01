@@ -17,7 +17,7 @@ val anago = FontFamily(
 )
 
 val ruberoid = FontFamily(
-    Font(R.font.ruberoid, FontWeight.Bold),
+    Font(R.font.ruberoid_bold, FontWeight.Bold),
 )
 
 val Typography = Typography(

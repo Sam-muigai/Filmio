@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -59,6 +60,7 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
+    implementation ("androidx.compose.ui:ui-util")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
@@ -90,4 +92,5 @@ dependencies {
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
+
 }
