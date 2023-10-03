@@ -18,17 +18,30 @@ class HomeScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _popularMovies = MutableStateFlow<PagingData<Result>>(PagingData.empty())
+    private val _trendingMovies = MutableStateFlow<PagingData<Result>>(PagingData.empty())
     val popularMovies: StateFlow<PagingData<Result>>
         get() = _popularMovies
 
+    val trendingMovies: StateFlow<PagingData<Result>>
+        get() = _trendingMovies
+
     init {
         getPopularMovies()
+        getTrendingMovies()
     }
 
     private fun getPopularMovies() {
         viewModelScope.launch {
             repository.getPopularMovies().cachedIn(viewModelScope).collect {
                 _popularMovies.value = it
+            }
+        }
+    }
+
+    private fun getTrendingMovies() {
+        viewModelScope.launch {
+            repository.getTrendingMovies().cachedIn(viewModelScope).collect {
+                _trendingMovies.value = it
             }
         }
     }

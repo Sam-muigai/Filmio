@@ -24,6 +24,7 @@ object AppModule {
 
         val json = Json {
             coerceInputValues = true
+            ignoreUnknownKeys = true
         }
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

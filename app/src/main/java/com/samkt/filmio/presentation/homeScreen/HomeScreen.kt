@@ -1,8 +1,15 @@
 package com.samkt.filmio.presentation.homeScreen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,11 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -27,37 +33,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.lerp
-import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.samkt.filmio.R
 import com.samkt.filmio.data.dtos.Result
 import com.samkt.filmio.presentation.homeScreen.components.AnimatedViewPager
-import com.samkt.filmio.ui.theme.GreenYellow
+import com.samkt.filmio.presentation.homeScreen.components.MovieCard
+
 import com.samkt.filmio.ui.theme.ruberoid
+import com.samkt.filmio.util.toErrorMessage
 import timber.log.Timber
-import kotlin.math.absoluteValue
 
 @Composable
 fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
-    val showLoadingBar = popularMovies.loadState.refresh is LoadState.Loading
+    val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
+    val isPopularMoviesLoading = popularMovies.loadState.refresh is LoadState.Loading
+    val isTrendingMoviesLoading = trendingMovies.loadState.refresh is LoadState.Loading
+    val showLoadingBar = isPopularMoviesLoading || isTrendingMoviesLoading
     HomeScreenContent(
-        showLoadingBar = showLoadingBar,
+        isLoading = showLoadingBar,
         popularMovies = popularMovies,
         onTrendingClicked = {},
         onPopularClicked = {},
+        trendingMovies = trendingMovies,
     )
 }
 
@@ -65,13 +70,16 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
 @Composable
 fun HomeScreenContent(
     modifier: Modifier = Modifier,
-    showLoadingBar: Boolean = false,
+    isLoading: Boolean = false,
     popularMovies: LazyPagingItems<Result>,
+    trendingMovies: LazyPagingItems<Result>,
     onTrendingClicked: () -> Unit,
     onPopularClicked: () -> Unit,
+    onViewAllClicked: (category: String) -> Unit = {}
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val pageWidth = (screenWidth / 3f).dp
+    val isTrendingMoviesEmpty = trendingMovies.itemCount == 0
     Timber.d(pageWidth.toString())
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -82,27 +90,128 @@ fun HomeScreenContent(
             )
         },
         bottomBar = {
-            if (showLoadingBar) {
+            if (isLoading) {
                 LinearProgressIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp),
-                    color = GreenYellow,
+                    color = MaterialTheme.colorScheme.primary,
                 )
             }
         },
     ) { paddingValues ->
-        Column(
-            Modifier.padding(paddingValues),
+        AnimatedVisibility(
+            visible = !isLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
         ) {
-            AnimatedViewPager(
-                pageSize = pageWidth,
-                movies = popularMovies,
+            LazyColumn(
+                contentPadding = paddingValues,
+                content = {
+                    item {
+                        AnimatedViewPager(
+                            modifier = Modifier.height(450.dp),
+                            pageSize = pageWidth,
+                            movies = popularMovies,
+                        )
+                    }
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                modifier = Modifier,
+                                text = "Trending",
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
+                                modifier = Modifier.clickable {
+                                    onViewAllClicked("trending")
+                                },
+                                text = "View all",
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                ),
+                            )
+                        }
+                    }
+                    item {
+                        MovieItems(movies = trendingMovies)
+                    }
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                modifier = Modifier,
+                                text = "Popular",
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                ),
+                            )
+                            Row(
+                                modifier = Modifier,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text(
+                                    modifier = Modifier.clickable {},
+                                    text = "Movies",
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    ),
+                                )
+                                Text(
+                                    modifier = Modifier.clickable {},
+                                    text = "TV Series",
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        color = MaterialTheme.colorScheme.onBackground
+                                    ),
+                                )
+                            }
+                        }
+                    }
+                    item {
+                        MovieItems(movies = popularMovies)
+                    }
+                },
             )
         }
     }
 }
 
+@Composable
+fun MovieItems(
+    modifier: Modifier = Modifier,
+    movies: LazyPagingItems<Result>
+) {
+    LazyRow(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(150.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        content = {
+            items(movies.itemCount) { movieIndex ->
+                val movieUrl = movies[movieIndex]?.posterPath ?: ""
+                val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
+                MovieCard(
+                    modifier = Modifier
+                        .width(110.dp)
+                        .height(150.dp)
+                        .padding(4.dp),
+                    imageUrl = imageUrl,
+                    cornerSize = 8.dp,
+                )
+            }
+        },
+    )
+}
 
 @Composable
 fun TopSection(
@@ -110,7 +219,11 @@ fun TopSection(
     onTrendingClicked: () -> Unit,
     onPopularClicked: () -> Unit,
 ) {
-    Column(modifier = modifier.padding(8.dp)) {
+    Column(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(8.dp),
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -153,14 +266,14 @@ fun TopSection(
                 Text(
                     text = "Trending",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
             TextButton(onClick = onPopularClicked) {
                 Text(
                     text = "Popular",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
         }

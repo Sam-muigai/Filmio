@@ -1,5 +1,11 @@
 package com.samkt.filmio.util
 
+import android.annotation.SuppressLint
+import android.net.http.HttpException
+import android.os.Build
+import androidx.annotation.RequiresExtension
+import java.io.IOException
+
 fun Int.toGenre(): String {
     return when (this) {
         28 -> "Action"
@@ -22,5 +28,15 @@ fun Int.toGenre(): String {
         10752 -> "War"
         37 -> "Western"
         else -> "Unknown"
+    }
+}
+
+
+@SuppressLint("NewApi")
+fun Throwable.toErrorMessage(): String {
+    return when (this) {
+        is HttpException -> "Could not reach the server"
+        is IOException -> "No internet connection Please check and try again later."
+        else -> message ?: "Unexpected error occurred"
     }
 }

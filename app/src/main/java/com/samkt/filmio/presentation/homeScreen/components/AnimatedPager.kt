@@ -1,18 +1,24 @@
 package com.samkt.filmio.presentation.homeScreen.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,10 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.samkt.filmio.data.dtos.Result
 import com.samkt.filmio.presentation.homeScreen.components.pager.pagerAnimation
-import com.samkt.filmio.ui.theme.GreenYellow
 import com.samkt.filmio.util.toGenre
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -42,6 +48,7 @@ fun AnimatedViewPager(
     pageSize: Dp,
     movies: LazyPagingItems<Result>,
     onAddToList: (Result) -> Unit = {},
+    onDetailsClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
 ) {
     val pagerState = rememberPagerState(
         initialPageOffsetFraction = 0f,
@@ -64,20 +71,23 @@ fun AnimatedViewPager(
         },
     )
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val isMoviesEmpty = movies.itemCount == 0
-        val genre = if (!isMoviesEmpty) {
+        val isMoviesLoading = movies.loadState.refresh is LoadState.Loading
+        val genre = if (!isMoviesLoading) {
             movies[pagerState.currentPage]?.genreIds
                 ?: emptyList()
         } else {
             emptyList()
         }
         val genresCount = genre.size
+        val currentMovie = if (!isMoviesLoading) movies[pagerState.currentPage] else null
         // Still open to future improvements..
         HorizontalPager(
-            modifier = modifier.fillMaxWidth().height(320.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(320.dp),
             state = pagerState,
             contentPadding = PaddingValues(horizontal = pageSize - 40.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -96,7 +106,7 @@ fun AnimatedViewPager(
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        if (!isMoviesEmpty) {
+        if (!isMoviesLoading) {
             Text(
                 text = movies[pagerState.currentPage]?.title ?: "No name",
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -129,20 +139,51 @@ fun AnimatedViewPager(
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        if (!isMoviesEmpty) {
-            Button(
-                onClick = {
-                    movies[pagerState.currentPage]?.let { onAddToList(it) }
-                },
-                shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = GreenYellow,
-                ),
+        if (!isMoviesLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp
+                    ),
             ) {
-                Text(
-                    text = "ADD TO LIST",
-                    fontWeight = FontWeight.Bold,
-                )
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .clickable {
+                            onDetailsClicked(
+                                currentMovie?.id ?: 0,
+                                currentMovie?.backdropPath ?: "",
+                                currentMovie?.posterPath ?: "",
+                            )
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = "Movie Details",
+                    )
+                    Text(
+                        text = "Details",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                    )
+                }
+                Button(
+                    modifier = Modifier.align(Alignment.Center),
+                    onClick = {
+                        movies[pagerState.currentPage]?.let { onAddToList(it) }
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
+                ) {
+                    Text(
+                        text = "ADD TO LIST",
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         }
     }

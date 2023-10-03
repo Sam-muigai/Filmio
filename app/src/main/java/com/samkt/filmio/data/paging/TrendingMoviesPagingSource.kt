@@ -6,17 +6,15 @@ import com.samkt.filmio.data.TMDBApi
 import com.samkt.filmio.data.dtos.Result
 import timber.log.Timber
 
-class PopularMoviesPagingSource(
+class TrendingMoviesPagingSource(
     private val tmdbApi: TMDBApi,
 ) : PagingSource<Int, Result>() {
-    override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
-        return state.anchorPosition
-    }
+    override fun getRefreshKey(state: PagingState<Int, Result>): Int? = state.anchorPosition
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
         return try {
             val currentPage = params.key ?: 1
-            val movies = tmdbApi.getPopularMovies(page = currentPage).results
-            Timber.d("Popular movies successfully called..")
+            val movies = tmdbApi.getTrendingMovies(page = currentPage).results
+            Timber.d("Trending movies successfully called..")
             LoadResult.Page(
                 data = movies,
                 nextKey = if (movies.isEmpty()) null else currentPage + 1,
