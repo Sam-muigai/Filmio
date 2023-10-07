@@ -6,7 +6,10 @@ import androidx.paging.PagingData
 import com.samkt.filmio.data.TMDBApi
 import com.samkt.filmio.data.dtos.Result
 import com.samkt.filmio.data.paging.PopularMoviesPagingSource
+import com.samkt.filmio.data.paging.TopRatedPagingSource
 import com.samkt.filmio.data.paging.TrendingMoviesPagingSource
+import com.samkt.filmio.data.paging.TrendingTvSeriesPagingSource
+import com.samkt.filmio.data.paging.UpcomingMoviesPagingSource
 import com.samkt.filmio.domain.repository.GetMoviesRepository
 import com.samkt.filmio.util.Constants.MOVIES_PER_PAGE
 import kotlinx.coroutines.flow.Flow
@@ -32,6 +35,36 @@ class GetMoviesRepositoryImpl @Inject constructor(
             config = PagingConfig(MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 TrendingMoviesPagingSource(tmdbApi)
+            },
+        ).flow
+    }
+
+    override fun getPopularTvSeries(): Flow<PagingData<Result>> {
+        Timber.d("getPopularTvSeries repository function called...")
+        return Pager(
+            config = PagingConfig(MOVIES_PER_PAGE),
+            pagingSourceFactory = {
+                TrendingTvSeriesPagingSource(tmdbApi)
+            },
+        ).flow
+    }
+
+    override fun getUpcomingMovies(): Flow<PagingData<Result>> {
+        Timber.d("getUpcomingMovies repository function called...")
+        return Pager(
+            config = PagingConfig(MOVIES_PER_PAGE),
+            pagingSourceFactory = {
+                UpcomingMoviesPagingSource(tmdbApi)
+            },
+        ).flow
+    }
+
+    override fun getTopRatedMovies(): Flow<PagingData<Result>> {
+        Timber.d("getTopRated repository function called...")
+        return Pager(
+            config = PagingConfig(MOVIES_PER_PAGE),
+            pagingSourceFactory = {
+                TopRatedPagingSource(tmdbApi)
             },
         ).flow
     }

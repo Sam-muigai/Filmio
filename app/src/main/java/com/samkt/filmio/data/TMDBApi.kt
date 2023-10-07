@@ -20,4 +20,24 @@ interface TMDBApi {
         @Query("language") language: String = "en-US",
     ): Movies
 
+    @GET("trending/tv/day")
+    suspend fun getTrendingTvSeries(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("page") page: Int = 0,
+        @Query("language") language: String = "en-US",
+    ): Movies
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("page") page: Int = 0,
+        @Query("language") language: String = "en-US",
+    ): Movies
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("page") page: Int = 0,
+        @Query("language") language: String = "en-US",
+    ): Movies
 }

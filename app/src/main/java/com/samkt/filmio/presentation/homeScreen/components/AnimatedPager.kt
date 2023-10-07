@@ -51,8 +51,11 @@ fun AnimatedViewPager(
     onDetailsClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
 ) {
     val pagerState = rememberPagerState(
-        initialPageOffsetFraction = 0f,
         initialPage = 0,
+        initialPageOffsetFraction = 0f,
+        pageCount = {
+            movies.itemCount
+        }
     )
 
     val currentPageIndex = remember { mutableStateOf(0) }
@@ -91,7 +94,6 @@ fun AnimatedViewPager(
             state = pagerState,
             contentPadding = PaddingValues(horizontal = pageSize - 40.dp),
             verticalAlignment = Alignment.CenterVertically,
-            pageCount = movies.itemCount,
         ) { thisPageIndex ->
             val image = movies[thisPageIndex]?.posterPath ?: ""
             val imageUrl = "https://image.tmdb.org/t/p/w500/$image"

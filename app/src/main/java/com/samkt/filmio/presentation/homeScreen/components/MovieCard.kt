@@ -35,7 +35,7 @@ internal fun MovieCard(
         ) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = ImageRequest.Builder(context).data(imageUrl).build(),
+                model = ImageRequest.Builder(context).data(imageUrl).crossfade(500).build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
             )

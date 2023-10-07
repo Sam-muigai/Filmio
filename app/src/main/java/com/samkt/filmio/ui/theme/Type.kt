@@ -16,105 +16,113 @@ val anago = FontFamily(
     Font(R.font.anago_black, FontWeight.W800),
 )
 
+val urbanist = FontFamily(
+    Font(R.font.urbanist_light, FontWeight.W100),
+    Font(R.font.urbanist_semi_bold, FontWeight.W400),
+    Font(R.font.urbanist_medium, FontWeight.W500),
+    Font(R.font.urbanist_bold, FontWeight.W700),
+    Font(R.font.urbanist_black, FontWeight.W800),
+)
+
 val ruberoid = FontFamily(
     Font(R.font.ruberoid_bold, FontWeight.Bold),
 )
 
 val Typography = Typography(
     displayLarge = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 50.sp,
         lineHeight = 64.sp,
         letterSpacing = (-0.25).sp,
     ),
     displayMedium = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 40.sp,
         lineHeight = 52.sp,
     ),
     displaySmall = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 30.sp,
         lineHeight = 44.sp,
     ),
     headlineLarge = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 28.sp,
         lineHeight = 40.sp,
     ),
     headlineMedium = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 24.sp,
         lineHeight = 36.sp,
     ),
     headlineSmall = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 20.sp,
         lineHeight = 32.sp,
     ),
     titleLarge = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W700,
         fontSize = 18.sp,
         lineHeight = 28.sp,
     ),
     titleMedium = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W700,
         fontSize = 14.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.1.sp,
     ),
     titleSmall = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W500,
         fontSize = 12.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
     ),
     bodyLarge = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
     ),
     bodyMedium = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.25.sp,
     ),
     bodySmall = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 11.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.4.sp,
     ),
     labelLarge = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 13.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
     ),
     labelMedium = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W400,
         fontSize = 11.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
     ),
     labelSmall = TextStyle(
-        fontFamily = anago,
+        fontFamily = urbanist,
         fontWeight = FontWeight.W500,
         fontSize = 9.sp,
         lineHeight = 16.sp,
