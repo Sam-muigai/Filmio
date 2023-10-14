@@ -17,8 +17,6 @@ data class Result(
     val originalLanguage: String?,
     @SerialName("original_title")
     val originalTitle: String? = null,
-    @SerialName("original_name")
-    val originalName: String? = null,
     @SerialName("overview")
     val overview: String?,
     @SerialName("popularity")

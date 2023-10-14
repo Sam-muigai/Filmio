@@ -1,6 +1,7 @@
-package com.samkt.filmio.presentation.homeScreen.components
+package com.samkt.filmio.presentation.sharedComponents
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +22,8 @@ import coil.request.ImageRequest
 internal fun MovieCard(
     modifier: Modifier = Modifier,
     imageUrl: String = "",
-    cornerSize: Dp = 0.dp
+    cornerSize: Dp = 0.dp,
+    onMovieClicked:()->Unit = {}
 ) {
     val context = LocalContext.current
     Box(
@@ -29,6 +31,7 @@ internal fun MovieCard(
     ) {
         Column(
             modifier = Modifier
+                .clickable { onMovieClicked.invoke()  }
                 .fillMaxSize()
                 .clip(RoundedCornerShape(cornerSize))
                 .background(color = MaterialTheme.colorScheme.secondaryContainer),

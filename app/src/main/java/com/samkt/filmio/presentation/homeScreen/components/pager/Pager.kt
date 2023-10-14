@@ -2,6 +2,7 @@ package com.samkt.filmio.presentation.homeScreen.components.pager
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.material3.TabPosition
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.util.lerp
@@ -14,9 +15,9 @@ fun Modifier.pagerAnimation(
 ) = then(
     graphicsLayer {
         val pageOffset = (
-            (pagerState.currentPage - thisPageIndex) + pagerState
-                .currentPageOffsetFraction
-            )
+                (pagerState.currentPage - thisPageIndex) + pagerState
+                    .currentPageOffsetFraction
+                )
 
         cameraDistance = 4 * density
         rotationY = lerp(

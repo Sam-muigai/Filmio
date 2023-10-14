@@ -1,4 +1,4 @@
-package com.samkt.filmio.presentation.movieScreen.components
+package com.samkt.filmio.presentation.tvSeriesScreen.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.samkt.filmio.R
 
 @Composable
-fun MovieTopSection(
+fun TvSeriesTopSection(
     modifier: Modifier = Modifier,
     category: String = "",
     onSearchClicked: () -> Unit,
@@ -42,7 +42,7 @@ fun MovieTopSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Movies",
+                text = "Tv Series",
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold
                 )
@@ -74,9 +74,9 @@ fun MovieTopSection(
             }
             TextButton(onClick = onUpcomingClicked) {
                 Text(
-                    text = "Upcoming",
+                    text = "Latest",
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (category == "upcoming") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+                    color = if (category == "latest") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
                 )
             }
             Row(

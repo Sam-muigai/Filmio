@@ -3,20 +3,19 @@ package com.samkt.filmio.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.samkt.filmio.data.TMDBApi
-import com.samkt.filmio.data.dtos.Result
 import com.samkt.filmio.data.dtos.TVSeries
 import timber.log.Timber
 
-class TrendingTvSeriesPagingSource(
+class PopularTvSeriesPagingSource(
     private val tmdbApi: TMDBApi
-) : PagingSource<Int, TVSeries>() {
+) : PagingSource<Int,TVSeries>(){
     override fun getRefreshKey(state: PagingState<Int, TVSeries>): Int? = state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TVSeries> {
-       return try {
+        return try {
             val currentPage = params.key ?: 1
-            val tvSeries = tmdbApi.getTrendingTvSeries(page = currentPage).results
-            Timber.d("TV series successfully called..")
+            val tvSeries = tmdbApi.getPopularTvSeries(page = currentPage).results
+            Timber.d("Popular TV series successfully called..")
             LoadResult.Page(
                 data = tvSeries,
                 nextKey = if (tvSeries.isEmpty()) null else currentPage + 1,
@@ -27,5 +26,4 @@ class TrendingTvSeriesPagingSource(
             LoadResult.Error(e)
         }
     }
-
 }

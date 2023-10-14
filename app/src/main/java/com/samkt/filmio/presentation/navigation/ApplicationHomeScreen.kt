@@ -29,15 +29,21 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.samkt.filmio.presentation.homeScreen.HomeScreen
 import com.samkt.filmio.presentation.movieScreen.MoviesScreen
+import com.samkt.filmio.presentation.singleMovieScreen.SingleMovieScreen
+import com.samkt.filmio.presentation.tvSeriesScreen.TvSeriesScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ApplicationHomeScreen() {
+fun ApplicationHomeScreen(
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+) {
     var navigationSelectedItem by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -52,9 +58,9 @@ fun ApplicationHomeScreen() {
                         selected = isSelected,
                         onClick = {
                             navigationSelectedItem = index
-                            navController.navigate(navItems.route) {
+                            navController.navigate(navItems.screen.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
-                                   saveState = true
+                                    saveState = true
                                 }
                                 launchSingleTop = true
                                 restoreState = true
@@ -78,23 +84,20 @@ fun ApplicationHomeScreen() {
         NavHost(
             modifier = Modifier.padding(paddingValues),
             navController = navController,
-            startDestination = "home"
+            startDestination = Screens.HomeScreen.route
         ) {
-            destination("home"){
-                HomeScreen()
+            destination(Screens.HomeScreen.route) {
+                HomeScreen(
+                    onMovieClicked = onMovieClicked
+                )
             }
-            destination("movies"){
-               MoviesScreen()
+            destination(Screens.MovieScreen.route) {
+                MoviesScreen()
             }
-           destination("tvSeries"){
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "TV Series")
-                }
+            destination(Screens.TvSeriesScreen.route) {
+                TvSeriesScreen()
             }
-            destination("watch_list"){
+            destination(Screens.WatchListScreen.route) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -102,6 +105,40 @@ fun ApplicationHomeScreen() {
                     Text(text = "Watch List")
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Screens.ApplicationHomePage.route) {
+        destination(Screens.ApplicationHomePage.route) {
+            ApplicationHomeScreen(
+                onMovieClicked = { id ,backDropPath,posterImage ->
+                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                }
+            )
+        }
+        destination(
+            route = Screens.SingleMovieScreen.route + "?backDropPath={backDropPath}" + "?posterImage={posterImage}" + "?movieId={movieId}",
+            arguments = listOf(
+                navArgument("backDropPath") {
+                    type = NavType.StringType
+                },
+                navArgument("posterImage") {
+                    type = NavType.StringType
+                }
+            )
+        ) {navBackStack ->
+            val posterImage = navBackStack.arguments?.getString("posterImage") ?: ""
+            val backDropPath = navBackStack.arguments?.getString("backDropPath") ?: ""
+            val movieId = navBackStack.arguments?.getString("movieId")
+            SingleMovieScreen(
+                movieImage = posterImage,
+                 backGroundImage = backDropPath,
+                movieId = movieId!!.toInt()
+            )
         }
     }
 }
@@ -117,16 +154,16 @@ fun NavGraphBuilder.destination(
         content = content,
         arguments = arguments,
         enterTransition = {
-            fadeIn(animationSpec = tween(300))
+            fadeIn(animationSpec = tween(500))
         },
         exitTransition = {
-            fadeOut(animationSpec = tween(300))
+            fadeOut(animationSpec = tween(500))
         },
         popEnterTransition = {
-            fadeIn(animationSpec = tween(300))
+            fadeIn(animationSpec = tween(500))
         },
         popExitTransition = {
-             fadeOut(animationSpec = tween(300))
+            fadeOut(animationSpec = tween(500))
         },
     )
 }

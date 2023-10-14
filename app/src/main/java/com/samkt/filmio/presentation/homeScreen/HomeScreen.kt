@@ -30,16 +30,21 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.presentation.homeScreen.components.AnimatedViewPager
 import com.samkt.filmio.presentation.homeScreen.components.HomeTopSection
 import com.samkt.filmio.presentation.homeScreen.components.MovieItems
 
 @Composable
-fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: HomeScreenViewModel = hiltViewModel(),
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
     val trendingTvSeries = viewModel.trendingTvSeries.collectAsLazyPagingItems()
@@ -80,12 +85,13 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
             showPopularMovies = it
         },
         isPopularMovies = showPopularMovies,
-        popularMoviesOrTvSeries = if (showPopularMovies) popularMovies else trendingTvSeries,
+        popularTvSeries = trendingTvSeries,
         upComingMovies = upComingMovies,
         topRatedMovies = topRatedMovies,
         onSearchClicked = {
             // TODO: Navigate to search screen
-        }
+        },
+        onMovieClicked = onMovieClicked
     )
 }
 
@@ -97,7 +103,7 @@ fun HomeScreenContent(
     hasErrors: Boolean = false,
     popularMovies: LazyPagingItems<Result>,
     trendingMovies: LazyPagingItems<Result>,
-    popularMoviesOrTvSeries: LazyPagingItems<Result>,
+    popularTvSeries: LazyPagingItems<TVSeries>,
     upComingMovies: LazyPagingItems<Result>,
     topRatedMovies: LazyPagingItems<Result>,
     onRetryClicked: () -> Unit,
@@ -106,7 +112,8 @@ fun HomeScreenContent(
     showPopularMovies: (Boolean) -> Unit,
     isPopularMovies: Boolean,
     onPopularClicked: () -> Unit,
-    onViewAllClicked: (category: String) -> Unit = {}
+    onViewAllClicked: (category: String) -> Unit = {},
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val pageWidth = (screenWidth / 3f).dp
@@ -158,13 +165,14 @@ fun HomeScreenContent(
                             modifier = Modifier.height(450.dp),
                             pageSize = pageWidth,
                             movies = popularMovies,
+                            onDetailsClicked = onMovieClicked
                         )
                     }
                     item {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
@@ -189,13 +197,16 @@ fun HomeScreenContent(
                         }
                     }
                     item {
-                        MovieItems(movies = trendingMovies)
+                        MovieItems(
+                            movies = trendingMovies,
+                            onMovieClicked = onMovieClicked
+                        )
                     }
                     item {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                                .padding(horizontal = 8.dp, vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
@@ -222,8 +233,6 @@ fun HomeScreenContent(
                                         color = if (isPopularMovies) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
                                     ),
                                 )
-
-
                                 Text(
                                     modifier = Modifier
                                         .clickable {
@@ -240,13 +249,18 @@ fun HomeScreenContent(
                         }
                     }
                     item {
-                        MovieItems(movies = popularMoviesOrTvSeries)
+                        MovieItems(
+                            movies = popularMovies,
+                            tvSeries = popularTvSeries,
+                            isMovies = isPopularMovies,
+                            onMovieClicked = onMovieClicked
+                        )
                     }
                     item {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
@@ -274,13 +288,16 @@ fun HomeScreenContent(
                         }
                     }
                     item {
-                        MovieItems(movies = upComingMovies)
+                        MovieItems(
+                            movies = upComingMovies,
+                            onMovieClicked = onMovieClicked
+                        )
                     }
                     item {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
@@ -307,7 +324,10 @@ fun HomeScreenContent(
 
                     }
                     item {
-                        MovieItems(movies = topRatedMovies)
+                        MovieItems(
+                            movies = topRatedMovies,
+                            onMovieClicked = onMovieClicked
+                        )
                     }
                     item {
                         Spacer(modifier = Modifier.height(50.dp))

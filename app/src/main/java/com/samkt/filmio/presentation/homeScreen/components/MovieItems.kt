@@ -15,42 +15,84 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.presentation.sharedComponents.MovieCard
 
 @Composable
 fun MovieItems(
     modifier: Modifier = Modifier,
-    movies: LazyPagingItems<Result>
+    movies: LazyPagingItems<Result>,
+    tvSeries:LazyPagingItems<TVSeries>? = null,
+    isMovies :Boolean = true,
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     LazyRow(
-        modifier = modifier
-            .fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 8.dp),
         content = {
-            items(movies.itemCount,key = {it}) { movieIndex ->
-                val movieUrl = movies[movieIndex]?.posterPath ?: ""
-                val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
-                val title =
-                    movies[movieIndex]?.title ?: movies[movieIndex]?.originalName ?: "No name"
-                Column(
-                    modifier = Modifier
-                        .width(110.dp)
-                        .height(180.dp)
-                ) {
-                    MovieCard(
+            if (isMovies){
+                items(movies.itemCount,key = {it}) { movieIndex ->
+                    val movieUrl = movies[movieIndex]?.posterPath ?: ""
+                    val movieId = movies[movieIndex]?.id ?: 0
+                    val backDropPath = movies[movieIndex]?.backdropPath ?: ""
+                    val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
+                    val title = movies[movieIndex]?.title ?: movies[movieIndex]?.originalTitle ?: "No name"
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(150.dp)
-                            .padding(4.dp),
-                        imageUrl = imageUrl,
-                        cornerSize = 4.dp,
-                    )
-                    Text(
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        text = title,
-                        style = MaterialTheme.typography.bodySmall,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
-                    )
+                            .width(110.dp)
+                            .height(180.dp)
+                    ) {
+                        MovieCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(150.dp)
+                                .padding(4.dp),
+                            imageUrl = imageUrl,
+                            cornerSize = 4.dp,
+                            onMovieClicked = {
+                                onMovieClicked(movieId,backDropPath,movieUrl)
+                            }
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = title,
+                            style = MaterialTheme.typography.bodySmall,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                    }
+                }
+            }else{
+                items(tvSeries?.itemCount!!,key = {it}) { tvIndex ->
+                    val tvUrl = tvSeries[tvIndex]?.posterPath ?: ""
+                    val tvBacKDropPath = tvSeries[tvIndex]?.posterPath ?: ""
+                    val tvImageId = tvSeries[tvIndex]?.id ?: 0
+                    val tvImageUrl = "https://image.tmdb.org/t/p/w500/$tvUrl"
+                    val tvTitle = tvSeries[tvIndex]?.name ?: "No name"
+                    Column(
+                        modifier = Modifier
+                            .width(110.dp)
+                            .height(180.dp)
+                    ) {
+                        MovieCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(150.dp)
+                                .padding(4.dp),
+                            imageUrl = tvImageUrl,
+                            cornerSize = 4.dp,
+                            onMovieClicked = {
+                                onMovieClicked(tvImageId,tvBacKDropPath,tvUrl)
+                            }
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = tvTitle,
+                            style = MaterialTheme.typography.bodySmall,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                    }
                 }
             }
         },

@@ -11,7 +11,7 @@ import com.samkt.filmio.R
 
 data class BottomNavItem(
     val label: String,
-    val route: String,
+    val screen: Screens,
     @DrawableRes val unselectedIcon: Int,
     @DrawableRes val selectedIcon: Int
 )
@@ -19,25 +19,25 @@ data class BottomNavItem(
 val navigationItems = listOf(
     BottomNavItem(
         "Home",
-        "home",
+        Screens.HomeScreen,
         R.drawable.ic_outline_home,
         R.drawable.ic_filled_home,
     ),
     BottomNavItem(
         "Movies",
-        "movies",
+        Screens.MovieScreen,
         R.drawable.ic_movie_outlined,
         R.drawable.ic_movie_filled,
     ),
     BottomNavItem(
         "TV Series",
-        "tvSeries",
+        Screens.TvSeriesScreen,
         R.drawable.ic_tv_outlined,
         R.drawable.ic_tv_filled,
     ),
     BottomNavItem(
         "Watch List",
-        "watch_list",
+        Screens.WatchListScreen,
         R.drawable.ic_outline_bookmark,
         R.drawable.ic_filled_bookmark,
     ),

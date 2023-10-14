@@ -5,7 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.samkt.filmio.data.TMDBApi
 import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.data.paging.PopularMoviesPagingSource
+import com.samkt.filmio.data.paging.PopularTvSeriesPagingSource
 import com.samkt.filmio.data.paging.TopRatedPagingSource
 import com.samkt.filmio.data.paging.TrendingMoviesPagingSource
 import com.samkt.filmio.data.paging.TrendingTvSeriesPagingSource
@@ -35,16 +37,6 @@ class GetMoviesRepositoryImpl @Inject constructor(
             config = PagingConfig(MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 TrendingMoviesPagingSource(tmdbApi)
-            },
-        ).flow
-    }
-
-    override fun getPopularTvSeries(): Flow<PagingData<Result>> {
-        Timber.d("getPopularTvSeries repository function called...")
-        return Pager(
-            config = PagingConfig(MOVIES_PER_PAGE),
-            pagingSourceFactory = {
-                TrendingTvSeriesPagingSource(tmdbApi)
             },
         ).flow
     }

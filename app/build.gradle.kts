@@ -94,4 +94,6 @@ dependencies {
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
 
+    implementation("me.onebone:toolbar-compose:2.3.5")
+
 }

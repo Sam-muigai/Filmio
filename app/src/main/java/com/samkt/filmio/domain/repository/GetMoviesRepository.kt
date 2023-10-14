@@ -2,6 +2,7 @@ package com.samkt.filmio.domain.repository
 
 import androidx.paging.PagingData
 import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.TVSeries
 import kotlinx.coroutines.flow.Flow
 
 interface GetMoviesRepository {
@@ -9,7 +10,6 @@ interface GetMoviesRepository {
 
     fun getTrendingMovies(): Flow<PagingData<Result>>
 
-    fun getPopularTvSeries(): Flow<PagingData<Result>>
 
     fun getUpcomingMovies(): Flow<PagingData<Result>>
 

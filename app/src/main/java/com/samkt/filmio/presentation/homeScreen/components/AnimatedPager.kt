@@ -39,6 +39,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.samkt.filmio.data.dtos.Result
 import com.samkt.filmio.presentation.homeScreen.components.pager.pagerAnimation
+import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.util.toGenre
 
 @OptIn(ExperimentalFoundationApi::class)
