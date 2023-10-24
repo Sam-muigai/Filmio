@@ -3,7 +3,6 @@ package com.samkt.filmio.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.samkt.filmio.data.TMDBApi
-import com.samkt.filmio.data.dtos.Result
 import com.samkt.filmio.data.dtos.TVSeries
 import timber.log.Timber
 

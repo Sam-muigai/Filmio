@@ -23,7 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.presentation.homeScreen.components.pager.pagerAnimation
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.util.toGenre
@@ -47,8 +47,8 @@ import com.samkt.filmio.util.toGenre
 fun AnimatedViewPager(
     modifier: Modifier = Modifier,
     pageSize: Dp,
-    movies: LazyPagingItems<Result>,
-    onAddToList: (Result) -> Unit = {},
+    movies: LazyPagingItems<Movie>,
+    onAddToList: (Movie) -> Unit = {},
     onDetailsClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
 ) {
     val pagerState = rememberPagerState(
@@ -59,17 +59,17 @@ fun AnimatedViewPager(
         }
     )
 
-    val currentPageIndex = remember { mutableStateOf(0) }
+    val currentPageIndex = remember { mutableIntStateOf(0) }
     val hapticFeedback = LocalHapticFeedback.current
     LaunchedEffect(
         key1 = true,
         block = {
             snapshotFlow { pagerState.currentPage }.collect { currentPage ->
-                if (currentPageIndex.value == currentPage) {
+                if (currentPageIndex.intValue == currentPage) {
                     hapticFeedback.performHapticFeedback(
                         hapticFeedbackType = HapticFeedbackType.LongPress,
                     )
-                    currentPageIndex.value = currentPage
+                    currentPageIndex.intValue = currentPage
                 }
             }
         },
@@ -106,6 +106,7 @@ fun AnimatedViewPager(
                         thisPageIndex = thisPageIndex,
                     ),
                 imageUrl = imageUrl,
+                clickable = false
             )
         }
         Spacer(modifier = Modifier.height(10.dp))

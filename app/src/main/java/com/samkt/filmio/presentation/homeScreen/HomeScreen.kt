@@ -30,11 +30,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.presentation.homeScreen.components.AnimatedViewPager
 import com.samkt.filmio.presentation.homeScreen.components.HomeTopSection
@@ -43,6 +42,7 @@ import com.samkt.filmio.presentation.homeScreen.components.MovieItems
 @Composable
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
+    onSearchClicked: () -> Unit,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
@@ -88,9 +88,7 @@ fun HomeScreen(
         popularTvSeries = trendingTvSeries,
         upComingMovies = upComingMovies,
         topRatedMovies = topRatedMovies,
-        onSearchClicked = {
-            // TODO: Navigate to search screen
-        },
+        onSearchClicked = onSearchClicked,
         onMovieClicked = onMovieClicked
     )
 }
@@ -101,11 +99,11 @@ fun HomeScreenContent(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     hasErrors: Boolean = false,
-    popularMovies: LazyPagingItems<Result>,
-    trendingMovies: LazyPagingItems<Result>,
+    popularMovies: LazyPagingItems<Movie>,
+    trendingMovies: LazyPagingItems<Movie>,
     popularTvSeries: LazyPagingItems<TVSeries>,
-    upComingMovies: LazyPagingItems<Result>,
-    topRatedMovies: LazyPagingItems<Result>,
+    upComingMovies: LazyPagingItems<Movie>,
+    topRatedMovies: LazyPagingItems<Movie>,
     onRetryClicked: () -> Unit,
     onTrendingClicked: () -> Unit,
     onSearchClicked: () -> Unit,

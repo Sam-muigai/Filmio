@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.domain.repository.GetMoviesRepository
 import com.samkt.filmio.domain.repository.GetTvSeriesRepository
@@ -20,24 +20,24 @@ class HomeScreenViewModel @Inject constructor(
     private val tvSeriesRepository: GetTvSeriesRepository
 ) : ViewModel() {
 
-    private val _popularMovies = MutableStateFlow<PagingData<Result>>(PagingData.empty())
-    private val _trendingMovies = MutableStateFlow<PagingData<Result>>(PagingData.empty())
+    private val _popularMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+    private val _trendingMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
     private val _trendingTvSeries = MutableStateFlow<PagingData<TVSeries>>(PagingData.empty())
-    private val _upcomingMovies = MutableStateFlow<PagingData<Result>>(PagingData.empty())
-    private val _topRatedMovies = MutableStateFlow<PagingData<Result>>(PagingData.empty())
-    val popularMovies: StateFlow<PagingData<Result>>
+    private val _upcomingMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+    private val _topRatedMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+    val popularMovies: StateFlow<PagingData<Movie>>
         get() = _popularMovies
 
-    val trendingMovies: StateFlow<PagingData<Result>>
+    val trendingMovies: StateFlow<PagingData<Movie>>
         get() = _trendingMovies
 
     val trendingTvSeries: StateFlow<PagingData<TVSeries>>
         get() = _trendingTvSeries
 
-    val upcomingMovies: StateFlow<PagingData<Result>>
+    val upcomingMovies: StateFlow<PagingData<Movie>>
         get() = _upcomingMovies
 
-    val topRatedMovies: StateFlow<PagingData<Result>>
+    val topRatedMovies: StateFlow<PagingData<Movie>>
         get() = _topRatedMovies
 
     init {

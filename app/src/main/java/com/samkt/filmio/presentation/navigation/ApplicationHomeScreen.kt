@@ -36,13 +36,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.samkt.filmio.presentation.homeScreen.HomeScreen
 import com.samkt.filmio.presentation.movieScreen.MoviesScreen
+import com.samkt.filmio.presentation.searchScreen.SearchScreen
 import com.samkt.filmio.presentation.singleMovieScreen.SingleMovieScreen
 import com.samkt.filmio.presentation.tvSeriesScreen.TvSeriesScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApplicationHomeScreen(
-    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onSearchClicked:()->Unit
 ) {
     var navigationSelectedItem by rememberSaveable {
         mutableIntStateOf(0)
@@ -88,11 +90,14 @@ fun ApplicationHomeScreen(
         ) {
             destination(Screens.HomeScreen.route) {
                 HomeScreen(
-                    onMovieClicked = onMovieClicked
+                    onMovieClicked = onMovieClicked,
+                    onSearchClicked = onSearchClicked
                 )
             }
             destination(Screens.MovieScreen.route) {
-                MoviesScreen()
+                MoviesScreen(
+                    onMovieClicked = onMovieClicked
+                )
             }
             destination(Screens.TvSeriesScreen.route) {
                 TvSeriesScreen()
@@ -105,6 +110,7 @@ fun ApplicationHomeScreen(
                     Text(text = "Watch List")
                 }
             }
+
         }
     }
 }
@@ -117,6 +123,9 @@ fun AppNavigation() {
             ApplicationHomeScreen(
                 onMovieClicked = { id ,backDropPath,posterImage ->
                     navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                },
+                onSearchClicked = {
+                    navController.navigate(Screens.SearchScreen.route)
                 }
             )
         }
@@ -137,8 +146,14 @@ fun AppNavigation() {
             SingleMovieScreen(
                 movieImage = posterImage,
                  backGroundImage = backDropPath,
-                movieId = movieId!!.toInt()
+                movieId = movieId!!.toInt(),
+                onBackClicked = {
+                    navController.popBackStack()
+                }
             )
+        }
+        destination(Screens.SearchScreen.route){
+            SearchScreen()
         }
     }
 }

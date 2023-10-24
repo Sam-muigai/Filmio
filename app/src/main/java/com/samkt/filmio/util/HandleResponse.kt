@@ -3,6 +3,7 @@ package com.samkt.filmio.util
 import android.net.http.HttpException
 import android.os.Build
 import androidx.annotation.RequiresExtension
+import timber.log.Timber
 import java.io.IOException
 
 sealed class Result<out T>(val data:T? = null,val message:String? = null){
@@ -23,7 +24,8 @@ suspend fun <T> safeApiCall(
                 Result.Error("No internet connection!!")
             }
             else ->{
-                Result.Error("Unexpected error occurred")
+                Timber.d(e.message)
+                Result.Error(e.message)
             }
         }
     }

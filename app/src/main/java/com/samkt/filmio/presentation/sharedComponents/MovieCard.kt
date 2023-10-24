@@ -22,19 +22,29 @@ import coil.request.ImageRequest
 internal fun MovieCard(
     modifier: Modifier = Modifier,
     imageUrl: String = "",
+    clickable:Boolean = true,
     cornerSize: Dp = 0.dp,
     onMovieClicked:()->Unit = {}
 ) {
     val context = LocalContext.current
+
+    val cardImageModifier = if (clickable){
+        Modifier
+            .clickable { onMovieClicked.invoke()  }
+            .fillMaxSize()
+            .clip(RoundedCornerShape(cornerSize))
+            .background(color = MaterialTheme.colorScheme.secondaryContainer)
+    } else{
+        Modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(cornerSize))
+            .background(color = MaterialTheme.colorScheme.secondaryContainer)
+    }
     Box(
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier
-                .clickable { onMovieClicked.invoke()  }
-                .fillMaxSize()
-                .clip(RoundedCornerShape(cornerSize))
-                .background(color = MaterialTheme.colorScheme.secondaryContainer),
+            modifier = cardImageModifier
         ) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),

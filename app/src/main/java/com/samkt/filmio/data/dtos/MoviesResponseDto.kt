@@ -8,7 +8,7 @@ data class MoviesResponseDto(
     @SerialName("page")
     val page: Int,
     @SerialName("results")
-    val results: List<Result>,
+    val movies: List<Movie>,
     @SerialName("total_pages")
     val totalPages: Int,
     @SerialName("total_results")

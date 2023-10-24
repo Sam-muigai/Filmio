@@ -4,13 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.samkt.filmio.data.TMDBApi
-import com.samkt.filmio.data.dtos.Result
-import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.paging.PopularMoviesPagingSource
-import com.samkt.filmio.data.paging.PopularTvSeriesPagingSource
 import com.samkt.filmio.data.paging.TopRatedPagingSource
 import com.samkt.filmio.data.paging.TrendingMoviesPagingSource
-import com.samkt.filmio.data.paging.TrendingTvSeriesPagingSource
 import com.samkt.filmio.data.paging.UpcomingMoviesPagingSource
 import com.samkt.filmio.domain.repository.GetMoviesRepository
 import com.samkt.filmio.util.Constants.MOVIES_PER_PAGE
@@ -21,7 +18,7 @@ import javax.inject.Inject
 class GetMoviesRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi,
 ) : GetMoviesRepository {
-    override fun getPopularMovies(): Flow<PagingData<Result>> {
+    override fun getPopularMovies(): Flow<PagingData<Movie>> {
         Timber.d("getPopularMovies repository function called...")
         return Pager(
             config = PagingConfig(MOVIES_PER_PAGE),
@@ -31,7 +28,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getTrendingMovies(): Flow<PagingData<Result>> {
+    override fun getTrendingMovies(): Flow<PagingData<Movie>> {
         Timber.d("getTrending repository function called...")
         return Pager(
             config = PagingConfig(MOVIES_PER_PAGE),
@@ -41,7 +38,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getUpcomingMovies(): Flow<PagingData<Result>> {
+    override fun getUpcomingMovies(): Flow<PagingData<Movie>> {
         Timber.d("getUpcomingMovies repository function called...")
         return Pager(
             config = PagingConfig(MOVIES_PER_PAGE),
@@ -51,7 +48,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getTopRatedMovies(): Flow<PagingData<Result>> {
+    override fun getTopRatedMovies(): Flow<PagingData<Movie>> {
         Timber.d("getTopRated repository function called...")
         return Pager(
             config = PagingConfig(MOVIES_PER_PAGE),

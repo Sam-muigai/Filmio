@@ -9,7 +9,7 @@ data class SingleMovieResponseDto(
     @SerialName("adult")
     val adult: Boolean,
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerialName("budget")
     val budget: Int,
     @SerialName("genres")
@@ -20,6 +20,8 @@ data class SingleMovieResponseDto(
     val id: Int,
     @SerialName("imdb_id")
     val imdbId: String,
+    @SerialName("production_companies")
+    val productionCompanies: List<ProductionCompany>?,
     @SerialName("original_language")
     val originalLanguage: String,
     @SerialName("original_title")
@@ -32,8 +34,6 @@ data class SingleMovieResponseDto(
     val posterPath: String,
     @SerialName("release_date")
     val releaseDate: String,
-    @SerialName("revenue")
-    val revenue: Int,
     @SerialName("runtime")
     val runtime: Int,
     @SerialName("status")

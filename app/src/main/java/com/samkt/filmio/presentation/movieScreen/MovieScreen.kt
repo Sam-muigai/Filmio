@@ -24,13 +24,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.presentation.homeScreen.HomeScreenViewModel
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.movieScreen.components.MovieTopSection
 
 @Composable
-fun MoviesScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
+fun MoviesScreen(viewModel: HomeScreenViewModel = hiltViewModel(),
+                 onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
     val upComingMovies = viewModel.upcomingMovies.collectAsLazyPagingItems()
@@ -68,7 +69,8 @@ fun MoviesScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
             category = it
         },
         isError = errorOccurred,
-        isLoading = isLoading
+        isLoading = isLoading,
+        onMovieClicked = onMovieClicked
     )
 }
 
@@ -76,12 +78,13 @@ fun MoviesScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
 @Composable
 fun MovieScreenContent(
     modifier: Modifier = Modifier,
-    movies: LazyPagingItems<Result>,
+    movies: LazyPagingItems<Movie>,
     category: String = "",
     isLoading: Boolean = false,
     isError: Boolean = false,
     onSearchClicked: () -> Unit,
     onCategoryClicked: (String) -> Unit,
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -118,7 +121,8 @@ fun MovieScreenContent(
         ) {
             MoviesLazyGrid(
                 modifier = Modifier.padding(paddingValues),
-                movies = movies
+                movies = movies,
+                onMovieClicked = onMovieClicked
             )
         }
     }
@@ -127,7 +131,8 @@ fun MovieScreenContent(
 @Composable
 fun MoviesLazyGrid(
     modifier: Modifier = Modifier,
-    movies: LazyPagingItems<Result>
+    movies: LazyPagingItems<Movie>,
+    onMovieClicked:(id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -138,14 +143,19 @@ fun MoviesLazyGrid(
                 key = { index -> index }
             ) { movieIndex ->
                 val movieUrl = movies[movieIndex]?.posterPath ?: ""
+                val backDropPath  = movies[movieIndex]?.backdropPath ?: ""
                 val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
+                val backDropPathImage = "https://image.tmdb.org/t/p/w500/$backDropPath"
                 MovieCard(
                     modifier = Modifier
                         .padding(4.dp)
                         .fillMaxWidth()
                         .height(180.dp),
                     imageUrl = imageUrl,
-                    cornerSize = 4.dp
+                    cornerSize = 4.dp,
+                    onMovieClicked = {
+                        onMovieClicked.invoke(movies[movieIndex]?.id ?: 240,backDropPathImage,imageUrl)
+                    }
                 )
             }
         }

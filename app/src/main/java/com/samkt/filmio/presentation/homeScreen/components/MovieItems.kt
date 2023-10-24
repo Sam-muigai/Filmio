@@ -14,14 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import com.samkt.filmio.data.dtos.Result
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 
 @Composable
 fun MovieItems(
     modifier: Modifier = Modifier,
-    movies: LazyPagingItems<Result>,
+    movies: LazyPagingItems<Movie>,
     tvSeries:LazyPagingItems<TVSeries>? = null,
     isMovies :Boolean = true,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
