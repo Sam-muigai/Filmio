@@ -1,6 +1,7 @@
 package com.samkt.filmio.presentation.navigation
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -39,6 +40,10 @@ import com.samkt.filmio.presentation.movieScreen.MoviesScreen
 import com.samkt.filmio.presentation.searchScreen.SearchScreen
 import com.samkt.filmio.presentation.singleMovieScreen.SingleMovieScreen
 import com.samkt.filmio.presentation.tvSeriesScreen.TvSeriesScreen
+import soup.compose.material.motion.MaterialSharedAxisZ
+import soup.compose.material.motion.animation.materialSharedAxisZ
+import soup.compose.material.motion.animation.materialSharedAxisZIn
+import soup.compose.material.motion.animation.materialSharedAxisZOut
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,11 +101,14 @@ fun ApplicationHomeScreen(
             }
             destination(Screens.MovieScreen.route) {
                 MoviesScreen(
-                    onMovieClicked = onMovieClicked
+                    onMovieClicked = onMovieClicked,
+                    onSearchClicked = onSearchClicked
                 )
             }
             destination(Screens.TvSeriesScreen.route) {
-                TvSeriesScreen()
+                TvSeriesScreen(
+                    onSearchClicked = onSearchClicked
+                )
             }
             destination(Screens.WatchListScreen.route) {
                 Box(
@@ -153,10 +161,15 @@ fun AppNavigation() {
             )
         }
         destination(Screens.SearchScreen.route){
-            SearchScreen()
+            SearchScreen(
+                onMovieClicked = {id ,backDropPath,posterImage ->
+                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                }
+            )
         }
     }
 }
+
 
 
 fun NavGraphBuilder.destination(
@@ -169,16 +182,16 @@ fun NavGraphBuilder.destination(
         content = content,
         arguments = arguments,
         enterTransition = {
-            fadeIn(animationSpec = tween(500))
+            materialSharedAxisZIn(forward = true, durationMillis = 500)
         },
         exitTransition = {
-            fadeOut(animationSpec = tween(500))
+            materialSharedAxisZOut(forward = false, durationMillis = 500)
         },
         popEnterTransition = {
-            fadeIn(animationSpec = tween(500))
+            materialSharedAxisZIn(forward = true, durationMillis = 500)
         },
         popExitTransition = {
-            fadeOut(animationSpec = tween(500))
+            materialSharedAxisZOut(forward = false, durationMillis = 500)
         },
     )
 }

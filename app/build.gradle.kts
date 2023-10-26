@@ -96,4 +96,8 @@ dependencies {
 
     implementation("me.onebone:toolbar-compose:2.3.5")
 
+    implementation ("io.github.fornewid:material-motion-compose-navigation:1.1.0")
+    implementation ("io.github.fornewid:material-motion-compose-core:1.1.0")
+
+
 }

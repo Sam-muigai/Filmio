@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.dtos.searchResponse.SearchResult
 import com.samkt.filmio.domain.repository.SearchMovieRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -67,6 +68,6 @@ class SearchViewModel @Inject constructor(
 
 data class SearchScreenUiState(
     val loading:Boolean = false,
-    val movies:List<Movie> = emptyList(),
+    val movies:List<SearchResult> = emptyList(),
     val error:String? = null
 )

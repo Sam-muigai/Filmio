@@ -1,5 +1,6 @@
 package com.samkt.filmio.presentation.sharedComponents
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,15 +22,19 @@ import com.samkt.filmio.data.dtos.Movie
 @Composable
 fun MovieItem(
     modifier: Modifier = Modifier,
-    movie: Movie
+    imageUrl:String = "",
+    filmName:String,
+    clickable:Boolean = false,
+    onClick:()->Unit = {},
+    filmOverview:String
 ) {
+    val movieItemModifier = if(clickable) modifier.clickable { onClick.invoke() }.padding(8.dp) else modifier.padding(8.dp)
     Row(
-        modifier = modifier.padding(8.dp),
+        modifier = movieItemModifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        val image = movie.posterPath ?: movie.backdropPath
-        val movieImageUrl = "https://image.tmdb.org/t/p/w500/${image}"
+        val movieImageUrl = "https://image.tmdb.org/t/p/w500/${imageUrl}"
         MovieCard(
             modifier = Modifier
                 .width(70.dp)
@@ -43,7 +48,7 @@ fun MovieItem(
             modifier = Modifier.fillMaxHeight()
         ) {
             Text(
-                text = movie.title ?: movie.originalTitle ?: "Unknown",
+                text = filmName,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -53,7 +58,7 @@ fun MovieItem(
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = movie.overview ?: "Unknown",
+                text = filmOverview,
                 maxLines = 2,
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.onBackground,

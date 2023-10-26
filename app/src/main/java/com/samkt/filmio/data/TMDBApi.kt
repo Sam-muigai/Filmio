@@ -3,6 +3,7 @@ package com.samkt.filmio.data
 import com.samkt.filmio.data.dtos.MoviesResponseDto
 import com.samkt.filmio.data.dtos.TvSeriesResponseDto
 import com.samkt.filmio.data.dtos.credits.CreditResponseDto
+import com.samkt.filmio.data.dtos.searchResponse.SearchResponseDto
 import com.samkt.filmio.data.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.util.Constants.API_KEY
 import retrofit2.http.GET
@@ -83,6 +84,7 @@ interface TMDBApi {
         @Query("api_key") apiKey: String = API_KEY,
         @Query("query") searchQuery:String,
         @Query("language") language: String = "en-US",
-    ):MoviesResponseDto
+    ):SearchResponseDto
+
 
 }

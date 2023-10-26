@@ -26,7 +26,7 @@ import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.tvSeriesScreen.components.TvSeriesTopSection
 
 @Composable
-fun TvSeriesScreen(viewModel: TvSeriesViewModel = hiltViewModel()) {
+fun TvSeriesScreen(viewModel: TvSeriesViewModel = hiltViewModel(),onSearchClicked: () -> Unit) {
 
     val trendingTvSeries = viewModel.trendingTvSeries.collectAsLazyPagingItems()
     val popularTvSeries = viewModel.popularTvSeries.collectAsLazyPagingItems()
@@ -56,7 +56,7 @@ fun TvSeriesScreen(viewModel: TvSeriesViewModel = hiltViewModel()) {
         else -> null
     }
     TvSeriesScreenContent(
-        onSearchClicked = { /*TODO*/ },
+        onSearchClicked = onSearchClicked,
         category = category,
         onCategoryClicked = {
                             category = it

@@ -30,8 +30,11 @@ import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.movieScreen.components.MovieTopSection
 
 @Composable
-fun MoviesScreen(viewModel: HomeScreenViewModel = hiltViewModel(),
-                 onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit) {
+fun MoviesScreen(
+    viewModel: HomeScreenViewModel = hiltViewModel(),
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onSearchClicked: () -> Unit
+) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
     val upComingMovies = viewModel.upcomingMovies.collectAsLazyPagingItems()
@@ -62,9 +65,7 @@ fun MoviesScreen(viewModel: HomeScreenViewModel = hiltViewModel(),
     MovieScreenContent(
         movies = movies!!,
         category = category,
-        onSearchClicked = {
-            // TODO: Navigate to searchScreen
-        },
+        onSearchClicked = onSearchClicked,
         onCategoryClicked = {
             category = it
         },
@@ -132,7 +133,7 @@ fun MovieScreenContent(
 fun MoviesLazyGrid(
     modifier: Modifier = Modifier,
     movies: LazyPagingItems<Movie>,
-    onMovieClicked:(id: Int, backDropPath: String, posterImage: String) -> Unit
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -143,7 +144,7 @@ fun MoviesLazyGrid(
                 key = { index -> index }
             ) { movieIndex ->
                 val movieUrl = movies[movieIndex]?.posterPath ?: ""
-                val backDropPath  = movies[movieIndex]?.backdropPath ?: ""
+                val backDropPath = movies[movieIndex]?.backdropPath ?: ""
                 val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
                 val backDropPathImage = "https://image.tmdb.org/t/p/w500/$backDropPath"
                 MovieCard(
@@ -154,7 +155,11 @@ fun MoviesLazyGrid(
                     imageUrl = imageUrl,
                     cornerSize = 4.dp,
                     onMovieClicked = {
-                        onMovieClicked.invoke(movies[movieIndex]?.id ?: 240,backDropPathImage,imageUrl)
+                        onMovieClicked.invoke(
+                            movies[movieIndex]?.id ?: 240,
+                            backDropPathImage,
+                            imageUrl
+                        )
                     }
                 )
             }

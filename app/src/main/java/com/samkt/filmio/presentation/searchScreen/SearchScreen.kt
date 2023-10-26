@@ -35,7 +35,8 @@ import com.samkt.filmio.presentation.sharedComponents.MovieItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val uiState = viewModel.searchScreenUiState.collectAsState().value
     var searchTerm by remember {
@@ -65,15 +66,23 @@ fun SearchScreen(
                     viewModel.searchMovie(searchTerm)
                 }
             )
-            AnimatedVisibility(visible = uiState.loading) {
-                CircularProgressIndicator()
-            }
             LazyColumn(
                 contentPadding = paddingValues,
                 content = {
-                    items(items = uiState.movies, key = { it.id ?: 0 }) { movie ->
-                        if (movie.title != null) {
-                            MovieItem(movie = movie)
+                    items(items = uiState.movies, key = { it.id }) { film ->
+                        val filmName = film.name ?: film.originalName ?: film.title ?: film.originalTitle
+                        val imageUrl = film.backdropPath ?: film.posterPath
+                        if (filmName != null && imageUrl != null){
+                            MovieItem(
+                                imageUrl = imageUrl,
+                                filmName = filmName,
+                                filmOverview = film.overview,
+                                clickable = true,
+                                onClick = {
+                                    // TODO: Replace empty strings with default images
+                                    onMovieClicked(film.id,film.backdropPath ?: "",film.posterPath ?: "")
+                                }
+                            )
                         }
                     }
                 }

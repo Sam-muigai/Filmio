@@ -36,8 +36,11 @@ fun RelatedMoviesScreen(
             .heightIn(max = 1000.dp),
         content = {
             items(uiState.relatedMovies) { movie ->
+                val filmName = movie.title ?: movie.originalTitle ?: "Unknown"
                 MovieItem(
-                    movie = movie
+                    imageUrl = movie.posterPath ?: movie.backdropPath ?: "",
+                    filmName = filmName,
+                    filmOverview = movie.overview ?: ""
                 )
             }
         }
