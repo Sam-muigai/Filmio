@@ -5,6 +5,7 @@ import com.samkt.filmio.data.dtos.TvSeriesResponseDto
 import com.samkt.filmio.data.dtos.credits.CreditResponseDto
 import com.samkt.filmio.data.dtos.searchResponse.SearchResponseDto
 import com.samkt.filmio.data.dtos.singleMovie.SingleMovieResponseDto
+import com.samkt.filmio.data.dtos.singleTvSeries.SingleTvSeriesResponse
 import com.samkt.filmio.util.Constants.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -86,5 +87,24 @@ interface TMDBApi {
         @Query("language") language: String = "en-US",
     ):SearchResponseDto
 
+    @GET("tv/{tv_id}")
+    suspend fun getTvSeriesDetails(
+        @Path("tv_id") tvSeriesId: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US"
+    ): SingleTvSeriesResponse
+
+    @GET("tv/{tvId}/credits")
+    suspend fun getTvSeriesCast(
+        @Path("tvId") tvSeriesId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): CreditResponseDto
+
+    @GET("tv/{tvId}/similar")
+    suspend fun getRelatedTvShows(
+        @Path("tvId") tvSeriesId: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US"
+    ): TvSeriesResponseDto
 
 }

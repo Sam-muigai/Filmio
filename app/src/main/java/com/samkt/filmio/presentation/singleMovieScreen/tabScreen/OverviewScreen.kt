@@ -20,7 +20,7 @@ import com.samkt.filmio.presentation.singleMovieScreen.MovieScreenUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OverviewScreen(
+fun MovieOverviewScreen(
     uiState: MovieScreenUiState,
 ) {
     val movieDetails = uiState.movieDetails

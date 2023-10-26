@@ -24,7 +24,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -49,11 +48,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.samkt.filmio.R
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.CastScreen
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.OverviewScreen
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.RelatedMoviesScreen
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.TabsItem
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.tabs
+import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.MovieTabsItem
+import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.movieTabs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -272,11 +268,11 @@ fun SingleMovieScreenContent(
             content = {
                 stickyHeader {
                     Column {
-                        Tabs(pagerState = pagerState, scope = scope)
-                        TabContents(
+                        MovieTabs(pagerState = pagerState, scope = scope)
+                        MovieTabContents(
                             modifier = Modifier,
                             pagerState = pagerState,
-                            tabs = tabs,
+                            tabs = movieTabs,
                             overviewScreenState = uiState
                         )
                     }
@@ -289,10 +285,10 @@ fun SingleMovieScreenContent(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabContents(
+fun MovieTabContents(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
-    tabs: List<TabsItem>,
+    tabs: List<MovieTabsItem>,
     overviewScreenState: MovieScreenUiState
 ) {
     HorizontalPager(
@@ -307,7 +303,7 @@ fun TabContents(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Tabs(
+fun MovieTabs(
     pagerState: PagerState,
     scope: CoroutineScope
 ) {
@@ -316,7 +312,7 @@ fun Tabs(
         divider = {},
         selectedTabIndex = pagerState.currentPage
     ) {
-        tabs.forEachIndexed { index, tab ->
+        movieTabs.forEachIndexed { index, tab ->
             Tab(selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {

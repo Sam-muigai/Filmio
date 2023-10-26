@@ -26,7 +26,11 @@ import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.tvSeriesScreen.components.TvSeriesTopSection
 
 @Composable
-fun TvSeriesScreen(viewModel: TvSeriesViewModel = hiltViewModel(),onSearchClicked: () -> Unit) {
+fun TvSeriesScreen(
+    viewModel: TvSeriesViewModel = hiltViewModel(),
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onSearchClicked: () -> Unit
+) {
 
     val trendingTvSeries = viewModel.trendingTvSeries.collectAsLazyPagingItems()
     val popularTvSeries = viewModel.popularTvSeries.collectAsLazyPagingItems()
@@ -38,18 +42,17 @@ fun TvSeriesScreen(viewModel: TvSeriesViewModel = hiltViewModel(),onSearchClicke
 
 
     val isTrendingTvSeriesError = trendingTvSeries.loadState.refresh is LoadState.Error
-    val isPopularTvSeriesError= popularTvSeries.loadState.refresh is LoadState.Error
-    val isLatestTvSeriesError= latestTvSeries.loadState.refresh is LoadState.Error
+    val isPopularTvSeriesError = popularTvSeries.loadState.refresh is LoadState.Error
+    val isLatestTvSeriesError = latestTvSeries.loadState.refresh is LoadState.Error
 
     val isLoading = isTrendingTvSeriesLoading || isPopularTvSeriesLoading || isLatestTvSeriesLoading
     val isError = isPopularTvSeriesError || isTrendingTvSeriesError || isLatestTvSeriesError
 
 
-
     var category by rememberSaveable {
         mutableStateOf("trending")
     }
-    val tvSeries= when (category) {
+    val tvSeries = when (category) {
         "trending" -> trendingTvSeries
         "popular" -> popularTvSeries
         "latest" -> latestTvSeries
@@ -59,11 +62,12 @@ fun TvSeriesScreen(viewModel: TvSeriesViewModel = hiltViewModel(),onSearchClicke
         onSearchClicked = onSearchClicked,
         category = category,
         onCategoryClicked = {
-                            category = it
+            category = it
         },
         tvSeries = tvSeries!!,
         isLoading = isLoading,
-        isError = isError
+        isError = isError,
+        onTvSeriesClicked = onTvSeriesClicked
     )
 }
 
@@ -73,9 +77,10 @@ fun TvSeriesScreenContent(
     modifier: Modifier = Modifier,
     onSearchClicked: () -> Unit,
     category: String,
-    isLoading:Boolean = false,
-    isError:Boolean = false,
+    isLoading: Boolean = false,
+    isError: Boolean = false,
     onCategoryClicked: (String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     tvSeries: LazyPagingItems<TVSeries>
 ) {
     Scaffold(
@@ -100,10 +105,11 @@ fun TvSeriesScreenContent(
             }
         }
     ) { paddingValues ->
-        if (!isError && !isLoading){
+        if (!isError && !isLoading) {
             TvSeriesLazyGrid(
                 modifier = Modifier.padding(paddingValues),
-                tvSeries = tvSeries
+                tvSeries = tvSeries,
+                onTvSeriesClicked = onTvSeriesClicked
             )
         }
     }
@@ -112,7 +118,8 @@ fun TvSeriesScreenContent(
 @Composable
 fun TvSeriesLazyGrid(
     modifier: Modifier = Modifier,
-    tvSeries: LazyPagingItems<TVSeries>
+    tvSeries: LazyPagingItems<TVSeries>,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -122,6 +129,7 @@ fun TvSeriesLazyGrid(
                 count = tvSeries.itemCount,
                 key = { index -> index }
             ) { movieIndex ->
+                val series = tvSeries[movieIndex]
                 val tvUrl = tvSeries[movieIndex]?.posterPath ?: ""
                 val imageUrl = "https://image.tmdb.org/t/p/w500/$tvUrl"
                 MovieCard(
@@ -130,9 +138,18 @@ fun TvSeriesLazyGrid(
                         .fillMaxWidth()
                         .height(180.dp),
                     imageUrl = imageUrl,
-                    cornerSize = 4.dp
+                    cornerSize = 4.dp,
+                    onMovieClicked = {
+                        onTvSeriesClicked(
+                            series?.id ?: 88236,
+                            series?.backdropPath ?: "",
+                            series?.posterPath ?: ""
+                        )
+                    },
+                    clickable = true
                 )
             }
         }
     )
 }
+

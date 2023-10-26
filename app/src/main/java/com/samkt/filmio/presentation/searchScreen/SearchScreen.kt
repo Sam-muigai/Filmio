@@ -36,7 +36,8 @@ import com.samkt.filmio.presentation.sharedComponents.MovieItem
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
-    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
 ) {
     val uiState = viewModel.searchScreenUiState.collectAsState().value
     var searchTerm by remember {
@@ -70,9 +71,11 @@ fun SearchScreen(
                 contentPadding = paddingValues,
                 content = {
                     items(items = uiState.movies, key = { it.id }) { film ->
-                        val filmName = film.name ?: film.originalName ?: film.title ?: film.originalTitle
+                        val movieName = film.title ?: film.originalTitle
+                        val tvSeriesName = film.name ?: film.originalName
+                        val filmName = tvSeriesName ?: movieName
                         val imageUrl = film.backdropPath ?: film.posterPath
-                        if (filmName != null && imageUrl != null){
+                        if (filmName != null && imageUrl != null) {
                             MovieItem(
                                 imageUrl = imageUrl,
                                 filmName = filmName,
@@ -80,7 +83,19 @@ fun SearchScreen(
                                 clickable = true,
                                 onClick = {
                                     // TODO: Replace empty strings with default images
-                                    onMovieClicked(film.id,film.backdropPath ?: "",film.posterPath ?: "")
+                                    if (movieName != null) {
+                                        onMovieClicked(
+                                            film.id,
+                                            film.backdropPath ?: "",
+                                            film.posterPath ?: ""
+                                        )
+                                    } else {
+                                        onTvSeriesClicked(
+                                            film.id,
+                                            film.backdropPath ?: "",
+                                            film.posterPath ?: ""
+                                        )
+                                    }
                                 }
                             )
                         }

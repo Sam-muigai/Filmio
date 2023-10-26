@@ -7,21 +7,21 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TVSeries(
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerialName("first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
     @SerialName("genre_ids")
     val genreIds: List<Int>,
     @SerialName("id")
     val id: Int,
     @SerialName("name")
-    val name: String,
+    val name: String?,
     @SerialName("origin_country")
     val originCountry: List<String>,
     @SerialName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String?,
     @SerialName("original_name")
-    val originalName: String,
+    val originalName: String?,
     @SerialName("overview")
     val overview: String,
     @SerialName("popularity")

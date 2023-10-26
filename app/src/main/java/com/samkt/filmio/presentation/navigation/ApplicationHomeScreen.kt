@@ -1,12 +1,6 @@
 package com.samkt.filmio.presentation.navigation
 
 import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -39,9 +33,8 @@ import com.samkt.filmio.presentation.homeScreen.HomeScreen
 import com.samkt.filmio.presentation.movieScreen.MoviesScreen
 import com.samkt.filmio.presentation.searchScreen.SearchScreen
 import com.samkt.filmio.presentation.singleMovieScreen.SingleMovieScreen
+import com.samkt.filmio.presentation.singleTvSeriesScreen.TvSeriesDetailScreen
 import com.samkt.filmio.presentation.tvSeriesScreen.TvSeriesScreen
-import soup.compose.material.motion.MaterialSharedAxisZ
-import soup.compose.material.motion.animation.materialSharedAxisZ
 import soup.compose.material.motion.animation.materialSharedAxisZIn
 import soup.compose.material.motion.animation.materialSharedAxisZOut
 
@@ -49,7 +42,8 @@ import soup.compose.material.motion.animation.materialSharedAxisZOut
 @Composable
 fun ApplicationHomeScreen(
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    onSearchClicked:()->Unit
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onSearchClicked: () -> Unit
 ) {
     var navigationSelectedItem by rememberSaveable {
         mutableIntStateOf(0)
@@ -96,7 +90,8 @@ fun ApplicationHomeScreen(
             destination(Screens.HomeScreen.route) {
                 HomeScreen(
                     onMovieClicked = onMovieClicked,
-                    onSearchClicked = onSearchClicked
+                    onSearchClicked = onSearchClicked,
+                    onTvSeriesClicked = onTvSeriesClicked
                 )
             }
             destination(Screens.MovieScreen.route) {
@@ -107,7 +102,8 @@ fun ApplicationHomeScreen(
             }
             destination(Screens.TvSeriesScreen.route) {
                 TvSeriesScreen(
-                    onSearchClicked = onSearchClicked
+                    onSearchClicked = onSearchClicked,
+                    onTvSeriesClicked = onTvSeriesClicked
                 )
             }
             destination(Screens.WatchListScreen.route) {
@@ -129,11 +125,14 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = Screens.ApplicationHomePage.route) {
         destination(Screens.ApplicationHomePage.route) {
             ApplicationHomeScreen(
-                onMovieClicked = { id ,backDropPath,posterImage ->
+                onMovieClicked = { id, backDropPath, posterImage ->
                     navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
                 },
                 onSearchClicked = {
                     navController.navigate(Screens.SearchScreen.route)
+                },
+                onTvSeriesClicked = { id, backDropPath, posterImage ->
+                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
                 }
             )
         }
@@ -147,29 +146,56 @@ fun AppNavigation() {
                     type = NavType.StringType
                 }
             )
-        ) {navBackStack ->
+        ) { navBackStack ->
             val posterImage = navBackStack.arguments?.getString("posterImage") ?: ""
             val backDropPath = navBackStack.arguments?.getString("backDropPath") ?: ""
             val movieId = navBackStack.arguments?.getString("movieId")
             SingleMovieScreen(
                 movieImage = posterImage,
-                 backGroundImage = backDropPath,
+                backGroundImage = backDropPath,
                 movieId = movieId!!.toInt(),
                 onBackClicked = {
                     navController.popBackStack()
                 }
             )
         }
-        destination(Screens.SearchScreen.route){
+
+        destination(
+            route = Screens.SingleTvSeriesScreen.route + "?backDropPath={backDropPath}" + "?posterImage={posterImage}" + "?tvSeriesId={tvSeriesId}",
+            arguments = listOf(
+                navArgument("backDropPath") {
+                    type = NavType.StringType
+                },
+                navArgument("posterImage") {
+                    type = NavType.StringType
+                }
+            )
+        ) { navBackStack ->
+            val posterImage = navBackStack.arguments?.getString("posterImage") ?: ""
+            val backDropPath = navBackStack.arguments?.getString("backDropPath") ?: ""
+            val movieId = navBackStack.arguments?.getString("tvSeriesId")!!
+            TvSeriesDetailScreen(
+                tvSeriesId = movieId.toInt(),
+                backDropPath = backDropPath,
+                posterImage = posterImage,
+                onBackClicked = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        destination(Screens.SearchScreen.route) {
             SearchScreen(
-                onMovieClicked = {id ,backDropPath,posterImage ->
+                onMovieClicked = { id, backDropPath, posterImage ->
                     navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                },
+                onTvSeriesClicked = { id, backDropPath, posterImage ->
+                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
                 }
             )
         }
     }
 }
-
 
 
 fun NavGraphBuilder.destination(

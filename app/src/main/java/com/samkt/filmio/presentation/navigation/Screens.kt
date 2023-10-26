@@ -8,4 +8,5 @@ sealed class Screens(val route:String){
     data object ApplicationHomePage:Screens("app_home_page")
     data object SingleMovieScreen:Screens("single_movie")
     data object SearchScreen:Screens("search_screen")
+    data object SingleTvSeriesScreen:Screens("single_tv_series")
 }

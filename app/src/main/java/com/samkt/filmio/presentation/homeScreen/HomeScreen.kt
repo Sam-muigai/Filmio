@@ -43,7 +43,8 @@ import com.samkt.filmio.presentation.homeScreen.components.MovieItems
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
     onSearchClicked: () -> Unit,
-    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
@@ -89,7 +90,8 @@ fun HomeScreen(
         upComingMovies = upComingMovies,
         topRatedMovies = topRatedMovies,
         onSearchClicked = onSearchClicked,
-        onMovieClicked = onMovieClicked
+        onMovieClicked = onMovieClicked,
+        onTvSeriesClicked = onTvSeriesClicked
     )
 }
 
@@ -111,7 +113,8 @@ fun HomeScreenContent(
     isPopularMovies: Boolean,
     onPopularClicked: () -> Unit,
     onViewAllClicked: (category: String) -> Unit = {},
-    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val pageWidth = (screenWidth / 3f).dp
@@ -251,7 +254,7 @@ fun HomeScreenContent(
                             movies = popularMovies,
                             tvSeries = popularTvSeries,
                             isMovies = isPopularMovies,
-                            onMovieClicked = onMovieClicked
+                            onMovieClicked = if (isPopularMovies) onMovieClicked else onTvSeriesClicked
                         )
                     }
                     item {
