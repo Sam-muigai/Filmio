@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.samkt.filmio.presentation.filterScreen.FilterScreen
 import com.samkt.filmio.presentation.homeScreen.HomeScreen
 import com.samkt.filmio.presentation.navigation.AppNavigation
 import com.samkt.filmio.ui.theme.FilmioTheme
@@ -21,9 +22,9 @@ class MainActivity : ComponentActivity() {
             FilmioTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation()
+                    FilterScreen()
                 }
             }
         }

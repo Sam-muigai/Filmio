@@ -6,16 +6,18 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.domain.repository.GetTvSeriesRepository
+import com.samkt.filmio.domain.useCases.GetTvSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TvSeriesViewModel @Inject constructor(
-    private val tvSeriesRepository: GetTvSeriesRepository
+    private val getTvSeriesUseCase: GetTvSeriesUseCase
 ) : ViewModel() {
 
     private val _popularTvSeries = MutableStateFlow<PagingData<TVSeries>>(PagingData.empty())
@@ -42,7 +44,7 @@ class TvSeriesViewModel @Inject constructor(
 
     private fun getLatestTvSeries() {
         viewModelScope.launch {
-            tvSeriesRepository.getLatestTvSeries().cachedIn(viewModelScope).collectLatest {
+            getTvSeriesUseCase.getLatestTvSeries(this).collect{
                 _latestTvSeries.value = it
             }
         }
@@ -50,7 +52,7 @@ class TvSeriesViewModel @Inject constructor(
 
     private fun getPopularTvSeries() {
         viewModelScope.launch {
-            tvSeriesRepository.getPopularTvSeries().cachedIn(viewModelScope).collectLatest {
+            getTvSeriesUseCase.getPopularTvSeries(this).collect{
                 _popularTvSeries.value = it
             }
         }
@@ -58,10 +60,9 @@ class TvSeriesViewModel @Inject constructor(
 
     private fun getTrendingTvSeries() {
         viewModelScope.launch {
-            tvSeriesRepository.getTrendingTvSeries().cachedIn(viewModelScope).collectLatest {
+            getTvSeriesUseCase.getTrendingTvSeries(this).collect{
                 _trendingTvSeries.value = it
             }
         }
     }
-
 }

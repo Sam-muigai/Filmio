@@ -3,11 +3,10 @@ package com.samkt.filmio.presentation.homeScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.TVSeries
-import com.samkt.filmio.domain.repository.GetMoviesRepository
-import com.samkt.filmio.domain.repository.GetTvSeriesRepository
+import com.samkt.filmio.domain.useCases.GetMoviesUseCase
+import com.samkt.filmio.domain.useCases.GetTvSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,13 +15,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val moviesRepository: GetMoviesRepository,
-    private val tvSeriesRepository: GetTvSeriesRepository
+    private val getMoviesUseCase: GetMoviesUseCase,
+    private val getTvSeriesUseCase: GetTvSeriesUseCase
 ) : ViewModel() {
 
     private val _popularMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
     private val _trendingMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
-    private val _trendingTvSeries = MutableStateFlow<PagingData<TVSeries>>(PagingData.empty())
+    private val _popularTvSeries = MutableStateFlow<PagingData<TVSeries>>(PagingData.empty())
     private val _upcomingMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
     private val _topRatedMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
     val popularMovies: StateFlow<PagingData<Movie>>
@@ -31,8 +30,8 @@ class HomeScreenViewModel @Inject constructor(
     val trendingMovies: StateFlow<PagingData<Movie>>
         get() = _trendingMovies
 
-    val trendingTvSeries: StateFlow<PagingData<TVSeries>>
-        get() = _trendingTvSeries
+    val popularTvSeries: StateFlow<PagingData<TVSeries>>
+        get() = _popularTvSeries
 
     val upcomingMovies: StateFlow<PagingData<Movie>>
         get() = _upcomingMovies
@@ -54,7 +53,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
-            moviesRepository.getTopRatedMovies().cachedIn(viewModelScope).collect {
+            getMoviesUseCase.getTopRatedMovies(this).collect{
                 _topRatedMovies.value = it
             }
         }
@@ -62,7 +61,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getUpcomingMovies() {
         viewModelScope.launch {
-            moviesRepository.getUpcomingMovies().cachedIn(viewModelScope).collect {
+            getMoviesUseCase.getUpcomingMovies(this).collect{
                 _upcomingMovies.value = it
             }
         }
@@ -70,7 +69,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            moviesRepository.getPopularMovies().cachedIn(viewModelScope).collect {
+            getMoviesUseCase.getPopularMovies(this).collect{
                 _popularMovies.value = it
             }
         }
@@ -78,15 +77,15 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getPopularTvSeries() {
         viewModelScope.launch {
-            tvSeriesRepository.getPopularTvSeries().cachedIn(viewModelScope).collect {
-                _trendingTvSeries.value = it
+            getTvSeriesUseCase.getPopularTvSeries(this).collect{
+                _popularTvSeries.value = it
             }
         }
     }
 
     private fun getTrendingMovies() {
         viewModelScope.launch {
-            moviesRepository.getTrendingMovies().cachedIn(viewModelScope).collect {
+            getMoviesUseCase.getTrendingMovies(this).collect{
                 _trendingMovies.value = it
             }
         }

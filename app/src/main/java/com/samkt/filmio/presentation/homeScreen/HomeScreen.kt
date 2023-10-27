@@ -43,12 +43,13 @@ import com.samkt.filmio.presentation.homeScreen.components.MovieItems
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
     onSearchClicked: () -> Unit,
+    onViewAllClicked: (category: String) -> Unit,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
-    val trendingTvSeries = viewModel.trendingTvSeries.collectAsLazyPagingItems()
+    val trendingTvSeries = viewModel.popularTvSeries.collectAsLazyPagingItems()
     val upComingMovies = viewModel.upcomingMovies.collectAsLazyPagingItems()
     val topRatedMovies = viewModel.topRatedMovies.collectAsLazyPagingItems()
 
@@ -78,8 +79,6 @@ fun HomeScreen(
         isLoading = isLoading,
         hasErrors = hasErrors,
         popularMovies = popularMovies,
-        onTrendingClicked = {},
-        onPopularClicked = {},
         onRetryClicked = viewModel::getMovies,
         trendingMovies = trendingMovies,
         showPopularMovies = {
@@ -91,7 +90,8 @@ fun HomeScreen(
         topRatedMovies = topRatedMovies,
         onSearchClicked = onSearchClicked,
         onMovieClicked = onMovieClicked,
-        onTvSeriesClicked = onTvSeriesClicked
+        onTvSeriesClicked = onTvSeriesClicked,
+        onViewAllClicked = onViewAllClicked
     )
 }
 
@@ -107,11 +107,9 @@ fun HomeScreenContent(
     upComingMovies: LazyPagingItems<Movie>,
     topRatedMovies: LazyPagingItems<Movie>,
     onRetryClicked: () -> Unit,
-    onTrendingClicked: () -> Unit,
     onSearchClicked: () -> Unit,
     showPopularMovies: (Boolean) -> Unit,
     isPopularMovies: Boolean,
-    onPopularClicked: () -> Unit,
     onViewAllClicked: (category: String) -> Unit = {},
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
@@ -122,8 +120,12 @@ fun HomeScreenContent(
         modifier = modifier.fillMaxSize(),
         topBar = {
             HomeTopSection(
-                onTrendingClicked = onTrendingClicked,
-                onPopularClicked = onPopularClicked,
+                onTrendingClicked = {
+                    onViewAllClicked("Trending")
+                },
+                onPopularClicked = {
+                    onViewAllClicked("Popular")
+                },
                 onSearchClicked = onSearchClicked
             )
         },
@@ -187,7 +189,7 @@ fun HomeScreenContent(
                             Text(
                                 modifier = Modifier
                                     .clickable {
-                                        onViewAllClicked("trending")
+                                        onViewAllClicked("Trending")
                                     }
                                     .padding(8.dp),
                                 text = "View all",
@@ -276,7 +278,7 @@ fun HomeScreenContent(
                             Text(
                                 modifier = Modifier
                                     .clickable {
-                                        onViewAllClicked("upComing")
+                                        onViewAllClicked("Upcoming")
                                     }
                                     .padding(8.dp),
                                 text = "View all",
@@ -313,7 +315,7 @@ fun HomeScreenContent(
                             Text(
                                 modifier = Modifier
                                     .clickable {
-                                        onViewAllClicked("topRated")
+                                        onViewAllClicked("TopRated")
                                     }
                                     .padding(8.dp),
                                 text = "View all",
@@ -322,7 +324,6 @@ fun HomeScreenContent(
                                 ),
                             )
                         }
-
                     }
                     item {
                         MovieItems(

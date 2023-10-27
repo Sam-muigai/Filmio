@@ -23,6 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
+import com.samkt.filmio.presentation.sharedComponents.TvSeriesLazyGrid
 import com.samkt.filmio.presentation.tvSeriesScreen.components.TvSeriesTopSection
 
 @Composable
@@ -115,41 +116,5 @@ fun TvSeriesScreenContent(
     }
 }
 
-@Composable
-fun TvSeriesLazyGrid(
-    modifier: Modifier = Modifier,
-    tvSeries: LazyPagingItems<TVSeries>,
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-) {
-    LazyVerticalGrid(
-        modifier = modifier,
-        columns = GridCells.Fixed(3),
-        content = {
-            items(
-                count = tvSeries.itemCount,
-                key = { index -> index }
-            ) { movieIndex ->
-                val series = tvSeries[movieIndex]
-                val tvUrl = tvSeries[movieIndex]?.posterPath ?: ""
-                val imageUrl = "https://image.tmdb.org/t/p/w500/$tvUrl"
-                MovieCard(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth()
-                        .height(180.dp),
-                    imageUrl = imageUrl,
-                    cornerSize = 4.dp,
-                    onMovieClicked = {
-                        onTvSeriesClicked(
-                            series?.id ?: 88236,
-                            series?.backdropPath ?: "",
-                            series?.posterPath ?: ""
-                        )
-                    },
-                    clickable = true
-                )
-            }
-        }
-    )
-}
+
 

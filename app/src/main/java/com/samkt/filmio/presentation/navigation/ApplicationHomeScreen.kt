@@ -29,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.samkt.filmio.presentation.categoryScreen.CategoryScreen
 import com.samkt.filmio.presentation.homeScreen.HomeScreen
 import com.samkt.filmio.presentation.movieScreen.MoviesScreen
 import com.samkt.filmio.presentation.searchScreen.SearchScreen
@@ -43,6 +44,7 @@ import soup.compose.material.motion.animation.materialSharedAxisZOut
 fun ApplicationHomeScreen(
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onViewAllClicked: (category: String) -> Unit,
     onSearchClicked: () -> Unit
 ) {
     var navigationSelectedItem by rememberSaveable {
@@ -91,7 +93,8 @@ fun ApplicationHomeScreen(
                 HomeScreen(
                     onMovieClicked = onMovieClicked,
                     onSearchClicked = onSearchClicked,
-                    onTvSeriesClicked = onTvSeriesClicked
+                    onTvSeriesClicked = onTvSeriesClicked,
+                    onViewAllClicked = onViewAllClicked
                 )
             }
             destination(Screens.MovieScreen.route) {
@@ -133,6 +136,9 @@ fun AppNavigation() {
                 },
                 onTvSeriesClicked = { id, backDropPath, posterImage ->
                     navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                },
+                onViewAllClicked = { category ->
+                    navController.navigate(Screens.CategoryScreen.route + "?category=$category")
                 }
             )
         }
@@ -183,7 +189,6 @@ fun AppNavigation() {
                 }
             )
         }
-
         destination(Screens.SearchScreen.route) {
             SearchScreen(
                 onMovieClicked = { id, backDropPath, posterImage ->
@@ -191,6 +196,25 @@ fun AppNavigation() {
                 },
                 onTvSeriesClicked = { id, backDropPath, posterImage ->
                     navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                }
+            )
+        }
+        destination(
+            route = Screens.CategoryScreen.route + "?category={category}",
+            arguments = listOf(
+                navArgument("category") {
+                    type = NavType.StringType
+                }
+            )
+        ) { navBackStack ->
+            val category = navBackStack.arguments?.getString("category")
+            CategoryScreen(
+                category = category,
+                onMovieClicked = { id, backDropPath, posterImage ->
+                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                },
+                onBackClicked = {
+                    navController.popBackStack()
                 }
             )
         }

@@ -22,21 +22,22 @@ import com.samkt.filmio.presentation.sharedComponents.MovieCard
 fun MovieItems(
     modifier: Modifier = Modifier,
     movies: LazyPagingItems<Movie>,
-    tvSeries:LazyPagingItems<TVSeries>? = null,
-    isMovies :Boolean = true,
+    tvSeries: LazyPagingItems<TVSeries>? = null,
+    isMovies: Boolean = true,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 8.dp),
         content = {
-            if (isMovies){
-                items(movies.itemCount,key = {it}) { movieIndex ->
+            if (isMovies) {
+                items(movies.itemCount, key = { it }) { movieIndex ->
                     val movieUrl = movies[movieIndex]?.posterPath ?: ""
                     val movieId = movies[movieIndex]?.id ?: 0
                     val backDropPath = movies[movieIndex]?.backdropPath ?: ""
                     val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
-                    val title = movies[movieIndex]?.title ?: movies[movieIndex]?.originalTitle ?: "No name"
+                    val title = movies[movieIndex]?.title ?: movies[movieIndex]?.originalTitle
+
                     Column(
                         modifier = Modifier
                             .width(110.dp)
@@ -50,25 +51,25 @@ fun MovieItems(
                             imageUrl = imageUrl,
                             cornerSize = 4.dp,
                             onMovieClicked = {
-                                onMovieClicked(movieId,backDropPath,movieUrl)
+                                onMovieClicked(movieId, backDropPath, movieUrl)
                             }
                         )
                         Text(
                             modifier = Modifier.padding(horizontal = 4.dp),
-                            text = title,
+                            text = title!!,
                             style = MaterialTheme.typography.bodySmall,
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
                     }
                 }
-            }else{
-                items(tvSeries?.itemCount!!,key = {it}) { tvIndex ->
+            } else {
+                items(tvSeries?.itemCount!!, key = { it }) { tvIndex ->
                     val tvUrl = tvSeries[tvIndex]?.posterPath ?: ""
                     val tvBacKDropPath = tvSeries[tvIndex]?.posterPath ?: ""
                     val tvImageId = tvSeries[tvIndex]?.id ?: 0
                     val tvImageUrl = "https://image.tmdb.org/t/p/w500/$tvUrl"
-                    val tvTitle = tvSeries[tvIndex]?.name ?: "No name"
+                    val tvTitle = tvSeries[tvIndex]?.name ?: tvSeries[tvIndex]?.originalName
                     Column(
                         modifier = Modifier
                             .width(110.dp)
@@ -82,12 +83,12 @@ fun MovieItems(
                             imageUrl = tvImageUrl,
                             cornerSize = 4.dp,
                             onMovieClicked = {
-                                onMovieClicked(tvImageId,tvBacKDropPath,tvUrl)
+                                onMovieClicked(tvImageId, tvBacKDropPath, tvUrl)
                             }
                         )
                         Text(
                             modifier = Modifier.padding(horizontal = 4.dp),
-                            text = tvTitle,
+                            text = tvTitle!!,
                             style = MaterialTheme.typography.bodySmall,
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1

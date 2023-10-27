@@ -48,8 +48,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.samkt.filmio.R
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.TvSeriesTabsItem
-import com.samkt.filmio.presentation.singleMovieScreen.tabScreen.tvSeriesTabs
+import com.samkt.filmio.presentation.sharedComponents.TvSeriesTabsItem
+import com.samkt.filmio.presentation.sharedComponents.tvSeriesTabs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold

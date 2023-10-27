@@ -25,6 +25,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +43,8 @@ import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.presentation.homeScreen.components.pager.pagerAnimation
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.util.toGenre
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -59,7 +63,7 @@ fun AnimatedViewPager(
         }
     )
 
-    val currentPageIndex = remember { mutableIntStateOf(0) }
+    val currentPageIndex = rememberSaveable { mutableIntStateOf(0) }
     val hapticFeedback = LocalHapticFeedback.current
     LaunchedEffect(
         key1 = true,
