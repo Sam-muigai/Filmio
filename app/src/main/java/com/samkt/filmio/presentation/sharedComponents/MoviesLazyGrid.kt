@@ -17,7 +17,6 @@ fun MoviesLazyGrid(
     movies: LazyPagingItems<Movie>,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
-
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(3),

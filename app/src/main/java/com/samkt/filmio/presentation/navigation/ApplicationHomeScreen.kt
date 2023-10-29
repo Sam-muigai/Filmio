@@ -30,6 +30,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.samkt.filmio.presentation.categoryScreen.CategoryScreen
+import com.samkt.filmio.presentation.filterScreen.FilterScreen
+import com.samkt.filmio.presentation.filteredFilmScreen.FilterFilmScreen
 import com.samkt.filmio.presentation.homeScreen.HomeScreen
 import com.samkt.filmio.presentation.movieScreen.MoviesScreen
 import com.samkt.filmio.presentation.searchScreen.SearchScreen
@@ -45,7 +47,8 @@ fun ApplicationHomeScreen(
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onViewAllClicked: (category: String) -> Unit,
-    onSearchClicked: () -> Unit
+    onSearchClicked: () -> Unit,
+    onFilterClicked: () -> Unit
 ) {
     var navigationSelectedItem by rememberSaveable {
         mutableIntStateOf(0)
@@ -100,13 +103,15 @@ fun ApplicationHomeScreen(
             destination(Screens.MovieScreen.route) {
                 MoviesScreen(
                     onMovieClicked = onMovieClicked,
-                    onSearchClicked = onSearchClicked
+                    onSearchClicked = onSearchClicked,
+                    onFilterClicked = onFilterClicked
                 )
             }
             destination(Screens.TvSeriesScreen.route) {
                 TvSeriesScreen(
                     onSearchClicked = onSearchClicked,
-                    onTvSeriesClicked = onTvSeriesClicked
+                    onTvSeriesClicked = onTvSeriesClicked,
+                    onFilterClicked = onFilterClicked
                 )
             }
             destination(Screens.WatchListScreen.route) {
@@ -117,7 +122,6 @@ fun ApplicationHomeScreen(
                     Text(text = "Watch List")
                 }
             }
-
         }
     }
 }
@@ -139,6 +143,9 @@ fun AppNavigation() {
                 },
                 onViewAllClicked = { category ->
                     navController.navigate(Screens.CategoryScreen.route + "?category=$category")
+                },
+                onFilterClicked = {
+                    navController.navigate(Screens.FilterScreen.route)
                 }
             )
         }
@@ -215,6 +222,47 @@ fun AppNavigation() {
                 },
                 onBackClicked = {
                     navController.popBackStack()
+                },
+                onTvSeriesClicked = {id, backDropPath, posterImage ->
+                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                }
+            )
+        }
+        destination(
+            route = Screens.FilterScreen.route
+        ) {
+            FilterScreen(
+                onBackClicked = {
+                    navController.popBackStack()
+                },
+                onSubmit = { type, category, genre ->
+                    navController.navigate(Screens.FilteredFilmsScreen.route + "?type=$type?category=$category?genre=$genre")
+                }
+            )
+        }
+        destination(
+            route = Screens.FilteredFilmsScreen.route + "?type={type}" + "?category={category}" + "?genre={genre}",
+            arguments = listOf(
+                navArgument("type"){
+                    type = NavType.StringType
+                },
+                navArgument("category"){
+                    type = NavType.StringType
+                },
+                navArgument("genre"){
+                    type = NavType.StringType
+                }
+            )
+        ){
+            FilterFilmScreen(
+                onBackClicked = {
+                    navController.popBackStack()
+                },
+                onMovieClicked = { id, backDropPath, posterImage ->
+                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                },
+                onTvSeriesClicked = { id, backDropPath, posterImage ->
+                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
                 }
             )
         }

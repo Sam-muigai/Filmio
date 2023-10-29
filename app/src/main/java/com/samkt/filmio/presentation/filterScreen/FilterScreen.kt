@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,35 +32,41 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun FilterScreen(
-    viewModel: FilterScreenViewModel = hiltViewModel()
+    viewModel: FilterScreenViewModel = hiltViewModel(),
+    onBackClicked: () -> Unit = {},
+    onSubmit: (type: String, category: String, genre: String) -> Unit
 ) {
+    val isMovie = viewModel.selectedType == "Movies"
     FilterScreenContent(
-        onBackClicked = { },
+        onBackClicked = onBackClicked,
         selectedType = viewModel.selectedType,
-        selectedGenre = viewModel.selectedMovieGenres,
+        selectedGenre = if (isMovie) viewModel.selectedMovieGenres else viewModel.selectedTvSeriesGenre,
         onSelectType = viewModel::onSelectType,
-        onSelectGenre = viewModel::onSelectMovieGenres,
-        genres = filmGenres,
+        onSelectGenre = if (isMovie) viewModel::onSelectMovieGenres else viewModel::onSelectedTvSeries,
+        genres = if (isMovie) movieGenres else tvSeriesGenres,
         types = types,
         categories = categories,
         onSelectCategory = viewModel::onCategorySelect,
-        selectedCategory = viewModel.selectedCategory
+        selectedCategory = viewModel.selectedCategory,
+        onSubmit = onSubmit
     )
 }
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun FilterScreenContent(
     modifier: Modifier = Modifier,
     onBackClicked: () -> Unit,
-    types:List<String> = emptyList(),
-    categories:List<String> = emptyList(),
-    genres:List<String> = emptyList(),
+    types: List<String> = emptyList(),
+    categories: List<String> = emptyList(),
+    genres: List<String> = emptyList(),
     selectedType: String,
-    selectedCategory:String,
-    selectedGenre:String,
-    onSelectType:(String) ->Unit,
+    selectedCategory: String,
+    selectedGenre: String,
+    onSelectType: (String) -> Unit,
     onSelectCategory: (String) -> Unit,
-    onSelectGenre:(String) ->Unit
+    onSelectGenre: (String) -> Unit,
+    onSubmit: (type: String, category: String, genre: String) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -81,6 +89,19 @@ fun FilterScreenContent(
                         fontWeight = FontWeight.Bold
                     )
                 )
+            }
+        },
+        bottomBar = {
+            Button(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp),
+                onClick = {
+                    onSubmit(selectedType, selectedCategory, selectedGenre)
+                }
+            ) {
+                Text(text = "SUBMIT")
             }
         }
     ) { paddingValues ->
@@ -141,7 +162,7 @@ fun FilterScreenContent(
                 maxItemsInEachRow = 3,
                 verticalArrangement = Arrangement.Center,
             ) {
-                genres.forEach {genre ->
+                genres.forEach { genre ->
                     CheckBoxItem(
                         selectedOption = selectedGenre,
                         text = genre,
@@ -155,9 +176,9 @@ fun FilterScreenContent(
 
 @Composable
 fun CheckBoxItem(
-    selectedOption:String,
-    text:String,
-    onOptionSelect:(String) ->Unit
+    selectedOption: String,
+    text: String,
+    onOptionSelect: (String) -> Unit
 ) {
     Row(
         modifier = Modifier,

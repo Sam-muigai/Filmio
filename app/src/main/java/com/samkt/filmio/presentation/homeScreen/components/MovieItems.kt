@@ -37,7 +37,6 @@ fun MovieItems(
                     val backDropPath = movies[movieIndex]?.backdropPath ?: ""
                     val imageUrl = "https://image.tmdb.org/t/p/w500/$movieUrl"
                     val title = movies[movieIndex]?.title ?: movies[movieIndex]?.originalTitle
-
                     Column(
                         modifier = Modifier
                             .width(110.dp)

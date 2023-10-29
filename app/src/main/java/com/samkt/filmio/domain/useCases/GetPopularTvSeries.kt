@@ -18,7 +18,7 @@ class GetPopularTvSeries @Inject constructor(
         return if (genreId != null){
             getTvSeriesRepository.getPopularTvSeries().map {
                 it.filter { tvSeries ->
-                    tvSeries.name != null || tvSeries.originalName != null && tvSeries.genreIds.contains(genreId)
+                    tvSeries.name != null && tvSeries.originalName != null && tvSeries.genreIds.contains(genreId)
                 }
             }.cachedIn(scope)
         }else{

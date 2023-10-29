@@ -24,8 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -42,9 +40,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.presentation.homeScreen.components.pager.pagerAnimation
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
-import com.samkt.filmio.util.toGenre
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.samkt.filmio.util.toMovieGenre
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -132,7 +128,7 @@ fun AnimatedViewPager(
                         )
                         genre.forEachIndexed { index, genreId ->
                             append(
-                                genreId.toGenre(),
+                                genreId.toMovieGenre(),
                             )
                             if (index != genresCount - 1) {
                                 append(

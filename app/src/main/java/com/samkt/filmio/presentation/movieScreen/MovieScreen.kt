@@ -34,6 +34,7 @@ import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
 fun MoviesScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onFilterClicked:()->Unit,
     onSearchClicked: () -> Unit
 ) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
@@ -72,7 +73,8 @@ fun MoviesScreen(
         },
         isError = errorOccurred,
         isLoading = isLoading,
-        onMovieClicked = onMovieClicked
+        onMovieClicked = onMovieClicked,
+        onFilterClicked = onFilterClicked
     )
 }
 
@@ -86,6 +88,7 @@ fun MovieScreenContent(
     isError: Boolean = false,
     onSearchClicked: () -> Unit,
     onCategoryClicked: (String) -> Unit,
+    onFilterClicked:()->Unit,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     Scaffold(
@@ -102,7 +105,8 @@ fun MovieScreenContent(
                 },
                 onUpcomingClicked = {
                     onCategoryClicked("upcoming")
-                }
+                },
+                onFilterClicked = onFilterClicked
             )
         },
         bottomBar = {

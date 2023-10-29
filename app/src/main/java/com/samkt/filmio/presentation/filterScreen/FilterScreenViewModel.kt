@@ -12,9 +12,12 @@ class FilterScreenViewModel @Inject constructor():ViewModel(){
 
     var selectedType by mutableStateOf(types[0])
         private set
-    var selectedMovieGenres by mutableStateOf(filmGenres[0])
+    var selectedMovieGenres by mutableStateOf(movieGenres[0])
         private set
     var selectedCategory by mutableStateOf(categories[0])
+        private set
+
+    var selectedTvSeriesGenre by mutableStateOf(tvSeriesGenres[0])
         private set
 
     fun onSelectType(type:String){
@@ -25,15 +28,20 @@ class FilterScreenViewModel @Inject constructor():ViewModel(){
         selectedMovieGenres = genre
     }
 
+    fun onSelectedTvSeries(genre: String){
+        selectedTvSeriesGenre = genre
+    }
+
     fun onCategorySelect(category:String){
         selectedCategory = category
     }
 
 
 
+
 }
 val types = listOf("Movies", "Tv Series")
-val filmGenres = listOf(
+val movieGenres = listOf(
     "Action",
     "Adventure",
     "Animation",
@@ -54,6 +62,25 @@ val filmGenres = listOf(
     "War",
     "Western"
 )
+val tvSeriesGenres = listOf(
+    "Action & Adventure",
+    "Animation",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Kids",
+    "Mystery",
+    "News",
+    "Reality",
+    "Sci-Fi & Fantasy",
+    "Soap",
+    "Talk",
+    "War & Politics",
+    "Western"
+)
+
 val categories = listOf(
     "Popular",
     "Top Rated",

@@ -17,7 +17,7 @@ class GetLatestTvSeries @Inject constructor(
         return  if (genreId != null) {
             getTvSeriesRepository.getLatestTvSeries().map {
                 it.filter { tvSeries ->
-                    tvSeries.name != null || tvSeries.originalName != null && tvSeries.genreIds.contains(genreId)
+                    tvSeries.name != null && tvSeries.originalName != null && tvSeries.genreIds.contains(genreId)
                 }
             }.cachedIn(scope)
         }else{

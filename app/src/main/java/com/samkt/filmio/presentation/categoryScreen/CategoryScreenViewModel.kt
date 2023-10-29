@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.domain.useCases.GetMoviesUseCase
 import com.samkt.filmio.domain.useCases.GetTvSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,28 +27,31 @@ class CategoryScreenViewModel @Inject constructor(
 
     private val _movies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
 
+    private val _tvSeries = MutableStateFlow<PagingData<TVSeries>>(PagingData.empty())
+
     var isMovie by mutableStateOf(true)
         private set
 
-    fun setIsMovie(value:Boolean){
+    fun setIsMovie(value: Boolean) {
         isMovie = value
     }
+
     val movies: StateFlow<PagingData<Movie>>
         get() = _movies
+    val tvSeries: StateFlow<PagingData<TVSeries>>
+        get() = _tvSeries
 
     init {
         val category = savedStateHandle.get<String>("category") ?: "Popular"
         getFilms(category)
     }
+
     private fun getFilms(
         category: String,
         isMovie: Boolean = true
     ) {
-        if (isMovie) {
-            getMovies(category)
-        } else {
-            getTvSeries(category)
-        }
+        getMovies(category)
+        getTvSeries(category)
     }
 
     private fun getMovies(category: String) {
@@ -66,9 +70,19 @@ class CategoryScreenViewModel @Inject constructor(
     }
 
     private fun getTvSeries(category: String) {
-
+        viewModelScope.launch {
+            getTvSeriesUseCase.run {
+                when (category) {
+                    "Popular" -> getPopularTvSeries(this@launch)
+                    "Trending" -> getTrendingTvSeries(this@launch)
+                    "Upcoming" -> getLatestTvSeries(this@launch)
+                    else -> getLatestTvSeries(this@launch)
+                }
+            }.collect {
+                _tvSeries.value = it
+            }
+        }
     }
-
 
 }
 

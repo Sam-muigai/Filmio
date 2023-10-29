@@ -18,7 +18,7 @@ class GetPopularMovies @Inject constructor(
         return if (genreIds != null){
             getMoviesRepository.getPopularMovies().map {
                 it.filter { movie ->
-                    movie.title != null || movie.originalTitle != null && movie.genreIds.contains(genreIds)
+                    movie.title != null && movie.originalTitle != null && movie.genreIds.contains(genreIds)
                 }
             }.cachedIn(scope)
         } else{

@@ -37,7 +37,9 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.R
 import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
+import com.samkt.filmio.presentation.sharedComponents.TvSeriesLazyGrid
 
 @Composable
 fun CategoryScreen(
@@ -45,11 +47,19 @@ fun CategoryScreen(
     viewModel: CategoryScreenViewModel = hiltViewModel(),
     onBackClicked: () -> Unit = {},
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
 ) {
     val movies = viewModel.movies.collectAsLazyPagingItems()
+    val tvSeries = viewModel.tvSeries.collectAsLazyPagingItems()
 
-    val isLoading = movies.loadState.refresh is LoadState.Loading
-    val isError = movies.loadState.refresh is LoadState.Error
+    val isTvSeriesLoading = tvSeries.loadState.refresh is LoadState.Loading
+    val isMoviesLoading = movies.loadState.refresh is LoadState.Loading
+
+    val isTvSeriesError = tvSeries.loadState.refresh is LoadState.Error
+    val isMoviesError = movies.loadState.refresh is LoadState.Error
+
+    val isLoading = isMoviesLoading && isTvSeriesLoading
+    val isError = isTvSeriesError && isMoviesError
 
     CategoryScreenContent(
         movies = movies,
@@ -59,7 +69,9 @@ fun CategoryScreen(
         onMovieClicked = onMovieClicked,
         onBackClicked = onBackClicked,
         isMovie = viewModel.isMovie,
-        setIsMovie = viewModel::setIsMovie
+        setIsMovie = viewModel::setIsMovie,
+        tvSeries = tvSeries,
+        onTvSeriesClicked = onTvSeriesClicked
     )
 }
 
@@ -67,18 +79,22 @@ fun CategoryScreen(
 @Composable
 fun CategoryScreenContent(
     movies: LazyPagingItems<Movie>,
+    tvSeries: LazyPagingItems<TVSeries>,
     isLoading: Boolean,
     category: String,
     isError: Boolean,
-    onBackClicked:()->Unit,
-    setIsMovie:(Boolean) ->Unit,
-    isMovie:Boolean,
-    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+    onBackClicked: () -> Unit,
+    setIsMovie: (Boolean) -> Unit,
+    isMovie: Boolean,
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
 ) {
     Scaffold(
         topBar = {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -117,12 +133,12 @@ fun CategoryScreenContent(
                     Text(
                         modifier = Modifier
                             .clickable {
-                               setIsMovie(true)
+                                setIsMovie(true)
                             }
                             .padding(8.dp),
                         text = "Movies",
                         style = MaterialTheme.typography.bodyLarge.copy(
-                            color =  if (isMovie) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+                            color = if (isMovie) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
                         ),
                     )
                     Text(
@@ -140,20 +156,23 @@ fun CategoryScreenContent(
             }
         }
     ) { paddingValues ->
-        AnimatedVisibility(
-            visible = !isLoading && !isError,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
+        if (!isLoading && !isError){
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
             ) {
-                MoviesLazyGrid(
-                    movies = movies,
-                    onMovieClicked = onMovieClicked
-                )
+                if (isMovie){
+                    MoviesLazyGrid(
+                        movies = movies,
+                        onMovieClicked = onMovieClicked
+                    )
+                }else{
+                    TvSeriesLazyGrid(
+                        tvSeries = tvSeries,
+                        onTvSeriesClicked = onTvSeriesClicked
+                    )
+                }
             }
         }
     }

@@ -2,11 +2,9 @@ package com.samkt.filmio.util
 
 import android.annotation.SuppressLint
 import android.net.http.HttpException
-import android.os.Build
-import androidx.annotation.RequiresExtension
 import java.io.IOException
 
-fun Int.toGenre(): String {
+fun Int.toMovieGenre(): String {
     return when (this) {
         28 -> "Action"
         12 -> "Adventure"
@@ -55,6 +53,52 @@ fun String.toGenreInt(): Int {
         else -> 0
     }
 }
+
+fun Int.toTvSeriesGenre(): String {
+    when (this) {
+        10759 -> return "Action & Adventure"
+        16 -> return "Animation"
+        35 -> return "Comedy"
+        80 -> return "Crime"
+        99 -> return "Documentary"
+        18 -> return "Drama"
+        10751 -> return "Family"
+        10762 -> return "Kids"
+        9648 -> return "Mystery"
+        10763 -> return "News"
+        10764 -> return "Reality"
+        10765 -> return "Sci-Fi & Fantasy"
+        10766 -> return "Soap"
+        10767 -> return "Talk"
+        10768 -> return "War & Politics"
+        37 -> return "Western"
+        else -> return "Unknown"
+    }
+}
+
+fun String.toTvSeriesGenreId(): Int {
+    return when (this) {
+        "Action & Adventure" -> 10759
+        "Animation" -> 16
+        "Comedy" -> 35
+        "Crime" -> 80
+        "Documentary" -> 99
+        "Drama" -> 18
+        "Family" -> 10751
+        "Kids" -> 10762
+        "Mystery" -> 9648
+        "News" -> 10763
+        "Reality" -> 10764
+        "Sci-Fi & Fantasy" -> 10765
+        "Soap" -> 10766
+        "Talk" -> 10767
+        "War & Politics" -> 10768
+        "Western" -> 37
+        else -> -1 
+    }
+}
+
+
 
 
 @SuppressLint("NewApi")

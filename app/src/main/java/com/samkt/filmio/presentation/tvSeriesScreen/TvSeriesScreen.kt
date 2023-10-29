@@ -30,7 +30,8 @@ import com.samkt.filmio.presentation.tvSeriesScreen.components.TvSeriesTopSectio
 fun TvSeriesScreen(
     viewModel: TvSeriesViewModel = hiltViewModel(),
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    onSearchClicked: () -> Unit
+    onSearchClicked: () -> Unit,
+    onFilterClicked: () -> Unit
 ) {
 
     val trendingTvSeries = viewModel.trendingTvSeries.collectAsLazyPagingItems()
@@ -68,7 +69,8 @@ fun TvSeriesScreen(
         tvSeries = tvSeries!!,
         isLoading = isLoading,
         isError = isError,
-        onTvSeriesClicked = onTvSeriesClicked
+        onTvSeriesClicked = onTvSeriesClicked,
+        onFilterClicked = onFilterClicked
     )
 }
 
@@ -82,7 +84,8 @@ fun TvSeriesScreenContent(
     isError: Boolean = false,
     onCategoryClicked: (String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    tvSeries: LazyPagingItems<TVSeries>
+    tvSeries: LazyPagingItems<TVSeries>,
+    onFilterClicked:()->Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -92,7 +95,8 @@ fun TvSeriesScreenContent(
                 category = category,
                 onTrendingClicked = { onCategoryClicked("trending") },
                 onPopularClicked = { onCategoryClicked("popular") },
-                onUpcomingClicked = { onCategoryClicked("latest") }
+                onUpcomingClicked = { onCategoryClicked("latest") },
+                onFilterClicked = onFilterClicked
             )
         },
         bottomBar = {
