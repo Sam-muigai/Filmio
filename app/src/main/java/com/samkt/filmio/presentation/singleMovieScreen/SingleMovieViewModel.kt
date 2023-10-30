@@ -2,9 +2,11 @@ package com.samkt.filmio.presentation.singleMovieScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.credits.Cast
 import com.samkt.filmio.data.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.domain.repository.GetMovieDetailsRepository
+import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,8 +15,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import com.samkt.filmio.data.dtos.Movie
-import com.samkt.filmio.util.Result
 import javax.inject.Inject
 
 @HiltViewModel

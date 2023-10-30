@@ -140,7 +140,7 @@ fun FilterScreenContent(
             )
             FlowRow(
                 maxItemsInEachRow = 3,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center
             ) {
                 categories.forEach { category ->
                     CheckBoxItem(
@@ -160,7 +160,7 @@ fun FilterScreenContent(
             )
             FlowRow(
                 maxItemsInEachRow = 3,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center
             ) {
                 genres.forEach { genre ->
                     CheckBoxItem(
@@ -185,7 +185,8 @@ fun CheckBoxItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         val isChecked = selectedOption == text
-        Checkbox(checked = selectedOption == text,
+        Checkbox(
+            checked = selectedOption == text,
             onCheckedChange = {
                 onOptionSelect(text)
             }
@@ -199,4 +200,3 @@ fun CheckBoxItem(
         )
     }
 }
-

@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlinx-serialization")
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
 }
 
 android {
@@ -28,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
@@ -60,7 +61,7 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
-    implementation ("androidx.compose.ui:ui-util")
+    implementation("androidx.compose.ui:ui-util")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
@@ -96,8 +97,6 @@ dependencies {
 
     implementation("me.onebone:toolbar-compose:2.3.5")
 
-    implementation ("io.github.fornewid:material-motion-compose-navigation:1.1.0")
-    implementation ("io.github.fornewid:material-motion-compose-core:1.1.0")
-
-
+    implementation("io.github.fornewid:material-motion-compose-navigation:1.1.0")
+    implementation("io.github.fornewid:material-motion-compose-core:1.1.0")
 }

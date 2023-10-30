@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +20,6 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.data.dtos.TVSeries
-import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.sharedComponents.TvSeriesLazyGrid
 import com.samkt.filmio.presentation.tvSeriesScreen.components.TvSeriesTopSection
 
@@ -33,7 +30,6 @@ fun TvSeriesScreen(
     onSearchClicked: () -> Unit,
     onFilterClicked: () -> Unit
 ) {
-
     val trendingTvSeries = viewModel.trendingTvSeries.collectAsLazyPagingItems()
     val popularTvSeries = viewModel.popularTvSeries.collectAsLazyPagingItems()
     val latestTvSeries = viewModel.latestTvSeries.collectAsLazyPagingItems()
@@ -42,14 +38,12 @@ fun TvSeriesScreen(
     val isPopularTvSeriesLoading = popularTvSeries.loadState.refresh is LoadState.Loading
     val isLatestTvSeriesLoading = latestTvSeries.loadState.refresh is LoadState.Loading
 
-
     val isTrendingTvSeriesError = trendingTvSeries.loadState.refresh is LoadState.Error
     val isPopularTvSeriesError = popularTvSeries.loadState.refresh is LoadState.Error
     val isLatestTvSeriesError = latestTvSeries.loadState.refresh is LoadState.Error
 
     val isLoading = isTrendingTvSeriesLoading || isPopularTvSeriesLoading || isLatestTvSeriesLoading
     val isError = isPopularTvSeriesError || isTrendingTvSeriesError || isLatestTvSeriesError
-
 
     var category by rememberSaveable {
         mutableStateOf("trending")
@@ -85,7 +79,7 @@ fun TvSeriesScreenContent(
     onCategoryClicked: (String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     tvSeries: LazyPagingItems<TVSeries>,
-    onFilterClicked:()->Unit
+    onFilterClicked: () -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -105,7 +99,7 @@ fun TvSeriesScreenContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -119,6 +113,3 @@ fun TvSeriesScreenContent(
         }
     }
 }
-
-
-

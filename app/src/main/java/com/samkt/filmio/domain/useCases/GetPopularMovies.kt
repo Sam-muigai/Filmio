@@ -1,6 +1,5 @@
 package com.samkt.filmio.domain.useCases
 
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
@@ -14,14 +13,14 @@ import javax.inject.Inject
 class GetPopularMovies @Inject constructor(
     private val getMoviesRepository: GetMoviesRepository
 ) {
-    operator fun invoke(scope:CoroutineScope,genreIds:Int? = null):Flow<PagingData<Movie>>{
-        return if (genreIds != null){
+    operator fun invoke(scope: CoroutineScope, genreIds: Int? = null): Flow<PagingData<Movie>> {
+        return if (genreIds != null) {
             getMoviesRepository.getPopularMovies().map {
                 it.filter { movie ->
                     movie.title != null && movie.originalTitle != null && movie.genreIds.contains(genreIds)
                 }
             }.cachedIn(scope)
-        } else{
+        } else {
             getMoviesRepository.getPopularMovies().map {
                 it.filter { movie ->
                     movie.title != null || movie.originalTitle != null

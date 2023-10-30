@@ -9,7 +9,5 @@ interface GetTvSeriesRepository {
     fun getPopularTvSeries(): Flow<PagingData<TVSeries>>
     fun getTrendingTvSeries(): Flow<PagingData<TVSeries>>
 
-    fun getLatestTvSeries():Flow<PagingData<TVSeries>>
+    fun getLatestTvSeries(): Flow<PagingData<TVSeries>>
 }
-
-

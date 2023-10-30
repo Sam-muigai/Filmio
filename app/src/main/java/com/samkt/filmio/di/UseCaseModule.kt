@@ -22,7 +22,7 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun provideMoviesUseCase(getMoviesRepository: GetMoviesRepository):GetMoviesUseCase{
+    fun provideMoviesUseCase(getMoviesRepository: GetMoviesRepository): GetMoviesUseCase {
         return GetMoviesUseCase(
             getPopularMovies = GetPopularMovies(getMoviesRepository),
             getTopRatedMovies = GetTopRatedMovies(getMoviesRepository),
@@ -33,7 +33,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideTvSeriesUseCase(getTvSeriesRepository: GetTvSeriesRepository):GetTvSeriesUseCase{
+    fun provideTvSeriesUseCase(getTvSeriesRepository: GetTvSeriesRepository): GetTvSeriesUseCase {
         return GetTvSeriesUseCase(
             getPopularTvSeries = GetPopularTvSeries(getTvSeriesRepository),
             getLatestTvSeries = GetLatestTvSeries(getTvSeriesRepository),

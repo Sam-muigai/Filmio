@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +24,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.presentation.homeScreen.HomeScreenViewModel
-import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.movieScreen.components.MovieTopSection
 import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
 
@@ -34,7 +31,7 @@ import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
 fun MoviesScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    onFilterClicked:()->Unit,
+    onFilterClicked: () -> Unit,
     onSearchClicked: () -> Unit
 ) {
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
@@ -48,7 +45,6 @@ fun MoviesScreen(
     val popularMoviesError = popularMovies.loadState.refresh is LoadState.Error
     val trendingMoviesError = trendingMovies.loadState.refresh is LoadState.Error
     val upcomingMoviesError = upComingMovies.loadState.refresh is LoadState.Error
-
 
     val isLoading = isPopularMoviesLoading || isTrendingMoviesLoading || isUpcomingMoviesLoading
 
@@ -88,7 +84,7 @@ fun MovieScreenContent(
     isError: Boolean = false,
     onSearchClicked: () -> Unit,
     onCategoryClicked: (String) -> Unit,
-    onFilterClicked:()->Unit,
+    onFilterClicked: () -> Unit,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     Scaffold(
@@ -115,10 +111,10 @@ fun MovieScreenContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
-        },
+        }
     ) { paddingValues ->
         AnimatedVisibility(
             visible = !isLoading && !isError,
@@ -133,6 +129,3 @@ fun MovieScreenContent(
         }
     }
 }
-
-
-

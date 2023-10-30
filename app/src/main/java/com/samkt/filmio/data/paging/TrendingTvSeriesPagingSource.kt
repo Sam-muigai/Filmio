@@ -12,19 +12,18 @@ class TrendingTvSeriesPagingSource(
     override fun getRefreshKey(state: PagingState<Int, TVSeries>): Int? = state.anchorPosition
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TVSeries> {
-       return try {
+        return try {
             val currentPage = params.key ?: 1
             val tvSeries = tmdbApi.getTrendingTvSeries(page = currentPage).results
             Timber.d("TV series successfully called..")
             LoadResult.Page(
                 data = tvSeries,
                 nextKey = if (tvSeries.isEmpty()) null else currentPage + 1,
-                prevKey = if (currentPage == 1) null else currentPage - 1,
+                prevKey = if (currentPage == 1) null else currentPage - 1
             )
         } catch (e: Exception) {
             Timber.d(e.message)
             LoadResult.Error(e)
         }
     }
-
 }

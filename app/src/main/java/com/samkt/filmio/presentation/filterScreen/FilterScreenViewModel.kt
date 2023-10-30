@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FilterScreenViewModel @Inject constructor():ViewModel(){
+class FilterScreenViewModel @Inject constructor() : ViewModel() {
 
     var selectedType by mutableStateOf(types[0])
         private set
@@ -20,25 +20,21 @@ class FilterScreenViewModel @Inject constructor():ViewModel(){
     var selectedTvSeriesGenre by mutableStateOf(tvSeriesGenres[0])
         private set
 
-    fun onSelectType(type:String){
+    fun onSelectType(type: String) {
         selectedType = type
     }
 
-    fun onSelectMovieGenres(genre:String){
+    fun onSelectMovieGenres(genre: String) {
         selectedMovieGenres = genre
     }
 
-    fun onSelectedTvSeries(genre: String){
+    fun onSelectedTvSeries(genre: String) {
         selectedTvSeriesGenre = genre
     }
 
-    fun onCategorySelect(category:String){
+    fun onCategorySelect(category: String) {
         selectedCategory = category
     }
-
-
-
-
 }
 val types = listOf("Movies", "Tv Series")
 val movieGenres = listOf(
@@ -85,5 +81,5 @@ val categories = listOf(
     "Popular",
     "Top Rated",
     "Upcoming",
-    "Trending",
+    "Trending"
 )

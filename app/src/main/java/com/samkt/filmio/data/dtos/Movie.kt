@@ -32,5 +32,5 @@ data class Movie(
     @SerialName("vote_average")
     val voteAverage: Double?,
     @SerialName("vote_count")
-    val voteCount: Int?,
+    val voteCount: Int?
 )

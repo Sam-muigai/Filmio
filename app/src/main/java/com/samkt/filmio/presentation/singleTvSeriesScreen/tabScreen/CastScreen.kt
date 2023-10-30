@@ -11,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.samkt.filmio.presentation.singleMovieScreen.MovieScreenUiState
 import com.samkt.filmio.presentation.singleMovieScreen.components.CastItem
 import com.samkt.filmio.presentation.singleTvSeriesScreen.TvSeriesUiState
 
@@ -20,7 +19,7 @@ import com.samkt.filmio.presentation.singleTvSeriesScreen.TvSeriesUiState
 fun TvSeriesCastScreen(
     uiState: TvSeriesUiState
 ) {
-    Scaffold {paddingValues ->
+    Scaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)

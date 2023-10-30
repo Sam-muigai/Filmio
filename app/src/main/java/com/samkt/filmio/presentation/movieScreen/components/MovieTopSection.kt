@@ -51,32 +51,32 @@ fun MovieTopSection(
                 Icon(
                     modifier = Modifier.size(20.dp),
                     painter = painterResource(id = R.drawable.ic_search),
-                    contentDescription = "Search",
+                    contentDescription = "Search"
                 )
             }
         }
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             TextButton(onClick = onTrendingClicked) {
                 Text(
                     text = "Trending",
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (category == "trending") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+                    color = if (category == "trending") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
                 )
             }
             TextButton(onClick = onPopularClicked) {
                 Text(
                     text = "Popular",
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (category == "popular") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+                    color = if (category == "popular") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
                 )
             }
             TextButton(onClick = onUpcomingClicked) {
                 Text(
                     text = "Upcoming",
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (category == "upcoming") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+                    color = if (category == "upcoming") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
                 )
             }
             Row(

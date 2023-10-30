@@ -16,7 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GetMoviesRepositoryImpl @Inject constructor(
-    private val tmdbApi: TMDBApi,
+    private val tmdbApi: TMDBApi
 ) : GetMoviesRepository {
     override fun getPopularMovies(): Flow<PagingData<Movie>> {
         Timber.d("getPopularMovies repository function called...")
@@ -24,7 +24,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
             config = PagingConfig(MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 PopularMoviesPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
 
@@ -34,7 +34,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
             config = PagingConfig(MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 TrendingMoviesPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
 
@@ -44,7 +44,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
             config = PagingConfig(MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 UpcomingMoviesPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
 
@@ -54,7 +54,7 @@ class GetMoviesRepositoryImpl @Inject constructor(
             config = PagingConfig(MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 TopRatedPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
 }

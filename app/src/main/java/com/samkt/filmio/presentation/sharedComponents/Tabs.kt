@@ -10,7 +10,6 @@ import com.samkt.filmio.presentation.singleTvSeriesScreen.tabScreen.RelatedTvSer
 import com.samkt.filmio.presentation.singleTvSeriesScreen.tabScreen.TvSeriesCastScreen
 import com.samkt.filmio.presentation.singleTvSeriesScreen.tabScreen.TvSeriesOverviewScreen
 
-
 typealias MovieTabScreen = @Composable (uiState: MovieScreenUiState) -> Unit
 typealias TvSeriesTabScreen = @Composable (uiState: TvSeriesUiState) -> Unit
 
@@ -27,28 +26,27 @@ data class TvSeriesTabsItem(
 val tvSeriesTabs = listOf(
     TvSeriesTabsItem(
         label = "Overview",
-        screen = {uiState ->
+        screen = { uiState ->
             TvSeriesOverviewScreen(uiState = uiState)
         }
     ),
     TvSeriesTabsItem(
         label = "Cast",
-        screen = {uiState ->
+        screen = { uiState ->
             TvSeriesCastScreen(uiState = uiState)
         }
     ),
     TvSeriesTabsItem(
         label = "Related",
-        screen = {uiState ->
+        screen = { uiState ->
             RelatedTvSeriesScreen(uiState = uiState)
         }
-    ),
+    )
 )
 
-
-
 val movieTabs = listOf(
-    MovieTabsItem(label = "Overview",
+    MovieTabsItem(
+        label = "Overview",
         screen = { uiState ->
             MovieOverviewScreen(
                 uiState = uiState
@@ -63,8 +61,9 @@ val movieTabs = listOf(
             )
         }
     ),
-    MovieTabsItem(label = "Related",
-        screen = {uiState ->
+    MovieTabsItem(
+        label = "Related",
+        screen = { uiState ->
             RelatedMoviesScreen(uiState = uiState)
         }
     )

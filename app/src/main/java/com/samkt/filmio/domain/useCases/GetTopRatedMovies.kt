@@ -13,14 +13,14 @@ import javax.inject.Inject
 class GetTopRatedMovies @Inject constructor(
     private val getMoviesRepository: GetMoviesRepository
 ) {
-    operator fun invoke(scope: CoroutineScope,genreId:Int? = null): Flow<PagingData<Movie>> {
-        return if (genreId != null){
+    operator fun invoke(scope: CoroutineScope, genreId: Int? = null): Flow<PagingData<Movie>> {
+        return if (genreId != null) {
             getMoviesRepository.getTopRatedMovies().map {
                 it.filter { movie ->
                     movie.title != null && movie.originalTitle != null && movie.genreIds.contains(genreId)
                 }
             }.cachedIn(scope)
-        }else{
+        } else {
             getMoviesRepository.getTopRatedMovies().map {
                 it.filter { movie ->
                     movie.title != null || movie.originalTitle != null

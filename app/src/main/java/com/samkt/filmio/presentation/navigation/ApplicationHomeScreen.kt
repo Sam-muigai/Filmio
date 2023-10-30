@@ -81,7 +81,7 @@ fun ApplicationHomeScreen(
                         },
                         label = {
                             Text(text = navItems.label)
-                        },
+                        }
                     )
                 }
             }
@@ -223,7 +223,7 @@ fun AppNavigation() {
                 onBackClicked = {
                     navController.popBackStack()
                 },
-                onTvSeriesClicked = {id, backDropPath, posterImage ->
+                onTvSeriesClicked = { id, backDropPath, posterImage ->
                     navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
                 }
             )
@@ -243,17 +243,17 @@ fun AppNavigation() {
         destination(
             route = Screens.FilteredFilmsScreen.route + "?type={type}" + "?category={category}" + "?genre={genre}",
             arguments = listOf(
-                navArgument("type"){
+                navArgument("type") {
                     type = NavType.StringType
                 },
-                navArgument("category"){
+                navArgument("category") {
                     type = NavType.StringType
                 },
-                navArgument("genre"){
+                navArgument("genre") {
                     type = NavType.StringType
                 }
             )
-        ){
+        ) {
             FilterFilmScreen(
                 onBackClicked = {
                     navController.popBackStack()
@@ -269,11 +269,10 @@ fun AppNavigation() {
     }
 }
 
-
 fun NavGraphBuilder.destination(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
-    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = route,
@@ -290,6 +289,6 @@ fun NavGraphBuilder.destination(
         },
         popExitTransition = {
             materialSharedAxisZOut(forward = false, durationMillis = 500)
-        },
+        }
     )
 }

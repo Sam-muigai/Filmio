@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class GetTvSeriesRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi
-):GetTvSeriesRepository {
+) : GetTvSeriesRepository {
 
     override fun getPopularTvSeries(): Flow<PagingData<TVSeries>> {
         Timber.d("getPopularTvSeries repository function called...")
@@ -24,7 +24,7 @@ class GetTvSeriesRepositoryImpl @Inject constructor(
             config = PagingConfig(Constants.MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 PopularTvSeriesPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
 
@@ -34,7 +34,7 @@ class GetTvSeriesRepositoryImpl @Inject constructor(
             config = PagingConfig(Constants.MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 TrendingTvSeriesPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
 
@@ -44,8 +44,7 @@ class GetTvSeriesRepositoryImpl @Inject constructor(
             config = PagingConfig(Constants.MOVIES_PER_PAGE),
             pagingSourceFactory = {
                 LatestTvSeriesPagingSource(tmdbApi)
-            },
+            }
         ).flow
     }
-
 }

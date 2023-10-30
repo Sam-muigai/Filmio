@@ -20,7 +20,7 @@ class GetUpcomingMovies @Inject constructor(
                     movie.title != null && movie.originalTitle != null && movie.genreIds.contains(genreId)
                 }
             }.cachedIn(scope)
-        }else{
+        } else {
             getMoviesRepository.getUpcomingMovies().map {
                 it.filter { movie ->
                     movie.title != null || movie.originalTitle != null

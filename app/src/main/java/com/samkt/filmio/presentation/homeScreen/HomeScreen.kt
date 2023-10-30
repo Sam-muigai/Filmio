@@ -67,7 +67,7 @@ fun HomeScreen(
 
     val isLoading =
         isPopularMoviesLoading || isTrendingMoviesLoading ||
-                isTrendingTvSeriesLoading || isUpcomingMoviesLoading || isTopRatedMoviesLoading
+            isTrendingTvSeriesLoading || isUpcomingMoviesLoading || isTopRatedMoviesLoading
 
     val hasErrors =
         trendingTvSeriesError || popularMoviesError || trendingMoviesError || upcomingMoviesError || topRatedMoviesError
@@ -112,7 +112,7 @@ fun HomeScreenContent(
     isPopularMovies: Boolean,
     onViewAllClicked: (category: String) -> Unit = {},
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val pageWidth = (screenWidth / 3f).dp
@@ -135,10 +135,10 @@ fun HomeScreenContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
-        },
+        }
     ) { paddingValues ->
         AnimatedVisibility(
             visible = hasErrors,
@@ -177,14 +177,14 @@ fun HomeScreenContent(
                                 .fillMaxWidth()
                                 .padding(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
                                 modifier = Modifier,
                                 text = "Trending",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Bold
-                                ),
+                                )
                             )
                             Text(
                                 modifier = Modifier
@@ -195,7 +195,7 @@ fun HomeScreenContent(
                                 text = "View all",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     color = MaterialTheme.colorScheme.primary
-                                ),
+                                )
                             )
                         }
                     }
@@ -211,20 +211,19 @@ fun HomeScreenContent(
                                 .fillMaxWidth()
                                 .padding(horizontal = 8.dp, vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
                                 modifier = Modifier,
                                 text = "Popular",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Bold
-                                ),
+                                )
                             )
                             Row(
                                 modifier = Modifier,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-
                                 Text(
                                     modifier = Modifier
                                         .clickable {
@@ -234,7 +233,7 @@ fun HomeScreenContent(
                                     text = "Movies",
                                     style = MaterialTheme.typography.bodyLarge.copy(
                                         color = if (isPopularMovies) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-                                    ),
+                                    )
                                 )
                                 Text(
                                     modifier = Modifier
@@ -245,9 +244,8 @@ fun HomeScreenContent(
                                     text = "TV Series",
                                     style = MaterialTheme.typography.bodyLarge.copy(
                                         color = if (!isPopularMovies) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-                                    ),
+                                    )
                                 )
-
                             }
                         }
                     }
@@ -265,14 +263,14 @@ fun HomeScreenContent(
                                 .fillMaxWidth()
                                 .padding(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
                                 modifier = Modifier,
                                 text = "Upcoming",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Bold
-                                ),
+                                )
                             )
 
                             Text(
@@ -284,10 +282,8 @@ fun HomeScreenContent(
                                 text = "View all",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     color = MaterialTheme.colorScheme.primary
-                                ),
+                                )
                             )
-
-
                         }
                     }
                     item {
@@ -302,14 +298,14 @@ fun HomeScreenContent(
                                 .fillMaxWidth()
                                 .padding(horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
                                 modifier = Modifier,
                                 text = "Top Rated",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Bold
-                                ),
+                                )
                             )
 
                             Text(
@@ -321,7 +317,7 @@ fun HomeScreenContent(
                                 text = "View all",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     color = MaterialTheme.colorScheme.primary
-                                ),
+                                )
                             )
                         }
                     }
@@ -334,11 +330,8 @@ fun HomeScreenContent(
                     item {
                         Spacer(modifier = Modifier.height(50.dp))
                     }
-                },
+                }
             )
         }
     }
 }
-
-
-

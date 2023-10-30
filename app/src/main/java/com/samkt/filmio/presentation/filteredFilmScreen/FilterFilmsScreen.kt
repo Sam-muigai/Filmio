@@ -1,6 +1,5 @@
 package com.samkt.filmio.presentation.filteredFilmScreen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -22,27 +20,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.samkt.filmio.R
 import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
 import com.samkt.filmio.presentation.sharedComponents.TvSeriesLazyGrid
-import dagger.Lazy
 
 @Composable
 fun FilterFilmScreen(
     viewModel: FilterFilmsScreenViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> }
 ) {
-    if (viewModel.type == "Movies"){
+    if (viewModel.type == "Movies") {
         val movies = viewModel.movies.collectAsLazyPagingItems()
         FilterFilmScreenContent(
             onBackClicked = onBackClicked,
@@ -52,7 +47,7 @@ fun FilterFilmScreen(
             movies = movies,
             onMovieClicked = onMovieClicked
         )
-    }else{
+    } else {
         val tvSeries = viewModel.tvSeries.collectAsLazyPagingItems()
         FilterFilmScreenContent(
             onBackClicked = onBackClicked,
@@ -76,7 +71,7 @@ fun FilterFilmScreenContent(
     movies: LazyPagingItems<Movie>? = null,
     tvSeries: LazyPagingItems<TVSeries>? = null,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> }
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),

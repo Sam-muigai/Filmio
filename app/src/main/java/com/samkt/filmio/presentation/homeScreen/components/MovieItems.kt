@@ -95,6 +95,6 @@ fun MovieItems(
                     }
                 }
             }
-        },
+        }
     )
 }

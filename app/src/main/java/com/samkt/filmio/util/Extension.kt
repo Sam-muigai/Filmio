@@ -94,12 +94,9 @@ fun String.toTvSeriesGenreId(): Int {
         "Talk" -> 10767
         "War & Politics" -> 10768
         "Western" -> 37
-        else -> -1 
+        else -> -1
     }
 }
-
-
-
 
 @SuppressLint("NewApi")
 fun Throwable.toErrorMessage(): String {

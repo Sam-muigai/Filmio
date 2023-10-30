@@ -1,6 +1,5 @@
 package com.samkt.filmio.presentation.categoryScreen
 
-import android.view.View
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -83,6 +82,4 @@ class CategoryScreenViewModel @Inject constructor(
             }
         }
     }
-
 }
-

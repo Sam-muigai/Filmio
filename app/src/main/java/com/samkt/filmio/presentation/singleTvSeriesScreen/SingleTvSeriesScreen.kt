@@ -77,7 +77,6 @@ fun TvSeriesDetailScreen(
         backGroundImage = backDropPath,
         onBackClicked = onBackClicked
     )
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -169,7 +168,7 @@ fun TvSeriesDetailScreenContent(
                             ) {
                                 Text(
                                     text = tvSeriesDetails?.originalName ?: tvSeriesDetails?.name
-                                    ?: "Unknown",
+                                        ?: "Unknown",
                                     color = MaterialTheme.colorScheme.onBackground,
                                     style = MaterialTheme.typography.titleLarge.copy(
                                         fontWeight = FontWeight.Normal
@@ -208,7 +207,7 @@ fun TvSeriesDetailScreenContent(
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Button(
                         modifier = Modifier
@@ -296,7 +295,8 @@ fun TvSeriesTabs(
         selectedTabIndex = pagerState.currentPage
     ) {
         tvSeriesTabs.forEachIndexed { index, tab ->
-            Tab(selected = pagerState.currentPage == index,
+            Tab(
+                selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {
                         pagerState.animateScrollToPage(index)

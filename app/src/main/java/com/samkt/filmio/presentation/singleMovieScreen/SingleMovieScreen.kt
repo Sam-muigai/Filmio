@@ -79,7 +79,6 @@ fun SingleMovieScreen(
     )
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SingleMovieScreenContent(
@@ -204,7 +203,7 @@ fun SingleMovieScreenContent(
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Button(
                         modifier = Modifier
@@ -282,7 +281,6 @@ fun SingleMovieScreenContent(
     }
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieTabContents(
@@ -313,7 +311,8 @@ fun MovieTabs(
         selectedTabIndex = pagerState.currentPage
     ) {
         movieTabs.forEachIndexed { index, tab ->
-            Tab(selected = pagerState.currentPage == index,
+            Tab(
+                selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {
                         pagerState.animateScrollToPage(index)
@@ -324,5 +323,3 @@ fun MovieTabs(
         }
     }
 }
-
-

@@ -49,7 +49,7 @@ fun AnimatedViewPager(
     pageSize: Dp,
     movies: LazyPagingItems<Movie>,
     onAddToList: (Movie) -> Unit = {},
-    onDetailsClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> },
+    onDetailsClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit = { _, _, _ -> }
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -67,16 +67,16 @@ fun AnimatedViewPager(
             snapshotFlow { pagerState.currentPage }.collect { currentPage ->
                 if (currentPageIndex.intValue == currentPage) {
                     hapticFeedback.performHapticFeedback(
-                        hapticFeedbackType = HapticFeedbackType.LongPress,
+                        hapticFeedbackType = HapticFeedbackType.LongPress
                     )
                     currentPageIndex.intValue = currentPage
                 }
             }
-        },
+        }
     )
     Column(
         modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val isMoviesLoading = movies.loadState.refresh is LoadState.Loading
         val genre = if (!isMoviesLoading) {
@@ -94,7 +94,7 @@ fun AnimatedViewPager(
                 .height(320.dp),
             state = pagerState,
             contentPadding = PaddingValues(horizontal = pageSize - 40.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) { thisPageIndex ->
             val image = movies[thisPageIndex]?.posterPath ?: ""
             val imageUrl = "https://image.tmdb.org/t/p/w500/$image"
@@ -103,7 +103,7 @@ fun AnimatedViewPager(
                     .size(width = pageSize + 260.dp, height = 320.dp)
                     .pagerAnimation(
                         pagerState = pagerState,
-                        thisPageIndex = thisPageIndex,
+                        thisPageIndex = thisPageIndex
                     ),
                 imageUrl = imageUrl,
                 clickable = false
@@ -114,32 +114,32 @@ fun AnimatedViewPager(
             Text(
                 text = movies[pagerState.currentPage]?.title ?: "No name",
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Bold
                 ),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = buildAnnotatedString {
                     append("Movie")
                     if (genre.isNotEmpty()) {
                         append(
-                            ": ",
+                            ": "
                         )
                         genre.forEachIndexed { index, genreId ->
                             append(
-                                genreId.toMovieGenre(),
+                                genreId.toMovieGenre()
                             )
                             if (index != genresCount - 1) {
                                 append(
-                                    ", ",
+                                    ", "
                                 )
                             }
                         }
                     }
                 },
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -150,7 +150,7 @@ fun AnimatedViewPager(
                     .padding(
                         horizontal = 16.dp,
                         vertical = 8.dp
-                    ),
+                    )
             ) {
                 Column(
                     modifier = Modifier
@@ -159,18 +159,18 @@ fun AnimatedViewPager(
                             onDetailsClicked(
                                 currentMovie?.id ?: 0,
                                 currentMovie?.backdropPath ?: "",
-                                currentMovie?.posterPath ?: "",
+                                currentMovie?.posterPath ?: ""
                             )
                         },
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Info,
-                        contentDescription = "Movie Details",
+                        contentDescription = "Movie Details"
                     )
                     Text(
                         text = "Details",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
                     )
                 }
                 Button(
@@ -180,12 +180,12 @@ fun AnimatedViewPager(
                     },
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                    ),
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
                 ) {
                     Text(
                         text = "ADD TO LIST",
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }

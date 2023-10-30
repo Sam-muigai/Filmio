@@ -2,9 +2,6 @@ package com.samkt.filmio.presentation.searchScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.data.dtos.searchResponse.SearchResult
 import com.samkt.filmio.domain.repository.SearchMovieRepository
 import com.samkt.filmio.util.Result
@@ -27,9 +24,7 @@ class SearchViewModel @Inject constructor(
 
     private val _searchScreenUiState = MutableStateFlow(SearchScreenUiState())
     val searchScreenUiState: StateFlow<SearchScreenUiState>
-        get() =  _searchScreenUiState
-
-
+        get() = _searchScreenUiState
 
     fun searchMovie(searchQuery: String) {
         searchJob?.cancel()
@@ -41,7 +36,7 @@ class SearchViewModel @Inject constructor(
                 )
             }
             searchMovieRepository.searchMovie(searchQuery).collectLatest { result ->
-                when(result){
+                when (result) {
                     is Result.Error -> {
                         _searchScreenUiState.update {
                             it.copy(
@@ -67,7 +62,7 @@ class SearchViewModel @Inject constructor(
 }
 
 data class SearchScreenUiState(
-    val loading:Boolean = false,
-    val movies:List<SearchResult> = emptyList(),
-    val error:String? = null
+    val loading: Boolean = false,
+    val movies: List<SearchResult> = emptyList(),
+    val error: String? = null
 )

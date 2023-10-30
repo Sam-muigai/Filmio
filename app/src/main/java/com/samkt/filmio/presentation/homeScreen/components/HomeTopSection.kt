@@ -27,65 +27,65 @@ fun HomeTopSection(
     modifier: Modifier = Modifier,
     onTrendingClicked: () -> Unit,
     onPopularClicked: () -> Unit,
-    onSearchClicked:()->Unit
+    onSearchClicked: () -> Unit
 ) {
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
-            .padding(8.dp),
+            .padding(8.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Row(modifier = Modifier.weight(1f)) {
                 Image(
                     modifier = Modifier.size(40.dp),
                     painter = painterResource(id = R.drawable.films),
-                    contentDescription = null,
+                    contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "FilmIo",
                     style = MaterialTheme.typography.headlineLarge.copy(
-                        fontFamily = ruberoid,
-                    ),
+                        fontFamily = ruberoid
+                    )
                 )
             }
             Row(
                 modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onSearchClicked) {
                     Icon(
                         modifier = Modifier.size(20.dp),
                         painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "Search",
+                        contentDescription = "Search"
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Icon(
                     modifier = Modifier.size(35.dp),
                     painter = painterResource(id = R.drawable.ic_account),
-                    contentDescription = "Account",
+                    contentDescription = "Account"
                 )
             }
         }
         Row(
-            modifier = Modifier.padding(start = 16.dp),
+            modifier = Modifier.padding(start = 16.dp)
         ) {
             TextButton(onClick = onTrendingClicked) {
                 Text(
                     text = "Trending",
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
             TextButton(onClick = onPopularClicked) {
                 Text(
                     text = "Popular",
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }

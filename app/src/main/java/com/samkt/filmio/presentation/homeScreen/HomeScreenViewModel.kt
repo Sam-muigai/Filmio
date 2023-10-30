@@ -53,7 +53,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
-            getMoviesUseCase.getTopRatedMovies(this).collect{
+            getMoviesUseCase.getTopRatedMovies(this).collect {
                 _topRatedMovies.value = it
             }
         }
@@ -61,7 +61,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getUpcomingMovies() {
         viewModelScope.launch {
-            getMoviesUseCase.getUpcomingMovies(this).collect{
+            getMoviesUseCase.getUpcomingMovies(this).collect {
                 _upcomingMovies.value = it
             }
         }
@@ -69,7 +69,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            getMoviesUseCase.getPopularMovies(this).collect{
+            getMoviesUseCase.getPopularMovies(this).collect {
                 _popularMovies.value = it
             }
         }
@@ -77,7 +77,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getPopularTvSeries() {
         viewModelScope.launch {
-            getTvSeriesUseCase.getPopularTvSeries(this).collect{
+            getTvSeriesUseCase.getPopularTvSeries(this).collect {
                 _popularTvSeries.value = it
             }
         }
@@ -85,7 +85,7 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun getTrendingMovies() {
         viewModelScope.launch {
-            getMoviesUseCase.getTrendingMovies(this).collect{
+            getMoviesUseCase.getTrendingMovies(this).collect {
                 _trendingMovies.value = it
             }
         }

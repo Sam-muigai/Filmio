@@ -1,8 +1,5 @@
 package com.samkt.filmio.presentation.categoryScreen
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,10 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -47,7 +40,7 @@ fun CategoryScreen(
     viewModel: CategoryScreenViewModel = hiltViewModel(),
     onBackClicked: () -> Unit = {},
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     val movies = viewModel.movies.collectAsLazyPagingItems()
     val tvSeries = viewModel.tvSeries.collectAsLazyPagingItems()
@@ -87,7 +80,7 @@ fun CategoryScreenContent(
     setIsMovie: (Boolean) -> Unit,
     isMovie: Boolean,
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -139,7 +132,7 @@ fun CategoryScreenContent(
                         text = "Movies",
                         style = MaterialTheme.typography.bodyLarge.copy(
                             color = if (isMovie) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-                        ),
+                        )
                     )
                     Text(
                         modifier = Modifier
@@ -150,24 +143,24 @@ fun CategoryScreenContent(
                         text = "TvSeries",
                         style = MaterialTheme.typography.bodyLarge.copy(
                             color = if (!isMovie) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-                        ),
+                        )
                     )
                 }
             }
         }
     ) { paddingValues ->
-        if (!isLoading && !isError){
+        if (!isLoading && !isError) {
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
             ) {
-                if (isMovie){
+                if (isMovie) {
                     MoviesLazyGrid(
                         movies = movies,
                         onMovieClicked = onMovieClicked
                     )
-                }else{
+                } else {
                     TvSeriesLazyGrid(
                         tvSeries = tvSeries,
                         onTvSeriesClicked = onTvSeriesClicked

@@ -15,7 +15,7 @@ import com.samkt.filmio.data.dtos.TVSeries
 fun TvSeriesLazyGrid(
     modifier: Modifier = Modifier,
     tvSeries: LazyPagingItems<TVSeries>,
-    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,

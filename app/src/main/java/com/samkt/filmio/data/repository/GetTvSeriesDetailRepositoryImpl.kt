@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class GetTvSeriesDetailRepositoryImpl @Inject constructor(
-    private val tmdbApi: TMDBApi):GetTvSeriesDetailsRepository {
+    private val tmdbApi: TMDBApi
+) : GetTvSeriesDetailsRepository {
     override suspend fun getTvSeriesDetailsRepository(tvSeriesId: Int): Flow<Result<SingleTvSeriesResponse>> {
         return flowOf(safeApiCall { tmdbApi.getTvSeriesDetails(tvSeriesId = tvSeriesId) })
     }
@@ -24,6 +25,4 @@ class GetTvSeriesDetailRepositoryImpl @Inject constructor(
     override suspend fun getRelatedTvSeries(tvSeriesId: Int): Flow<Result<TvSeriesResponseDto>> {
         return flowOf(safeApiCall { tmdbApi.getRelatedTvShows(tvSeriesId) })
     }
-
-
 }

@@ -17,24 +17,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.samkt.filmio.data.dtos.Movie
 
 @Composable
 fun MovieItem(
     modifier: Modifier = Modifier,
-    imageUrl:String = "",
-    filmName:String,
-    clickable:Boolean = false,
-    onClick:()->Unit = {},
-    filmOverview:String
+    imageUrl: String = "",
+    filmName: String,
+    clickable: Boolean = false,
+    onClick: () -> Unit = {},
+    filmOverview: String
 ) {
-    val movieItemModifier = if(clickable) modifier.clickable { onClick.invoke() }.padding(8.dp) else modifier.padding(8.dp)
+    val movieItemModifier = if (clickable) modifier.clickable { onClick.invoke() }.padding(8.dp) else modifier.padding(8.dp)
     Row(
         modifier = movieItemModifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        val movieImageUrl = "https://image.tmdb.org/t/p/w500/${imageUrl}"
+        val movieImageUrl = "https://image.tmdb.org/t/p/w500/$imageUrl"
         MovieCard(
             modifier = Modifier
                 .width(70.dp)

@@ -37,5 +37,5 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindSingleTvSeriesRepository(getTvSeriesDetailRepositoryImpl: GetTvSeriesDetailRepositoryImpl):GetTvSeriesDetailsRepository
+    abstract fun bindSingleTvSeriesRepository(getTvSeriesDetailRepositoryImpl: GetTvSeriesDetailRepositoryImpl): GetTvSeriesDetailsRepository
 }

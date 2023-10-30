@@ -1,6 +1,5 @@
 package com.samkt.filmio.data.dtos.searchResponse
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
