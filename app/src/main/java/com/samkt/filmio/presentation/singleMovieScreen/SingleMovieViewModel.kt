@@ -8,6 +8,7 @@ import com.samkt.filmio.data.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.domain.repository.GetMovieDetailsRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 @HiltViewModel
 class SingleMovieViewModel @Inject constructor(

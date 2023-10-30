@@ -6,6 +6,7 @@ import com.samkt.filmio.data.dtos.searchResponse.SearchResult
 import com.samkt.filmio.domain.repository.SearchMovieRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(

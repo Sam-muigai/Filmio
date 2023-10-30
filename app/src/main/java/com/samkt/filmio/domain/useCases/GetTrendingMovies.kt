@@ -5,10 +5,10 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.samkt.filmio.data.dtos.Movie
 import com.samkt.filmio.domain.repository.GetMoviesRepository
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class GetTrendingMovies @Inject constructor(
     private val getMoviesRepository: GetMoviesRepository
@@ -17,7 +17,9 @@ class GetTrendingMovies @Inject constructor(
         return if (genreId != null) {
             getMoviesRepository.getTrendingMovies().map {
                 it.filter { movie ->
-                    movie.title != null && movie.originalTitle != null && movie.genreIds.contains(genreId)
+                    movie.title != null && movie.originalTitle != null && movie.genreIds.contains(
+                        genreId
+                    )
                 }
             }.cachedIn(scope)
         } else {

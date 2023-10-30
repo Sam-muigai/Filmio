@@ -1,3 +1,5 @@
+import kotlin.collections.setOf
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -50,6 +52,16 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    disabledRules.set(setOf("no-wildcard-imports", "max-line-length"))
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.SARIF)
     }
 }
 

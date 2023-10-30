@@ -27,7 +27,13 @@ fun MovieItem(
     onClick: () -> Unit = {},
     filmOverview: String
 ) {
-    val movieItemModifier = if (clickable) modifier.clickable { onClick.invoke() }.padding(8.dp) else modifier.padding(8.dp)
+    val movieItemModifier = if (clickable) {
+        modifier.clickable { onClick.invoke() }.padding(8.dp)
+    } else {
+        modifier.padding(
+            8.dp
+        )
+    }
     Row(
         modifier = movieItemModifier,
         verticalAlignment = Alignment.CenterVertically,

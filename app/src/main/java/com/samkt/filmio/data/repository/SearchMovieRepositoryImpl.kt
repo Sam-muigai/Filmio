@@ -5,9 +5,9 @@ import com.samkt.filmio.data.dtos.searchResponse.SearchResult
 import com.samkt.filmio.domain.repository.SearchMovieRepository
 import com.samkt.filmio.util.Result
 import com.samkt.filmio.util.safeApiCall
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
 
 class SearchMovieRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi

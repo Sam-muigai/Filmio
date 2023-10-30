@@ -29,7 +29,9 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindGetMovieDetailsRepository(getMovieDetailsRepositoryImpl: GetMovieDetailsRepositoryImpl): GetMovieDetailsRepository
+    abstract fun bindGetMovieDetailsRepository(
+        getMovieDetailsRepositoryImpl: GetMovieDetailsRepositoryImpl
+    ): GetMovieDetailsRepository
 
     @Binds
     @Singleton
@@ -37,5 +39,7 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindSingleTvSeriesRepository(getTvSeriesDetailRepositoryImpl: GetTvSeriesDetailRepositoryImpl): GetTvSeriesDetailsRepository
+    abstract fun bindSingleTvSeriesRepository(
+        getTvSeriesDetailRepositoryImpl: GetTvSeriesDetailRepositoryImpl
+    ): GetTvSeriesDetailsRepository
 }

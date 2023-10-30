@@ -11,9 +11,9 @@ import com.samkt.filmio.data.paging.TrendingMoviesPagingSource
 import com.samkt.filmio.data.paging.UpcomingMoviesPagingSource
 import com.samkt.filmio.domain.repository.GetMoviesRepository
 import com.samkt.filmio.util.Constants.MOVIES_PER_PAGE
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
-import javax.inject.Inject
 
 class GetMoviesRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi

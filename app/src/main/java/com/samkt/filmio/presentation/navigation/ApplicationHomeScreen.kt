@@ -75,7 +75,9 @@ fun ApplicationHomeScreen(
                         icon = {
                             Icon(
                                 modifier = Modifier.size(25.dp),
-                                painter = painterResource(id = if (isSelected) navItems.selectedIcon else navItems.unselectedIcon),
+                                painter = painterResource(
+                                    id = if (isSelected) navItems.selectedIcon else navItems.unselectedIcon
+                                ),
                                 contentDescription = navItems.label
                             )
                         },
@@ -133,13 +135,17 @@ fun AppNavigation() {
         destination(Screens.ApplicationHomePage.route) {
             ApplicationHomeScreen(
                 onMovieClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                    navController.navigate(
+                        Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id"
+                    )
                 },
                 onSearchClicked = {
                     navController.navigate(Screens.SearchScreen.route)
                 },
                 onTvSeriesClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                    navController.navigate(
+                        Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id"
+                    )
                 },
                 onViewAllClicked = { category ->
                     navController.navigate(Screens.CategoryScreen.route + "?category=$category")
@@ -199,10 +205,14 @@ fun AppNavigation() {
         destination(Screens.SearchScreen.route) {
             SearchScreen(
                 onMovieClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                    navController.navigate(
+                        Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id"
+                    )
                 },
                 onTvSeriesClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                    navController.navigate(
+                        Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id"
+                    )
                 }
             )
         }
@@ -218,13 +228,17 @@ fun AppNavigation() {
             CategoryScreen(
                 category = category,
                 onMovieClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                    navController.navigate(
+                        Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id"
+                    )
                 },
                 onBackClicked = {
                     navController.popBackStack()
                 },
                 onTvSeriesClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                    navController.navigate(
+                        Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id"
+                    )
                 }
             )
         }
@@ -236,7 +250,9 @@ fun AppNavigation() {
                     navController.popBackStack()
                 },
                 onSubmit = { type, category, genre ->
-                    navController.navigate(Screens.FilteredFilmsScreen.route + "?type=$type?category=$category?genre=$genre")
+                    navController.navigate(
+                        Screens.FilteredFilmsScreen.route + "?type=$type?category=$category?genre=$genre"
+                    )
                 }
             )
         }
@@ -259,10 +275,14 @@ fun AppNavigation() {
                     navController.popBackStack()
                 },
                 onMovieClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id")
+                    navController.navigate(
+                        Screens.SingleMovieScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?movieId=$id"
+                    )
                 },
                 onTvSeriesClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id")
+                    navController.navigate(
+                        Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id"
+                    )
                 }
             )
         }

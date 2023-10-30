@@ -6,11 +6,11 @@ import androidx.paging.PagingData
 import com.samkt.filmio.data.dtos.TVSeries
 import com.samkt.filmio.domain.useCases.GetTvSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class TvSeriesViewModel @Inject constructor(

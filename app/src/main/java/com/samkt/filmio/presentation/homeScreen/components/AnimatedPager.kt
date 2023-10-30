@@ -170,7 +170,9 @@ fun AnimatedViewPager(
                     )
                     Text(
                         text = "Details",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontWeight = FontWeight.Bold
+                        )
                     )
                 }
                 Button(

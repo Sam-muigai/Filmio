@@ -1,7 +1,7 @@
 package com.samkt.filmio.util
 
-import timber.log.Timber
 import java.io.IOException
+import timber.log.Timber
 
 sealed class Result<out T>(val data: T? = null, val message: String? = null) {
     class Success<T>(data: T?) : Result<T>(data = data)

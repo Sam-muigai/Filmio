@@ -10,9 +10,9 @@ import com.samkt.filmio.data.paging.PopularTvSeriesPagingSource
 import com.samkt.filmio.data.paging.TrendingTvSeriesPagingSource
 import com.samkt.filmio.domain.repository.GetTvSeriesRepository
 import com.samkt.filmio.util.Constants
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
-import javax.inject.Inject
 
 class GetTvSeriesRepositoryImpl @Inject constructor(
     private val tmdbApi: TMDBApi
