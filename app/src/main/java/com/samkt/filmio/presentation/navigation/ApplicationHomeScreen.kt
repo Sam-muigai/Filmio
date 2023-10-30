@@ -235,10 +235,8 @@ fun AppNavigation() {
                 onBackClicked = {
                     navController.popBackStack()
                 },
-                onTvSeriesClicked = { id, backDropPath, posterImage ->
-                    navController.navigate(
-                        Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id"
-                    )
+                onSearchClicked = {
+                    navController.navigate(Screens.SearchScreen.route)
                 }
             )
         }
