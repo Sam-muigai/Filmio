@@ -1,7 +1,7 @@
 package com.samkt.filmio.domain.repository
 
 import androidx.paging.PagingData
-import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface GetMoviesRepository {

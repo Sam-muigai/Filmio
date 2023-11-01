@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.samkt.filmio.data.dtos.Movie
-import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.data.remote.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.TVSeries
 import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
 import com.samkt.filmio.presentation.sharedComponents.TvSeriesLazyGrid
 

@@ -1,7 +1,7 @@
 package com.samkt.filmio.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.samkt.filmio.data.TMDBApi
+import com.samkt.filmio.data.remote.TMDBApi
 import com.samkt.filmio.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides

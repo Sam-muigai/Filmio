@@ -2,7 +2,7 @@ package com.samkt.filmio.presentation.searchScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samkt.filmio.data.dtos.searchResponse.SearchResult
+import com.samkt.filmio.data.remote.dtos.searchResponse.SearchResult
 import com.samkt.filmio.domain.repository.SearchMovieRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel

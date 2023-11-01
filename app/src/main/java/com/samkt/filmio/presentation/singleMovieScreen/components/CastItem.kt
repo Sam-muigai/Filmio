@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.samkt.filmio.data.dtos.credits.Cast
+import com.samkt.filmio.data.remote.dtos.credits.Cast
 
 @Composable
 fun CastItem(

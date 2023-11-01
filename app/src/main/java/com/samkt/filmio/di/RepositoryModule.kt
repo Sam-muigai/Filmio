@@ -1,10 +1,10 @@
 package com.samkt.filmio.di
 
-import com.samkt.filmio.data.repository.GetMovieDetailsRepositoryImpl
-import com.samkt.filmio.data.repository.GetMoviesRepositoryImpl
-import com.samkt.filmio.data.repository.GetTvSeriesDetailRepositoryImpl
-import com.samkt.filmio.data.repository.GetTvSeriesRepositoryImpl
-import com.samkt.filmio.data.repository.SearchMovieRepositoryImpl
+import com.samkt.filmio.data.remote.repository.GetMovieDetailsRepositoryImpl
+import com.samkt.filmio.data.remote.repository.GetMoviesRepositoryImpl
+import com.samkt.filmio.data.remote.repository.GetTvSeriesDetailRepositoryImpl
+import com.samkt.filmio.data.remote.repository.GetTvSeriesRepositoryImpl
+import com.samkt.filmio.data.remote.repository.SearchMovieRepositoryImpl
 import com.samkt.filmio.domain.repository.GetMovieDetailsRepository
 import com.samkt.filmio.domain.repository.GetMoviesRepository
 import com.samkt.filmio.domain.repository.GetTvSeriesDetailsRepository

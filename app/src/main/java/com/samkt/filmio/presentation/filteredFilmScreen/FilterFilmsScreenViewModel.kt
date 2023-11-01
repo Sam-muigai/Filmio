@@ -7,8 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.samkt.filmio.data.dtos.Movie
-import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.data.remote.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.TVSeries
 import com.samkt.filmio.domain.useCases.GetMoviesUseCase
 import com.samkt.filmio.domain.useCases.GetTvSeriesUseCase
 import com.samkt.filmio.util.toGenreInt

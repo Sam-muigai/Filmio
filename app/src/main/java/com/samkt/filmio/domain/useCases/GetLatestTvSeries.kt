@@ -3,7 +3,7 @@ package com.samkt.filmio.domain.useCases
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
-import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.data.remote.dtos.TVSeries
 import com.samkt.filmio.domain.repository.GetTvSeriesRepository
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope

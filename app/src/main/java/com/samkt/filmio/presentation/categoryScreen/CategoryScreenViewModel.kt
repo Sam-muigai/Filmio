@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.Movie
 import com.samkt.filmio.domain.useCases.GetMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

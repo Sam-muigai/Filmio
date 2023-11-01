@@ -111,4 +111,9 @@ dependencies {
 
     implementation("io.github.fornewid:material-motion-compose-navigation:1.1.0")
     implementation("io.github.fornewid:material-motion-compose-core:1.1.0")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
+    ksp("androidx.room:room-compiler:2.6.0")
 }

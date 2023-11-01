@@ -28,7 +28,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.R
-import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.Movie
 import com.samkt.filmio.presentation.sharedComponents.MoviesLazyGrid
 
 @Composable

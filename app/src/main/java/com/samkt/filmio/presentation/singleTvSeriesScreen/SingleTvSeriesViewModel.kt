@@ -2,9 +2,9 @@ package com.samkt.filmio.presentation.singleTvSeriesScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samkt.filmio.data.dtos.TVSeries
-import com.samkt.filmio.data.dtos.credits.Cast
-import com.samkt.filmio.data.dtos.singleTvSeries.SingleTvSeriesResponse
+import com.samkt.filmio.data.remote.dtos.TVSeries
+import com.samkt.filmio.data.remote.dtos.credits.Cast
+import com.samkt.filmio.data.remote.dtos.singleTvSeries.SingleTvSeriesResponse
 import com.samkt.filmio.domain.repository.GetTvSeriesDetailsRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel

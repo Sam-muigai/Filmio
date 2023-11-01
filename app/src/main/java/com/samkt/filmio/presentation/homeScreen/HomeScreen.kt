@@ -33,8 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.samkt.filmio.data.dtos.Movie
-import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.data.remote.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.TVSeries
 import com.samkt.filmio.presentation.homeScreen.components.AnimatedViewPager
 import com.samkt.filmio.presentation.homeScreen.components.HomeTopSection
 import com.samkt.filmio.presentation.homeScreen.components.MovieItems

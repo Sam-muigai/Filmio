@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.samkt.filmio.data.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.Movie
 import com.samkt.filmio.presentation.homeScreen.components.pager.pagerAnimation
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.util.toMovieGenre

@@ -1,7 +1,7 @@
 package com.samkt.filmio.domain.repository
 
 import androidx.paging.PagingData
-import com.samkt.filmio.data.dtos.TVSeries
+import com.samkt.filmio.data.remote.dtos.TVSeries
 import kotlinx.coroutines.flow.Flow
 
 interface GetTvSeriesRepository {

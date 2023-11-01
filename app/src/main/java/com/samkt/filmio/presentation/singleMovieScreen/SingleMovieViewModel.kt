@@ -2,9 +2,9 @@ package com.samkt.filmio.presentation.singleMovieScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samkt.filmio.data.dtos.Movie
-import com.samkt.filmio.data.dtos.credits.Cast
-import com.samkt.filmio.data.dtos.singleMovie.SingleMovieResponseDto
+import com.samkt.filmio.data.remote.dtos.Movie
+import com.samkt.filmio.data.remote.dtos.credits.Cast
+import com.samkt.filmio.data.remote.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.domain.repository.GetMovieDetailsRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
