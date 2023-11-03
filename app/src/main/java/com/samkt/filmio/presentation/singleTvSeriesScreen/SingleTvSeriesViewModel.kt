@@ -1,8 +1,11 @@
 package com.samkt.filmio.presentation.singleTvSeriesScreen
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.samkt.filmio.data.remote.dtos.Movie
+import com.samkt.filmio.data.mappers.toTvSeriesEntity
 import com.samkt.filmio.data.remote.dtos.TVSeries
 import com.samkt.filmio.data.remote.dtos.credits.Cast
 import com.samkt.filmio.data.remote.dtos.singleTvSeries.SingleTvSeriesResponse
@@ -28,11 +31,33 @@ class SingleTvSeriesViewModel @Inject constructor(
     val tvSeriesUiState: StateFlow<TvSeriesUiState>
         get() = _tvSeriesUiState
 
-    fun saveMovie(movie: Movie){
+    var tvSeriesSaved by mutableStateOf(0)
+        private set
 
+    fun saveTvSeries(tvSeries: SingleTvSeriesResponse) {
+        viewModelScope.launch {
+            localMoviesRepository.saveTvSeries(tvSeries.toTvSeriesEntity())
+        }.invokeOnCompletion {
+            checkIfTvSeriesSaved(tvSeries.id!!)
+        }
+    }
+
+    fun deleteTvSeries(tvSeries: SingleTvSeriesResponse) {
+        viewModelScope.launch {
+            localMoviesRepository.deleteTvSeries(tvSeries.toTvSeriesEntity())
+        }.invokeOnCompletion {
+            checkIfTvSeriesSaved(tvSeries.id!!)
+        }
+    }
+
+    private fun checkIfTvSeriesSaved(tvSeriesId: Int) {
+        viewModelScope.launch {
+            tvSeriesSaved = localMoviesRepository.tvSeriesExists(tvSeriesId)
+        }
     }
 
     fun getTvSeries(tvSeriesId: Int) {
+        checkIfTvSeriesSaved(tvSeriesId)
         viewModelScope.launch {
             _tvSeriesUiState.update {
                 it.copy(

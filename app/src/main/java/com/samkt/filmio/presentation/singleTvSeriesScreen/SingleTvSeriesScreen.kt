@@ -1,5 +1,7 @@
 package com.samkt.filmio.presentation.singleTvSeriesScreen
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -41,15 +43,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.samkt.filmio.R
+import com.samkt.filmio.data.remote.dtos.singleTvSeries.SingleTvSeriesResponse
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.sharedComponents.TvSeriesTabsItem
 import com.samkt.filmio.presentation.sharedComponents.tvSeriesTabs
+import com.samkt.filmio.util.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -75,7 +80,10 @@ fun TvSeriesDetailScreen(
         uiState = uiState,
         tvSeriesImage = posterImage,
         backGroundImage = backDropPath,
-        onBackClicked = onBackClicked
+        isSaved = viewModel.tvSeriesSaved != 0,
+        onBackClicked = onBackClicked,
+        onSaveClicked = viewModel::saveTvSeries,
+        onDeleteClicked = viewModel::deleteTvSeries
     )
 }
 
@@ -86,9 +94,14 @@ fun TvSeriesDetailScreenContent(
     uiState: TvSeriesUiState,
     tvSeriesImage: String,
     backGroundImage: String,
-    onBackClicked: () -> Unit
+    isSaved: Boolean = false,
+    onBackClicked: () -> Unit,
+    onSaveClicked: (SingleTvSeriesResponse) -> Unit,
+    onDeleteClicked: (SingleTvSeriesResponse) -> Unit
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
+
+    val context = LocalContext.current
 
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -168,7 +181,7 @@ fun TvSeriesDetailScreenContent(
                             ) {
                                 Text(
                                     text = tvSeriesDetails?.originalName ?: tvSeriesDetails?.name
-                                        ?: "Unknown",
+                                    ?: "",
                                     color = MaterialTheme.colorScheme.onBackground,
                                     style = MaterialTheme.typography.titleLarge.copy(
                                         fontWeight = FontWeight.Normal
@@ -213,10 +226,20 @@ fun TvSeriesDetailScreenContent(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 8.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            uiState.tvSeries?.let {
+                                if (isSaved) {
+                                    onDeleteClicked(it)
+                                    showToast(context,"Film deleted successfully")
+                                } else {
+                                    onSaveClicked(it)
+                                    showToast(context,"Film saved successfully")
+                                }
+                            }
+                        },
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(text = "ADD TO LIST")
+                        Text(text = if (isSaved) "DELETE" else "ADD TO LIST")
                     }
                     OutlinedButton(
                         modifier = Modifier
@@ -265,7 +288,8 @@ fun TvSeriesDetailScreenContent(
         }
     ) {
         LazyColumn(
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize(),
             content = {
                 stickyHeader {
@@ -323,3 +347,5 @@ fun TvSeriesTabContents(
         tabs[pageIndex].screen(tvScreenState)
     }
 }
+
+

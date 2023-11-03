@@ -1,6 +1,7 @@
 package com.samkt.filmio.presentation.savedFilms
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,17 +43,16 @@ fun WatchListScreen(
 fun WatchListScreenContent(
     modifier: Modifier = Modifier,
     movies: List<MovieEntity>,
-    tvSeries:List<TvSeriesEntity>
+    tvSeries: List<TvSeriesEntity>
 ) {
     Scaffold(
         topBar = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp),
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "WatchList",
                     style = MaterialTheme.typography.titleLarge.copy(
@@ -72,20 +68,44 @@ fun WatchListScreenContent(
         ) {
             LazyColumn(
                 content = {
-                    stickyHeader {
-                        Text(text = "Movies")
+                    if (movies.isNotEmpty()){
+                        stickyHeader {
+                            Row(
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.background)
+                                    .fillMaxWidth()
+                                    .padding(vertical = 10.dp, horizontal = 20.dp)
+                            ) {
+                                Text(
+                                    text = "Movies",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
                     }
-                    items(movies){movie ->
+                    items(movies) { movie ->
                         MovieItem(
                             filmName = movie.title ?: movie.originalTitle ?: "",
                             filmOverview = movie.overview ?: "",
                             imageUrl = movie.posterPath ?: ""
                         )
                     }
-                    stickyHeader {
-                        Text(text = "Tv Series")
+                    if (tvSeries.isNotEmpty()){
+                        stickyHeader {
+                            Row(
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.background)
+                                    .fillMaxWidth()
+                                    .padding(vertical = 10.dp, horizontal = 20.dp)
+                            ) {
+                                Text(
+                                    text = "TvSeries",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
                     }
-                    items(tvSeries){tvSeries ->
+                    items(tvSeries) { tvSeries ->
                         MovieItem(
                             filmName = tvSeries.name ?: tvSeries.originalName ?: "",
                             filmOverview = tvSeries.overview ?: "",

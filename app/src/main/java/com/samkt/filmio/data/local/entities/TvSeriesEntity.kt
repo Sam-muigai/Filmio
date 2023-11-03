@@ -12,5 +12,5 @@ data class TvSeriesEntity(
     val originalName: String?,
     val overview: String?,
     val posterPath: String?,
-    val name: String?,
+    val name: String?
 )

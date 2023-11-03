@@ -4,10 +4,10 @@ import com.samkt.filmio.data.local.entities.FilmDatabase
 import com.samkt.filmio.data.local.entities.MovieEntity
 import com.samkt.filmio.data.local.entities.TvSeriesEntity
 import com.samkt.filmio.domain.repository.LocalFilmsRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
- class LocalFilmsRepositoryImpl @Inject constructor(
+class LocalFilmsRepositoryImpl @Inject constructor(
     filmsDatabase: FilmDatabase
 ) : LocalFilmsRepository {
 
@@ -24,25 +24,23 @@ import javax.inject.Inject
         filmsDao.deleteMovie(movieEntity)
     }
 
-     override suspend fun movieExists(movieId:Int): Int {
-         return filmsDao.movieExists(movieId)
-     }
+    override suspend fun movieExists(movieId: Int): Int {
+        return filmsDao.movieExists(movieId)
+    }
 
-     override fun getAllTvSeries(): Flow<List<TvSeriesEntity>> {
-         return filmsDao.getAllTvSeries()
-     }
+    override fun getAllTvSeries(): Flow<List<TvSeriesEntity>> {
+        return filmsDao.getAllTvSeries()
+    }
 
-     override suspend fun saveTvSeries(tvSeriesEntity: TvSeriesEntity) {
-         filmsDao.addTvSeries(tvSeriesEntity)
-     }
+    override suspend fun saveTvSeries(tvSeriesEntity: TvSeriesEntity) {
+        filmsDao.addTvSeries(tvSeriesEntity)
+    }
 
-     override suspend fun deleteTvSeries(tvSeriesEntity: TvSeriesEntity) {
+    override suspend fun deleteTvSeries(tvSeriesEntity: TvSeriesEntity) {
         filmsDao.deleteTvSeries(tvSeriesEntity)
-     }
+    }
 
-     override suspend fun tvSeriesExists(tvSeriesId: Int) {
-         filmsDao.tvSeriesExists(tvSeriesId)
-     }
-
-
- }
+    override suspend fun tvSeriesExists(tvSeriesId: Int): Int {
+        return filmsDao.tvSeriesExists(tvSeriesId)
+    }
+}

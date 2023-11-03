@@ -33,8 +33,7 @@ class SingleMovieViewModel @Inject constructor(
     private val _existInDb = mutableStateOf(0)
     val existInDb = _existInDb
 
-
-    fun saveMovie(movie: SingleMovieResponseDto){
+    fun saveMovie(movie: SingleMovieResponseDto) {
         viewModelScope.launch {
             localMoviesRepository.addMovie(
                 movie.toMovieEntity()
@@ -44,13 +43,13 @@ class SingleMovieViewModel @Inject constructor(
         }
     }
 
-    private fun checkIfFilmIsSaved(movieId:Int){
+    private fun checkIfFilmIsSaved(movieId: Int) {
         viewModelScope.launch {
             _existInDb.value = localMoviesRepository.movieExists(movieId)
         }
     }
 
-    fun delete(movie: SingleMovieResponseDto){
+    fun delete(movie: SingleMovieResponseDto) {
         viewModelScope.launch {
             localMoviesRepository.deleteMovies(movie.toMovieEntity())
         }.invokeOnCompletion {

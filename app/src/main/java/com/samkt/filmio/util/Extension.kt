@@ -1,7 +1,9 @@
 package com.samkt.filmio.util
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.http.HttpException
+import android.widget.Toast
 import java.io.IOException
 
 fun Int.toMovieGenre(): String {
@@ -105,4 +107,8 @@ fun Throwable.toErrorMessage(): String {
         is IOException -> "No internet connection Please check and try again later."
         else -> message ?: "Unexpected error occurred"
     }
+}
+
+fun showToast(context: Context, message:String){
+    Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
 }

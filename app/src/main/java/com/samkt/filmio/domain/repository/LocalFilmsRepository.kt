@@ -12,6 +12,5 @@ interface LocalFilmsRepository {
     fun getAllTvSeries(): Flow<List<TvSeriesEntity>>
     suspend fun saveTvSeries(tvSeriesEntity: TvSeriesEntity)
     suspend fun deleteTvSeries(tvSeriesEntity: TvSeriesEntity)
-    suspend fun tvSeriesExists(tvSeriesId: Int)
-
+    suspend fun tvSeriesExists(tvSeriesId: Int): Int
 }

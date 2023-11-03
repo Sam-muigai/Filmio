@@ -7,12 +7,20 @@ import com.samkt.filmio.data.remote.dtos.singleTvSeries.SingleTvSeriesResponse
 
 fun SingleMovieResponseDto.toMovieEntity(): MovieEntity {
     return MovieEntity(
-        id, originalTitle, overview, posterPath, title
+        id,
+        originalTitle,
+        overview,
+        posterPath,
+        title
     )
 }
 
-fun SingleTvSeriesResponse.toTvSeriesEntity() :TvSeriesEntity{
+fun SingleTvSeriesResponse.toTvSeriesEntity(): TvSeriesEntity {
     return TvSeriesEntity(
-        id, originalName, overview, posterPath, name
+        id,
+        originalName,
+        overview,
+        posterPath,
+        name
     )
 }

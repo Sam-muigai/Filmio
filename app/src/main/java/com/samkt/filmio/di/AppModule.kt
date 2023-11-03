@@ -39,8 +39,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideFilmDatabase(@ApplicationContext context: Context):FilmDatabase{
-        return Room.databaseBuilder(context,FilmDatabase::class.java,"film_db")
+    fun provideFilmDatabase(@ApplicationContext context: Context): FilmDatabase {
+        return Room.databaseBuilder(context, FilmDatabase::class.java, "film_db")
             .fallbackToDestructiveMigration()
             .build()
     }

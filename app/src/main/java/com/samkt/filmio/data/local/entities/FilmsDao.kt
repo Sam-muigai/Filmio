@@ -11,9 +11,11 @@ import kotlinx.coroutines.flow.Flow
 interface FilmsDao {
 
     @Query("SELECT * FROM movie_entity")
-    fun getAllMovies():Flow<List<MovieEntity>>
+    fun getAllMovies(): Flow<List<MovieEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovie(movieEntity: MovieEntity)
+
     @Delete
     suspend fun deleteMovie(movieEntity: MovieEntity)
 
@@ -21,9 +23,11 @@ interface FilmsDao {
     suspend fun movieExists(id: Int): Int
 
     @Query("SELECT * FROM tv_series")
-    fun getAllTvSeries():Flow<List<TvSeriesEntity>>
+    fun getAllTvSeries(): Flow<List<TvSeriesEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTvSeries(tvSeriesEntity: TvSeriesEntity)
+
     @Delete
     suspend fun deleteTvSeries(tvSeriesEntity: TvSeriesEntity)
 

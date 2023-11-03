@@ -119,7 +119,7 @@ fun ApplicationHomeScreen(
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screens.ApplicationHomePage.route) {
-        composable(Screens.ApplicationHomePage.route) {
+        destination(Screens.ApplicationHomePage.route) {
             ApplicationHomeScreen(
                 onMovieClicked = { id, backDropPath, posterImage ->
                     navController.navigate(
@@ -142,7 +142,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(
+        destination(
             route = Screens.SingleMovieScreen.route + "?backDropPath={backDropPath}" + "?posterImage={posterImage}" + "?movieId={movieId}",
             arguments = listOf(
                 navArgument("backDropPath") {
@@ -166,7 +166,7 @@ fun AppNavigation() {
             )
         }
 
-        composable(
+        destination(
             route = Screens.SingleTvSeriesScreen.route + "?backDropPath={backDropPath}" + "?posterImage={posterImage}" + "?tvSeriesId={tvSeriesId}",
             arguments = listOf(
                 navArgument("backDropPath") {
@@ -189,7 +189,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(Screens.SearchScreen.route) {
+        destination(Screens.SearchScreen.route) {
             SearchScreen(
                 onMovieClicked = { id, backDropPath, posterImage ->
                     navController.navigate(
@@ -203,7 +203,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(
+        destination(
             route = Screens.CategoryScreen.route + "?category={category}",
             arguments = listOf(
                 navArgument("category") {
@@ -227,7 +227,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(
+        destination(
             route = Screens.FilterScreen.route
         ) {
             FilterScreen(
@@ -241,7 +241,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(
+        destination(
             route = Screens.FilteredFilmsScreen.route + "?type={type}" + "?category={category}" + "?genre={genre}",
             arguments = listOf(
                 navArgument("type") {
@@ -273,4 +273,3 @@ fun AppNavigation() {
         }
     }
 }
-

@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,6 +52,7 @@ import com.samkt.filmio.data.remote.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.sharedComponents.MovieTabsItem
 import com.samkt.filmio.presentation.sharedComponents.movieTabs
+import com.samkt.filmio.util.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -98,9 +100,11 @@ fun SingleMovieScreenContent(
             3
         })
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     val movieDetails = uiState.movieDetails
     val dataRetrieved = !uiState.loading && uiState.overViewError == null
-    CollapsingToolbarScaffold(modifier = modifier.fillMaxSize(),
+    CollapsingToolbarScaffold(
+        modifier = modifier.fillMaxSize(),
         state = state,
         scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
         toolbar = {
@@ -114,12 +118,14 @@ fun SingleMovieScreenContent(
                     .pin()
             )
             Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(230.dp)
-                    .graphicsLayer {
-                        alpha = if (state.toolbarState.progress == 0f) 0f else 1f
-                    }) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(230.dp)
+                        .graphicsLayer {
+                            alpha = if (state.toolbarState.progress == 0f) 0f else 1f
+                        }
+                ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         MovieCard(
                             modifier = Modifier.fillMaxSize(),
@@ -132,8 +138,10 @@ fun SingleMovieScreenContent(
                                 .background(
                                     Brush.verticalGradient(
                                         colors = listOf(
-                                            Color.Transparent, MaterialTheme.colorScheme.background
-                                        ), startY = 150f
+                                            Color.Transparent,
+                                            MaterialTheme.colorScheme.background
+                                        ),
+                                        startY = 150f
                                     )
                                 )
                         )
@@ -142,7 +150,8 @@ fun SingleMovieScreenContent(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
                             .padding(8.dp)
-                            .height(150.dp), verticalAlignment = Alignment.Bottom
+                            .height(150.dp),
+                        verticalAlignment = Alignment.Bottom
                     ) {
                         MovieCard(
                             modifier = Modifier
@@ -159,7 +168,7 @@ fun SingleMovieScreenContent(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    text = movieDetails?.originalTitle ?: "No name",
+                                    text = movieDetails?.originalTitle ?: "",
                                     color = MaterialTheme.colorScheme.onBackground,
                                     style = MaterialTheme.typography.titleLarge.copy(
                                         fontWeight = FontWeight.Normal
@@ -205,12 +214,15 @@ fun SingleMovieScreenContent(
                             .weight(1f)
                             .padding(horizontal = 8.dp),
                         onClick = {
-                            if (isSaved)
+                            if (isSaved) {
                                 uiState.movieDetails?.let { onDeleteClicked(it) }
-                                else
-                            uiState.movieDetails?.let { onSaveMovieClicked(it) }
+                                showToast(context,"Movie deleted successfully")
+                            } else {
+                                uiState.movieDetails?.let { onSaveMovieClicked(it) }
+                                showToast(context,"Movie saved successfully")
+                            }
                         },
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(text = if (isSaved) "DELETE" else "ADD TO LIST")
                     }
@@ -258,10 +270,12 @@ fun SingleMovieScreenContent(
                     )
                 }
             }
-        }) {
-        LazyColumn(modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+        }
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .fillMaxSize(),
             content = {
                 stickyHeader {
                     Column {
@@ -274,7 +288,8 @@ fun SingleMovieScreenContent(
                         )
                     }
                 }
-            })
+            }
+        )
     }
 }
 
@@ -287,7 +302,8 @@ fun MovieTabContents(
     overviewScreenState: MovieScreenUiState
 ) {
     HorizontalPager(
-        modifier = modifier.fillMaxSize(), state = pagerState
+        modifier = modifier.fillMaxSize(),
+        state = pagerState
     ) { pageIndex ->
         tabs[pageIndex].screen(
             overviewScreenState
@@ -298,7 +314,8 @@ fun MovieTabContents(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieTabs(
-    pagerState: PagerState, scope: CoroutineScope
+    pagerState: PagerState,
+    scope: CoroutineScope
 ) {
     TabRow(
         modifier = Modifier.fillMaxWidth(0.7f),

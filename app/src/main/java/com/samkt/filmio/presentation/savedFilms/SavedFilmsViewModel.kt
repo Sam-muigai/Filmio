@@ -6,23 +6,23 @@ import com.samkt.filmio.data.local.entities.MovieEntity
 import com.samkt.filmio.data.local.entities.TvSeriesEntity
 import com.samkt.filmio.domain.repository.LocalFilmsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 @HiltViewModel
 class SavedFilmsViewModel @Inject constructor(
     private val localMoviesRepository: LocalFilmsRepository
-):ViewModel(){
+) : ViewModel() {
 
     private val _savedMovies = MutableStateFlow<List<MovieEntity>>(emptyList())
     private val _savedTvSeries = MutableStateFlow<List<TvSeriesEntity>>(emptyList())
-    val savedMovies:StateFlow<List<MovieEntity>>
+    val savedMovies: StateFlow<List<MovieEntity>>
         get() = _savedMovies
-    val savedTvSeries:StateFlow<List<TvSeriesEntity>>
+    val savedTvSeries: StateFlow<List<TvSeriesEntity>>
         get() = _savedTvSeries
 
     init {
@@ -31,12 +31,12 @@ class SavedFilmsViewModel @Inject constructor(
     }
 
     private fun getLocalMovies() {
-        localMoviesRepository.getAllMovies().onEach {movies ->
+        localMoviesRepository.getAllMovies().onEach { movies ->
             _savedMovies.update { movies }
         }.launchIn(viewModelScope)
     }
-    private fun getSavedTvSeries(){
-        localMoviesRepository.getAllTvSeries().onEach{tvSeries ->
+    private fun getSavedTvSeries() {
+        localMoviesRepository.getAllTvSeries().onEach { tvSeries ->
             _savedTvSeries.update { tvSeries }
         }.launchIn(viewModelScope)
     }
