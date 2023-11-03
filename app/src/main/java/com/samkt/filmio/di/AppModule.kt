@@ -1,11 +1,15 @@
 package com.samkt.filmio.di
 
+import android.content.Context
+import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.samkt.filmio.data.local.entities.FilmDatabase
 import com.samkt.filmio.data.remote.TMDBApi
 import com.samkt.filmio.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -31,5 +35,13 @@ object AppModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
             .create(TMDBApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFilmDatabase(@ApplicationContext context: Context):FilmDatabase{
+        return Room.databaseBuilder(context,FilmDatabase::class.java,"film_db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

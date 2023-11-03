@@ -47,6 +47,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.samkt.filmio.R
+import com.samkt.filmio.data.remote.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.presentation.sharedComponents.MovieTabsItem
 import com.samkt.filmio.presentation.sharedComponents.movieTabs
@@ -64,18 +65,18 @@ fun SingleMovieScreen(
     onBackClicked: () -> Unit,
     viewModel: SingleMovieViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(
-        key1 = true,
-        block = {
-            viewModel.getMovieDetails(movieId)
-        }
-    )
+    LaunchedEffect(key1 = true, block = {
+        viewModel.getMovieDetails(movieId)
+    })
     val movieUiState = viewModel.movieScreenUiState.collectAsState().value
     SingleMovieScreenContent(
         movieImage = movieImage,
         backGroundImage = backGroundImage,
         uiState = movieUiState,
-        onBackClicked = onBackClicked
+        onBackClicked = onBackClicked,
+        isSaved = viewModel.existInDb.value != 0,
+        onSaveMovieClicked = viewModel::saveMovie,
+        onDeleteClicked = viewModel::delete
     )
 }
 
@@ -86,21 +87,20 @@ fun SingleMovieScreenContent(
     movieImage: String,
     backGroundImage: String,
     uiState: MovieScreenUiState,
-    onBackClicked: () -> Unit = {}
+    onBackClicked: () -> Unit = {},
+    isSaved: Boolean = false,
+    onDeleteClicked: (SingleMovieResponseDto) -> Unit = {},
+    onSaveMovieClicked: (SingleMovieResponseDto) -> Unit
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-        initialPageOffsetFraction = 0f,
-        pageCount = {
+    val pagerState =
+        rememberPagerState(initialPage = 0, initialPageOffsetFraction = 0f, pageCount = {
             3
-        }
-    )
+        })
     val scope = rememberCoroutineScope()
     val movieDetails = uiState.movieDetails
     val dataRetrieved = !uiState.loading && uiState.overViewError == null
-    CollapsingToolbarScaffold(
-        modifier = modifier.fillMaxSize(),
+    CollapsingToolbarScaffold(modifier = modifier.fillMaxSize(),
         state = state,
         scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
         toolbar = {
@@ -114,14 +114,12 @@ fun SingleMovieScreenContent(
                     .pin()
             )
             Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(230.dp)
-                        .graphicsLayer {
-                            alpha = if (state.toolbarState.progress == 0f) 0f else 1f
-                        }
-                ) {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(230.dp)
+                    .graphicsLayer {
+                        alpha = if (state.toolbarState.progress == 0f) 0f else 1f
+                    }) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         MovieCard(
                             modifier = Modifier.fillMaxSize(),
@@ -134,10 +132,8 @@ fun SingleMovieScreenContent(
                                 .background(
                                     Brush.verticalGradient(
                                         colors = listOf(
-                                            Color.Transparent,
-                                            MaterialTheme.colorScheme.background
-                                        ),
-                                        startY = 150f
+                                            Color.Transparent, MaterialTheme.colorScheme.background
+                                        ), startY = 150f
                                     )
                                 )
                         )
@@ -146,8 +142,7 @@ fun SingleMovieScreenContent(
                         modifier = Modifier
                             .align(Alignment.BottomStart)
                             .padding(8.dp)
-                            .height(150.dp),
-                        verticalAlignment = Alignment.Bottom
+                            .height(150.dp), verticalAlignment = Alignment.Bottom
                     ) {
                         MovieCard(
                             modifier = Modifier
@@ -209,10 +204,15 @@ fun SingleMovieScreenContent(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 8.dp),
-                        onClick = { /*TODO*/ },
-                        shape = RoundedCornerShape(8.dp)
+                        onClick = {
+                            if (isSaved)
+                                uiState.movieDetails?.let { onDeleteClicked(it) }
+                                else
+                            uiState.movieDetails?.let { onSaveMovieClicked(it) }
+                        },
+                        shape = RoundedCornerShape(8.dp),
                     ) {
-                        Text(text = "ADD TO LIST")
+                        Text(text = if (isSaved) "DELETE" else "ADD TO LIST")
                     }
                     OutlinedButton(
                         modifier = Modifier
@@ -258,12 +258,10 @@ fun SingleMovieScreenContent(
                     )
                 }
             }
-        }
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize(),
+        }) {
+        LazyColumn(modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize(),
             content = {
                 stickyHeader {
                     Column {
@@ -276,8 +274,7 @@ fun SingleMovieScreenContent(
                         )
                     }
                 }
-            }
-        )
+            })
     }
 }
 
@@ -290,8 +287,7 @@ fun MovieTabContents(
     overviewScreenState: MovieScreenUiState
 ) {
     HorizontalPager(
-        modifier = modifier.fillMaxSize(),
-        state = pagerState
+        modifier = modifier.fillMaxSize(), state = pagerState
     ) { pageIndex ->
         tabs[pageIndex].screen(
             overviewScreenState
@@ -302,8 +298,7 @@ fun MovieTabContents(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieTabs(
-    pagerState: PagerState,
-    scope: CoroutineScope
+    pagerState: PagerState, scope: CoroutineScope
 ) {
     TabRow(
         modifier = Modifier.fillMaxWidth(0.7f),
@@ -311,15 +306,11 @@ fun MovieTabs(
         selectedTabIndex = pagerState.currentPage
     ) {
         movieTabs.forEachIndexed { index, tab ->
-            Tab(
-                selected = pagerState.currentPage == index,
-                onClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(index)
-                    }
-                },
-                text = { Text(text = tab.label) }
-            )
+            Tab(selected = pagerState.currentPage == index, onClick = {
+                scope.launch {
+                    pagerState.animateScrollToPage(index)
+                }
+            }, text = { Text(text = tab.label) })
         }
     }
 }

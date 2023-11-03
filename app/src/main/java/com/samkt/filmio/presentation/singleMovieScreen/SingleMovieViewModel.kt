@@ -1,11 +1,14 @@
 package com.samkt.filmio.presentation.singleMovieScreen
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samkt.filmio.data.mappers.toMovieEntity
 import com.samkt.filmio.data.remote.dtos.Movie
 import com.samkt.filmio.data.remote.dtos.credits.Cast
 import com.samkt.filmio.data.remote.dtos.singleMovie.SingleMovieResponseDto
 import com.samkt.filmio.domain.repository.GetMovieDetailsRepository
+import com.samkt.filmio.domain.repository.LocalFilmsRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,14 +22,44 @@ import timber.log.Timber
 
 @HiltViewModel
 class SingleMovieViewModel @Inject constructor(
-    private val movieDetailsRepository: GetMovieDetailsRepository
+    private val movieDetailsRepository: GetMovieDetailsRepository,
+    private val localMoviesRepository: LocalFilmsRepository
 ) : ViewModel() {
 
     private val _movieScreenUiState = MutableStateFlow(MovieScreenUiState())
     val movieScreenUiState: StateFlow<MovieScreenUiState>
         get() = _movieScreenUiState
 
+    private val _existInDb = mutableStateOf(0)
+    val existInDb = _existInDb
+
+
+    fun saveMovie(movie: SingleMovieResponseDto){
+        viewModelScope.launch {
+            localMoviesRepository.addMovie(
+                movie.toMovieEntity()
+            )
+        }.invokeOnCompletion {
+            checkIfFilmIsSaved(movie.id)
+        }
+    }
+
+    private fun checkIfFilmIsSaved(movieId:Int){
+        viewModelScope.launch {
+            _existInDb.value = localMoviesRepository.movieExists(movieId)
+        }
+    }
+
+    fun delete(movie: SingleMovieResponseDto){
+        viewModelScope.launch {
+            localMoviesRepository.deleteMovies(movie.toMovieEntity())
+        }.invokeOnCompletion {
+            checkIfFilmIsSaved(movie.id)
+        }
+    }
+
     fun getMovieDetails(movieId: Int) {
+        checkIfFilmIsSaved(movieId)
         _movieScreenUiState.update {
             it.copy(
                 loading = true
@@ -100,6 +133,7 @@ class SingleMovieViewModel @Inject constructor(
                         }
                         is Result.Success -> {
                             _movieScreenUiState.update { state ->
+
                                 state.copy(
                                     loading = false,
                                     overViewError = null,

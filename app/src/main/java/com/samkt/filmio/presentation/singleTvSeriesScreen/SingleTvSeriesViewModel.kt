@@ -2,10 +2,12 @@ package com.samkt.filmio.presentation.singleTvSeriesScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.samkt.filmio.data.remote.dtos.Movie
 import com.samkt.filmio.data.remote.dtos.TVSeries
 import com.samkt.filmio.data.remote.dtos.credits.Cast
 import com.samkt.filmio.data.remote.dtos.singleTvSeries.SingleTvSeriesResponse
 import com.samkt.filmio.domain.repository.GetTvSeriesDetailsRepository
+import com.samkt.filmio.domain.repository.LocalFilmsRepository
 import com.samkt.filmio.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,12 +20,17 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SingleTvSeriesViewModel @Inject constructor(
-    private val singleTvSeriesDetailsRepository: GetTvSeriesDetailsRepository
+    private val singleTvSeriesDetailsRepository: GetTvSeriesDetailsRepository,
+    private val localMoviesRepository: LocalFilmsRepository
 ) : ViewModel() {
 
     private val _tvSeriesUiState = MutableStateFlow(TvSeriesUiState())
     val tvSeriesUiState: StateFlow<TvSeriesUiState>
         get() = _tvSeriesUiState
+
+    fun saveMovie(movie: Movie){
+
+    }
 
     fun getTvSeries(tvSeriesId: Int) {
         viewModelScope.launch {

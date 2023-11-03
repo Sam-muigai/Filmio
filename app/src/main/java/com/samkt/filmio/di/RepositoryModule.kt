@@ -1,5 +1,6 @@
 package com.samkt.filmio.di
 
+import com.samkt.filmio.data.local.repository.LocalFilmsRepositoryImpl
 import com.samkt.filmio.data.remote.repository.GetMovieDetailsRepositoryImpl
 import com.samkt.filmio.data.remote.repository.GetMoviesRepositoryImpl
 import com.samkt.filmio.data.remote.repository.GetTvSeriesDetailRepositoryImpl
@@ -9,6 +10,7 @@ import com.samkt.filmio.domain.repository.GetMovieDetailsRepository
 import com.samkt.filmio.domain.repository.GetMoviesRepository
 import com.samkt.filmio.domain.repository.GetTvSeriesDetailsRepository
 import com.samkt.filmio.domain.repository.GetTvSeriesRepository
+import com.samkt.filmio.domain.repository.LocalFilmsRepository
 import com.samkt.filmio.domain.repository.SearchMovieRepository
 import dagger.Binds
 import dagger.Module
@@ -42,4 +44,10 @@ abstract class RepositoryModule {
     abstract fun bindSingleTvSeriesRepository(
         getTvSeriesDetailRepositoryImpl: GetTvSeriesDetailRepositoryImpl
     ): GetTvSeriesDetailsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindLocalMoviesRepository(
+        localFilmsRepositoryImpl: LocalFilmsRepositoryImpl
+    ): LocalFilmsRepository
 }
