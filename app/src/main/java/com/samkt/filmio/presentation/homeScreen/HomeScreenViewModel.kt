@@ -40,7 +40,6 @@ class HomeScreenViewModel @Inject constructor(
     val topRatedMovies: StateFlow<PagingData<Movie>>
         get() = _topRatedMovies
 
-
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()

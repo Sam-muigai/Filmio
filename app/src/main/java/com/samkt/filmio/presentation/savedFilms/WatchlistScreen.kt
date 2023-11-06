@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,7 +67,7 @@ fun WatchListScreenContent(
         ) {
             LazyColumn(
                 content = {
-                    if (movies.isNotEmpty()){
+                    if (movies.isNotEmpty()) {
                         stickyHeader {
                             Row(
                                 modifier = Modifier
@@ -90,7 +89,7 @@ fun WatchListScreenContent(
                             imageUrl = movie.posterPath ?: ""
                         )
                     }
-                    if (tvSeries.isNotEmpty()){
+                    if (tvSeries.isNotEmpty()) {
                         stickyHeader {
                             Row(
                                 modifier = Modifier

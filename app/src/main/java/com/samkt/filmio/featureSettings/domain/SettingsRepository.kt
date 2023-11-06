@@ -1,10 +1,9 @@
-package com.samkt.filmio.feature_settings.domain
+package com.samkt.filmio.featureSettings.domain
 
 import kotlinx.coroutines.flow.Flow
-
 
 interface SettingsRepository {
 
     val isDarkTheme: Flow<Boolean?>
-    suspend fun saveDarkTheme(isDarkTheme:Boolean)
+    suspend fun saveDarkTheme(isDarkTheme: Boolean)
 }

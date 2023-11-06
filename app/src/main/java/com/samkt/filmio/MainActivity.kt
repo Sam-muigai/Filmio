@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val viewModel: MainViewModel = hiltViewModel()
-            val isDarkTheme  = viewModel.isDarkTheme.collectAsState().value
+            val isDarkTheme = viewModel.isDarkTheme.collectAsState().value
             FilmioTheme(
                 darkTheme = isDarkTheme ?: isSystemInDarkTheme()
             ) {

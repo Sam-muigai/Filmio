@@ -1,4 +1,4 @@
-package com.samkt.filmio.feature_settings.presentation
+package com.samkt.filmio.featureSettings.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,10 +18,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -60,7 +56,7 @@ fun SettingsScreen(
         ) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
                 Column(
                     modifier = Modifier.padding(8.dp),
@@ -76,7 +72,8 @@ fun SettingsScreen(
                     )
                     Button(
                         shape = RoundedCornerShape(8.dp),
-                        onClick = { }) {
+                        onClick = { }
+                    ) {
                         Text(text = "Continue")
                     }
                 }

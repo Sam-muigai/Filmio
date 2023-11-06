@@ -216,10 +216,10 @@ fun SingleMovieScreenContent(
                         onClick = {
                             if (isSaved) {
                                 uiState.movieDetails?.let { onDeleteClicked(it) }
-                                showToast(context,"Movie deleted successfully")
+                                showToast(context, "Movie deleted successfully")
                             } else {
                                 uiState.movieDetails?.let { onSaveMovieClicked(it) }
-                                showToast(context,"Movie saved successfully")
+                                showToast(context, "Movie saved successfully")
                             }
                         },
                         shape = RoundedCornerShape(8.dp)

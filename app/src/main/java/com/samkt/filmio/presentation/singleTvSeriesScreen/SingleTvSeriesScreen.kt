@@ -1,7 +1,5 @@
 package com.samkt.filmio.presentation.singleTvSeriesScreen
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -181,7 +179,7 @@ fun TvSeriesDetailScreenContent(
                             ) {
                                 Text(
                                     text = tvSeriesDetails?.originalName ?: tvSeriesDetails?.name
-                                    ?: "",
+                                        ?: "",
                                     color = MaterialTheme.colorScheme.onBackground,
                                     style = MaterialTheme.typography.titleLarge.copy(
                                         fontWeight = FontWeight.Normal
@@ -230,10 +228,10 @@ fun TvSeriesDetailScreenContent(
                             uiState.tvSeries?.let {
                                 if (isSaved) {
                                     onDeleteClicked(it)
-                                    showToast(context,"Film deleted successfully")
+                                    showToast(context, "Film deleted successfully")
                                 } else {
                                     onSaveClicked(it)
-                                    showToast(context,"Film saved successfully")
+                                    showToast(context, "Film saved successfully")
                                 }
                             }
                         },
@@ -347,5 +345,3 @@ fun TvSeriesTabContents(
         tabs[pageIndex].screen(tvScreenState)
     }
 }
-
-
