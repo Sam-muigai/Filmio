@@ -12,4 +12,5 @@ sealed class Screens(val route: String) {
     data object CategoryScreen : Screens("category_screen")
     data object FilterScreen : Screens("filter_screen")
     data object FilteredFilmsScreen : Screens("filtered_film_screen")
+    data object SettingsScreen : Screens("settings_screen")
 }

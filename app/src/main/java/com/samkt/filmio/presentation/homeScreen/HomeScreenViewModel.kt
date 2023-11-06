@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -39,6 +40,11 @@ class HomeScreenViewModel @Inject constructor(
     val topRatedMovies: StateFlow<PagingData<Movie>>
         get() = _topRatedMovies
 
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
     init {
         getMovies()
     }
@@ -49,6 +55,7 @@ class HomeScreenViewModel @Inject constructor(
         getPopularTvSeries()
         getUpcomingMovies()
         getTopRatedMovies()
+        _isRefreshing.value = false
     }
 
     private fun getTopRatedMovies() {

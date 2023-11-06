@@ -34,6 +34,11 @@ val navigationItems = listOf(
         Screens.WatchListScreen,
         R.drawable.ic_outline_bookmark,
         R.drawable.ic_filled_bookmark
+    ),
+    BottomNavItem(
+        "More",
+        Screens.SettingsScreen,
+        R.drawable.ic_outline_settings,
+        R.drawable.ic_filled_settings
     )
-
 )

@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -55,7 +54,7 @@ fun WatchListScreenContent(
             ) {
                 Text(
                     text = "WatchList",
-                    style = MaterialTheme.typography.titleLarge.copy(
+                    style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -63,6 +62,7 @@ fun WatchListScreenContent(
         },
         modifier = modifier.fillMaxSize()
     ) { paddingValues ->
+
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
@@ -78,7 +78,7 @@ fun WatchListScreenContent(
                             ) {
                                 Text(
                                     text = "Movies",
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                             }
                         }
@@ -100,7 +100,7 @@ fun WatchListScreenContent(
                             ) {
                                 Text(
                                     text = "TvSeries",
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleLarge
                                 )
                             }
                         }

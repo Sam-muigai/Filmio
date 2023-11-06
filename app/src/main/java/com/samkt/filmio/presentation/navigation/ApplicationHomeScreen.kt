@@ -1,5 +1,9 @@
 package com.samkt.filmio.presentation.navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -22,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.samkt.filmio.feature_settings.presentation.SettingsScreen
 import com.samkt.filmio.presentation.categoryScreen.CategoryScreen
 import com.samkt.filmio.presentation.filterScreen.FilterScreen
 import com.samkt.filmio.presentation.filteredFilmScreen.FilterFilmScreen
@@ -50,33 +56,40 @@ fun ApplicationHomeScreen(
     Scaffold(
         bottomBar = {
             NavigationBar {
-                navigationItems.forEachIndexed { index, navItems ->
-                    val isSelected = navigationSelectedItem == index
-                    NavigationBarItem(
-                        selected = isSelected,
-                        onClick = {
-                            navigationSelectedItem = index
-                            navController.navigate(navItems.screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .fillMaxWidth()
+                ) {
+
+                    navigationItems.forEachIndexed { index, navItems ->
+                        val isSelected = navigationSelectedItem == index
+                        NavigationBarItem(
+                            selected = isSelected,
+                            onClick = {
+                                navigationSelectedItem = index
+                                navController.navigate(navItems.screen.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
+                            },
+                            icon = {
+                                Icon(
+                                    modifier = Modifier.size(25.dp),
+                                    painter = painterResource(
+                                        id = if (isSelected) navItems.selectedIcon else navItems.unselectedIcon
+                                    ),
+                                    contentDescription = navItems.label
+                                )
+                            },
+                            label = {
+                                Text(text = navItems.label)
                             }
-                        },
-                        icon = {
-                            Icon(
-                                modifier = Modifier.size(25.dp),
-                                painter = painterResource(
-                                    id = if (isSelected) navItems.selectedIcon else navItems.unselectedIcon
-                                ),
-                                contentDescription = navItems.label
-                            )
-                        },
-                        label = {
-                            Text(text = navItems.label)
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
@@ -110,6 +123,9 @@ fun ApplicationHomeScreen(
             }
             composable(Screens.WatchListScreen.route) {
                 WatchListScreen()
+            }
+            composable(Screens.SettingsScreen.route) {
+                SettingsScreen()
             }
         }
     }
