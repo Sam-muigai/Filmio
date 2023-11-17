@@ -1,5 +1,8 @@
 package com.samkt.filmio.featureSettings.presentation
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samkt.filmio.featureSettings.domain.SettingsRepository
@@ -13,6 +16,18 @@ import kotlinx.coroutines.launch
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
+
+    var openDialog by mutableStateOf(false)
+        private set
+
+    fun onDismissDialog(){
+        openDialog = false
+    }
+
+    fun onSignUpClicked(){
+        openDialog = true
+    }
+
 
     val theme = settingsRepository.isDarkTheme.stateIn(
         scope = viewModelScope,

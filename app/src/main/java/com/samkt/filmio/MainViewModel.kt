@@ -8,6 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -18,4 +19,10 @@ class MainViewModel @Inject constructor(
         SharingStarted.WhileSubscribed(5_000),
         initialValue = false
     )
+
+    fun setTheme(isDarkTheme:Boolean){
+        viewModelScope.launch {
+            settingsRepository.saveDarkTheme(isDarkTheme)
+        }
+    }
 }

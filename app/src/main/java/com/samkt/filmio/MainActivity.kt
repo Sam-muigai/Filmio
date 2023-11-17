@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.samkt.filmio.presentation.navigation.AppNavigation
+import com.samkt.filmio.featureMovies.presentation.navigation.AppNavigation
 import com.samkt.filmio.ui.theme.FilmioTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,8 +21,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel: MainViewModel = hiltViewModel()
             val isDarkTheme = viewModel.isDarkTheme.collectAsState().value
+
+            if (isDarkTheme == null){
+                viewModel.setTheme(
+                    isSystemInDarkTheme()
+                )
+            }
             FilmioTheme(
-                darkTheme = isDarkTheme ?: isSystemInDarkTheme()
+                darkTheme = isDarkTheme!!
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -34,3 +40,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+

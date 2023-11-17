@@ -1,16 +1,16 @@
 package com.samkt.filmio.di
 
-import com.samkt.filmio.domain.repository.GetMoviesRepository
-import com.samkt.filmio.domain.repository.GetTvSeriesRepository
-import com.samkt.filmio.domain.useCases.GetLatestTvSeries
-import com.samkt.filmio.domain.useCases.GetMoviesUseCase
-import com.samkt.filmio.domain.useCases.GetPopularMovies
-import com.samkt.filmio.domain.useCases.GetPopularTvSeries
-import com.samkt.filmio.domain.useCases.GetTopRatedMovies
-import com.samkt.filmio.domain.useCases.GetTrendingMovies
-import com.samkt.filmio.domain.useCases.GetTrendingTvSeries
-import com.samkt.filmio.domain.useCases.GetTvSeriesUseCase
-import com.samkt.filmio.domain.useCases.GetUpcomingMovies
+import com.samkt.filmio.featureMovies.domain.repository.GetMoviesRepository
+import com.samkt.filmio.featureMovies.domain.repository.GetTvSeriesRepository
+import com.samkt.filmio.featureMovies.domain.useCases.GetLatestTvSeries
+import com.samkt.filmio.featureMovies.domain.useCases.GetMoviesUseCase
+import com.samkt.filmio.featureMovies.domain.useCases.GetPopularMovies
+import com.samkt.filmio.featureMovies.domain.useCases.GetPopularTvSeries
+import com.samkt.filmio.featureMovies.domain.useCases.GetTopRatedMovies
+import com.samkt.filmio.featureMovies.domain.useCases.GetTrendingMovies
+import com.samkt.filmio.featureMovies.domain.useCases.GetTrendingTvSeries
+import com.samkt.filmio.featureMovies.domain.useCases.GetTvSeriesUseCase
+import com.samkt.filmio.featureMovies.domain.useCases.GetUpcomingMovies
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
