@@ -1,4 +1,4 @@
-package com.samkt.filmio.featureMovies.presentation.navigation
+package com.samkt.filmio.navigation
 
 sealed class Screens(val route: String) {
     data object HomeScreen : Screens("home_screen")

@@ -1,4 +1,4 @@
-package com.samkt.filmio.featureMovies.presentation.navigation
+package com.samkt.filmio.navigation
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -212,6 +212,9 @@ fun AppNavigation() {
                     navController.navigate(
                         Screens.SingleTvSeriesScreen.route + "?backDropPath=$backDropPath?posterImage=$posterImage?tvSeriesId=$id"
                     )
+                },
+                onBackPressed = {
+                    navController.popBackStack()
                 }
             )
         }

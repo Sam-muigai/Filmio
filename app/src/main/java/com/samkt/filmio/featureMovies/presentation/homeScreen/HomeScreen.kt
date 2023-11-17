@@ -6,12 +6,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
@@ -39,6 +41,7 @@ import com.samkt.filmio.featureMovies.data.remote.dtos.TVSeries
 import com.samkt.filmio.featureMovies.presentation.homeScreen.components.AnimatedViewPager
 import com.samkt.filmio.featureMovies.presentation.homeScreen.components.HomeTopSection
 import com.samkt.filmio.featureMovies.presentation.homeScreen.components.MovieItems
+import com.samkt.filmio.featureMovies.presentation.sharedComponents.ErrorAnimation
 import com.samkt.filmio.util.showToast
 
 @Composable
@@ -155,8 +158,18 @@ fun HomeScreenContent(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                TextButton(onClick = onRetryClicked) {
-                    Text(text = "An error occurred..Tap to try again")
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable { onRetryClicked.invoke() }
+                ) {
+                    ErrorAnimation(
+                        modifier = Modifier.size(200.dp)
+                    )
+                    Text(
+                        text = "Error occurred. Click to retry",
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             }
         }

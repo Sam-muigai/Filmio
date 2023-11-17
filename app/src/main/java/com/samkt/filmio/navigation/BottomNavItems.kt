@@ -1,4 +1,4 @@
-package com.samkt.filmio.featureMovies.presentation.navigation
+package com.samkt.filmio.navigation
 
 import androidx.annotation.DrawableRes
 import com.samkt.filmio.R

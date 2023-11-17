@@ -3,19 +3,25 @@ package com.samkt.filmio.featureMovies.presentation.movieScreen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,6 +31,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.samkt.filmio.featureMovies.data.remote.dtos.Movie
 import com.samkt.filmio.featureMovies.presentation.homeScreen.HomeScreenViewModel
 import com.samkt.filmio.featureMovies.presentation.movieScreen.components.MovieTopSection
+import com.samkt.filmio.featureMovies.presentation.sharedComponents.ErrorAnimation
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.MoviesLazyGrid
 
 @Composable
@@ -70,7 +77,10 @@ fun MoviesScreen(
         isError = errorOccurred,
         isLoading = isLoading,
         onMovieClicked = onMovieClicked,
-        onFilterClicked = onFilterClicked
+        onFilterClicked = onFilterClicked,
+        onRetryClicked = {
+            viewModel.getMovies()
+        }
     )
 }
 
@@ -85,7 +95,8 @@ fun MovieScreenContent(
     onSearchClicked: () -> Unit,
     onCategoryClicked: (String) -> Unit,
     onFilterClicked: () -> Unit,
-    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
+    onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
+    onRetryClicked: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -116,6 +127,30 @@ fun MovieScreenContent(
             }
         }
     ) { paddingValues ->
+        AnimatedVisibility(
+            visible = isError,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable { onRetryClicked.invoke() }
+                ) {
+                    ErrorAnimation(
+                        modifier = Modifier.size(200.dp)
+                    )
+                    Text(
+                        text = "Error occurred. Click to retry",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+            }
+        }
         AnimatedVisibility(
             visible = !isLoading && !isError,
             enter = fadeIn(),

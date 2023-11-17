@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.samkt.filmio.featureMovies.presentation.navigation.AppNavigation
+import com.samkt.filmio.navigation.AppNavigation
 import com.samkt.filmio.ui.theme.FilmioTheme
 import dagger.hilt.android.AndroidEntryPoint
 

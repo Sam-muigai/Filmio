@@ -33,7 +33,7 @@ class TvSeriesViewModel @Inject constructor(
         getTvSeries()
     }
 
-    private fun getTvSeries() {
+    fun getTvSeries() {
         getTrendingTvSeries()
         getPopularTvSeries()
         getLatestTvSeries()
