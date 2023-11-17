@@ -20,7 +20,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +41,6 @@ import com.samkt.filmio.featureMovies.presentation.homeScreen.components.Animate
 import com.samkt.filmio.featureMovies.presentation.homeScreen.components.HomeTopSection
 import com.samkt.filmio.featureMovies.presentation.homeScreen.components.MovieItems
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.ErrorAnimation
-import com.samkt.filmio.util.showToast
 
 @Composable
 fun HomeScreen(
@@ -52,7 +50,6 @@ fun HomeScreen(
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
 ) {
-
     val context = LocalContext.current
 
     val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
@@ -75,7 +72,7 @@ fun HomeScreen(
 
     val isLoading =
         isPopularMoviesLoading || isTrendingMoviesLoading ||
-                isTrendingTvSeriesLoading || isUpcomingMoviesLoading || isTopRatedMoviesLoading
+            isTrendingTvSeriesLoading || isUpcomingMoviesLoading || isTopRatedMoviesLoading
 
     val hasErrors =
         trendingTvSeriesError || popularMoviesError || trendingMoviesError || upcomingMoviesError || topRatedMoviesError
@@ -100,7 +97,7 @@ fun HomeScreen(
         onSearchClicked = onSearchClicked,
         onMovieClicked = onMovieClicked,
         onTvSeriesClicked = onTvSeriesClicked,
-        onViewAllClicked = onViewAllClicked,
+        onViewAllClicked = onViewAllClicked
     )
 }
 
@@ -187,7 +184,7 @@ fun HomeScreenContent(
                             modifier = Modifier,
                             pageSize = pageWidth,
                             movies = popularMovies,
-                            onDetailsClicked = onMovieClicked,
+                            onDetailsClicked = onMovieClicked
                         )
                     }
                     item {
@@ -354,4 +351,3 @@ fun HomeScreenContent(
         }
     }
 }
-

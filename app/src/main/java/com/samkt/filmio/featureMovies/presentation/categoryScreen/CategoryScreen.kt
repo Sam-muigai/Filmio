@@ -31,7 +31,6 @@ import com.samkt.filmio.R
 import com.samkt.filmio.featureMovies.data.remote.dtos.Movie
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.MoviesLazyGrid
 
-
 @Composable
 fun CategoryScreen(
     category: String?,

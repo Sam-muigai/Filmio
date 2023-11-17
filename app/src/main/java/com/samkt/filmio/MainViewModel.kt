@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(
         initialValue = false
     )
 
-    fun setTheme(isDarkTheme:Boolean){
+    fun setTheme(isDarkTheme: Boolean) {
         viewModelScope.launch {
             settingsRepository.saveDarkTheme(isDarkTheme)
         }

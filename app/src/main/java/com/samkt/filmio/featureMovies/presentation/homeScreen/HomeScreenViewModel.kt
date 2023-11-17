@@ -4,23 +4,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.samkt.filmio.featureMovies.data.mappers.toMovieEntity
 import com.samkt.filmio.featureMovies.data.remote.dtos.Movie
 import com.samkt.filmio.featureMovies.data.remote.dtos.TVSeries
-import com.samkt.filmio.featureMovies.domain.repository.LocalFilmsRepository
 import com.samkt.filmio.featureMovies.domain.useCases.GetMoviesUseCase
 import com.samkt.filmio.featureMovies.domain.useCases.GetTvSeriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
-    private val getTvSeriesUseCase: GetTvSeriesUseCase,
+    private val getTvSeriesUseCase: GetTvSeriesUseCase
 ) : ViewModel() {
 
     private val _popularMovies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
@@ -43,7 +40,6 @@ class HomeScreenViewModel @Inject constructor(
     val topRatedMovies: StateFlow<PagingData<Movie>>
         get() = _topRatedMovies
 
-
     init {
         getMovies()
     }
@@ -58,7 +54,6 @@ class HomeScreenViewModel @Inject constructor(
         getUpcomingMovies()
         getTopRatedMovies()
     }
-
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {

@@ -22,7 +22,6 @@ class SettingsRepositoryImpl @Inject constructor(
     override val isDarkTheme: Flow<Boolean?>
         get() = dataStore.data.map { preference ->
             preference[KEY_IS_DARK_THEME]
-
         }
 
     override suspend fun saveDarkTheme(isDarkTheme: Boolean) {

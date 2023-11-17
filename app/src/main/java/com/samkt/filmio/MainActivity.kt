@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             val viewModel: MainViewModel = hiltViewModel()
             val isDarkTheme = viewModel.isDarkTheme.collectAsState().value
 
-            if (isDarkTheme == null){
+            if (isDarkTheme == null) {
                 viewModel.setTheme(
                     isSystemInDarkTheme()
                 )
@@ -40,14 +40,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-

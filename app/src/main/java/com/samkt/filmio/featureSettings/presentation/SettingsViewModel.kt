@@ -20,14 +20,13 @@ class SettingsViewModel @Inject constructor(
     var openDialog by mutableStateOf(false)
         private set
 
-    fun onDismissDialog(){
+    fun onDismissDialog() {
         openDialog = false
     }
 
-    fun onSignUpClicked(){
+    fun onSignUpClicked() {
         openDialog = true
     }
-
 
     val theme = settingsRepository.isDarkTheme.stateIn(
         scope = viewModelScope,

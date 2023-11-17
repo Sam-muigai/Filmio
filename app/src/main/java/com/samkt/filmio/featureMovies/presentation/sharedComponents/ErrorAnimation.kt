@@ -10,12 +10,10 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.samkt.filmio.R
 
-
 @Composable
 fun ErrorAnimation(
     modifier: Modifier = Modifier
 ) {
-
     val lottieComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(
             R.raw.loading_error

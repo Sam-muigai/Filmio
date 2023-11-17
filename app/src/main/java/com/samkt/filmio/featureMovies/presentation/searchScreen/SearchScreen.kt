@@ -56,7 +56,7 @@ fun SearchScreen(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 2.dp)
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBackPressed) {
                     Icon(
@@ -66,7 +66,7 @@ fun SearchScreen(
                 }
                 Text(
                     text = "Search Films",
-                    style = MaterialTheme.typography.headlineMedium,
+                    style = MaterialTheme.typography.headlineMedium
                 )
             }
         }
@@ -102,7 +102,7 @@ fun SearchScreen(
                 )
             }
             uiState.error?.let {
-                Box(modifier = Modifier.fillMaxSize()){
+                Box(modifier = Modifier.fillMaxSize()) {
                     Button(onClick = { }) {
                         Text(text = "RETRY")
                     }

@@ -1,6 +1,5 @@
 package com.samkt.filmio.featureMovies.data.remote.repository
 
-
 import com.samkt.filmio.featureMovies.data.remote.TMDBApi
 import com.samkt.filmio.featureMovies.data.remote.dtos.searchResponse.SearchResult
 import com.samkt.filmio.featureMovies.domain.repository.SearchMovieRepository

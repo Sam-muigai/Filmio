@@ -1,6 +1,5 @@
 package com.samkt.filmio.featureMovies.data.mappers
 
-
 import com.samkt.filmio.featureMovies.data.local.entities.MovieEntity
 import com.samkt.filmio.featureMovies.data.local.entities.TvSeriesEntity
 import com.samkt.filmio.featureMovies.data.remote.dtos.Movie

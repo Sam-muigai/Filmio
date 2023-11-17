@@ -24,7 +24,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.samkt.filmio.featureSettings.presentation.SettingsScreen
 import com.samkt.filmio.featureMovies.presentation.categoryScreen.CategoryScreen
 import com.samkt.filmio.featureMovies.presentation.filterScreen.FilterScreen
 import com.samkt.filmio.featureMovies.presentation.filteredFilmScreen.FilterFilmScreen
@@ -35,6 +34,7 @@ import com.samkt.filmio.featureMovies.presentation.searchScreen.SearchScreen
 import com.samkt.filmio.featureMovies.presentation.singleMovieScreen.SingleMovieScreen
 import com.samkt.filmio.featureMovies.presentation.singleTvSeriesScreen.TvSeriesDetailScreen
 import com.samkt.filmio.featureMovies.presentation.tvSeriesScreen.TvSeriesScreen
+import com.samkt.filmio.featureSettings.presentation.SettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
