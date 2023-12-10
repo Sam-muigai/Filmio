@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,7 +74,7 @@ fun HomeScreen(
 
     val isLoading =
         isPopularMoviesLoading || isTrendingMoviesLoading ||
-            isTrendingTvSeriesLoading || isUpcomingMoviesLoading || isTopRatedMoviesLoading
+                isTrendingTvSeriesLoading || isUpcomingMoviesLoading || isTopRatedMoviesLoading
 
     val hasErrors =
         trendingTvSeriesError || popularMoviesError || trendingMoviesError || upcomingMoviesError || topRatedMoviesError
@@ -97,7 +99,10 @@ fun HomeScreen(
         onSearchClicked = onSearchClicked,
         onMovieClicked = onMovieClicked,
         onTvSeriesClicked = onTvSeriesClicked,
-        onViewAllClicked = onViewAllClicked
+        onViewAllClicked = onViewAllClicked,
+        onDismissRequest = viewModel::onDismissDialog,
+        openDialog = viewModel.openDialog,
+        onProfileClicked = viewModel::onProfileClicked
     )
 }
 
@@ -115,7 +120,10 @@ fun HomeScreenContent(
     onRetryClicked: () -> Unit,
     onSearchClicked: () -> Unit,
     showPopularMovies: (Boolean) -> Unit,
+    onProfileClicked: () -> Unit,
     isPopularMovies: Boolean,
+    openDialog: Boolean,
+    onDismissRequest: () -> Unit,
     onViewAllClicked: (category: String) -> Unit = {},
     onMovieClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit,
     onTvSeriesClicked: (id: Int, backDropPath: String, posterImage: String) -> Unit
@@ -132,7 +140,8 @@ fun HomeScreenContent(
                 onPopularClicked = {
                     onViewAllClicked("Popular")
                 },
-                onSearchClicked = onSearchClicked
+                onSearchClicked = onSearchClicked,
+                onProfileClicked = onProfileClicked
             )
         },
         bottomBar = {
@@ -349,5 +358,21 @@ fun HomeScreenContent(
                 }
             )
         }
+    }
+    if (openDialog) {
+        AlertDialog(
+            onDismissRequest = onDismissRequest,
+            title = { Text(text = "Coming soon") },
+            text = {
+                Text(text = "This feature is coming soon.Stay on the look out for updates.")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = onDismissRequest
+                ) {
+                    Text(text = "OKAY")
+                }
+            }
+        )
     }
 }

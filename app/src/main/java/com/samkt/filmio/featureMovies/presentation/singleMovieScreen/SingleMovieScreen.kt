@@ -52,6 +52,7 @@ import com.samkt.filmio.featureMovies.data.remote.dtos.singleMovie.SingleMovieRe
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.MovieTabsItem
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.movieTabs
+import com.samkt.filmio.util.shareMessage
 import com.samkt.filmio.util.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -230,7 +231,12 @@ fun SingleMovieScreenContent(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 8.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            shareMessage(
+                                context,
+                                "Check out this movie 👉 ${movieDetails?.originalTitle}"
+                            )
+                        },
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(text = "SHARE")

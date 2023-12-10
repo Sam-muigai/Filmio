@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import coil.request.*
 import com.samkt.filmio.featureMovies.data.remote.dtos.credits.Cast
 
 @Composable

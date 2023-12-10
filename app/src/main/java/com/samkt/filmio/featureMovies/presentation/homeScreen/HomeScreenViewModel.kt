@@ -1,6 +1,8 @@
 package com.samkt.filmio.featureMovies.presentation.homeScreen
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -93,5 +95,16 @@ class HomeScreenViewModel @Inject constructor(
                 _trendingMovies.value = it
             }
         }
+    }
+
+    var openDialog by mutableStateOf(false)
+        private set
+
+    fun onDismissDialog() {
+        openDialog = false
+    }
+
+    fun onProfileClicked() {
+        openDialog = true
     }
 }

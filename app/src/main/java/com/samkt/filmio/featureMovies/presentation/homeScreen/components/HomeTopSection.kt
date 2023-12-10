@@ -27,6 +27,7 @@ fun HomeTopSection(
     modifier: Modifier = Modifier,
     onTrendingClicked: () -> Unit,
     onPopularClicked: () -> Unit,
+    onProfileClicked: () -> Unit,
     onSearchClicked: () -> Unit
 ) {
     Column(
@@ -64,11 +65,13 @@ fun HomeTopSection(
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
-                Icon(
-                    modifier = Modifier.size(35.dp),
-                    painter = painterResource(id = R.drawable.ic_account),
-                    contentDescription = "Account"
-                )
+                IconButton(onClick = onProfileClicked) {
+                    Icon(
+                        modifier = Modifier.size(35.dp),
+                        painter = painterResource(id = R.drawable.ic_account),
+                        contentDescription = "Account"
+                    )
+                }
             }
         }
         Row(

@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
             FilmioTheme(
-                darkTheme = isDarkTheme!!
+                darkTheme = isDarkTheme ?: isSystemInDarkTheme()
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

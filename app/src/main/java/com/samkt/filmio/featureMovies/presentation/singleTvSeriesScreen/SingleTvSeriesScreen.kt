@@ -52,6 +52,7 @@ import com.samkt.filmio.featureMovies.data.remote.dtos.singleTvSeries.SingleTvSe
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.MovieCard
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.TvSeriesTabsItem
 import com.samkt.filmio.featureMovies.presentation.sharedComponents.tvSeriesTabs
+import com.samkt.filmio.util.shareMessage
 import com.samkt.filmio.util.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -179,7 +180,7 @@ fun TvSeriesDetailScreenContent(
                             ) {
                                 Text(
                                     text = tvSeriesDetails?.originalName ?: tvSeriesDetails?.name
-                                        ?: "",
+                                    ?: "",
                                     color = MaterialTheme.colorScheme.onBackground,
                                     style = MaterialTheme.typography.titleLarge.copy(
                                         fontWeight = FontWeight.Normal
@@ -243,7 +244,12 @@ fun TvSeriesDetailScreenContent(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 8.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            shareMessage(
+                                context,
+                                "Check out this movie 👉 ${tvSeriesDetails?.originalName}"
+                            )
+                        },
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(text = "SHARE")
