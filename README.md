@@ -19,6 +19,7 @@ This is a simple app built consuming TMDB API to display movies and the details.
 
 <img src="screenshot/light_settings.jpeg" width="250"/>  <img src="screenshot/light_search.jpeg" width="250"/>  <img src="screenshot/light_category.jpeg" width="250"/>
 
+# App Architecture
 
 
 # Tech Stack
