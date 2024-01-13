@@ -20,6 +20,8 @@ This is a simple app built consuming TMDB API to display movies and the details.
 <img src="screenshot/light_settings.jpeg" width="250"/>  <img src="screenshot/light_search.jpeg" width="250"/>  <img src="screenshot/light_category.jpeg" width="250"/>
 
 # App Architecture
+FilmIo is built following Google Recommended architectural pattern. It includes the following two features ie Settings and Movies.Each feature has three layers data,domain and presentation.The following diagram illustrate the whole app architecture.
+
 
 
 # Tech Stack
@@ -27,7 +29,7 @@ This is a simple app built consuming TMDB API to display movies and the details.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) -  Android's recommended modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
 - [Paging 3 library](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - The Paging library helps you load and display pages of data from a larger dataset from local storage or over network. This approach allows your app to use both network bandwidth and system resources more efficiently.
 - [Room database](https://developer.android.com/training/data-storage/room) - The Room persistence library provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite.
-- [Preferences DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - Jetpack DataStore is a data storage solution that allows you to store key-value pairs or typed objects with protocol buffers. DataStore uses Kotlin coroutines and Flow to store data asynchronously, consistently, and transactionally.
+- [Preferences DataStore](https://developer.android.com/topic/libraries/architecture/datastore) - Jetpack DataStore is a data storage solution that allows you to store key-value pairs or typed objects with protocol buffers. DataStore uses Kotlin coroutines and Flow to store data asynchronously, consistently, and transactional.
 - [Navigation Compose](https://developer.android.com/jetpack/compose/navigation) - It is part of the Jetpack Navigation component tailored for use with Compose.
 - [Material Motion Compose](https://github.com/fornewid/material-motion-compose) - Jetpack Compose library for implementing motion system in Material Components for Android and Compose Multiplatform.
 - [Retrofit](https://square.github.io/retrofit) -  Retrofit is a REST client for Java/ Kotlin and Android by Square inc under Apache 2.0 license. Its a simple network library that is used for network transactions. By using this library we can seamlessly capture JSON response from web service/web API.
