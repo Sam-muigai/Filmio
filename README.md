@@ -1,6 +1,26 @@
 # FilmIo
 This is a simple app built consuming TMDB API to display movies and the details.
 
+
+# Demo
+## Dark Theme
+
+<img src="screenshot/dark_home.jpeg" width="250"/>  <img src="screenshot/dark_movies.jpeg" width="250"/>  <img src="screenshot/dark_tv_series.jpeg" width="250"/>
+
+<img src="screenshot/dark_watch_list.jpeg" width="250"/>  <img src="screenshot/dark_filter.jpeg" width="250"/>  <img src="screenshot/dark_details_overview.jpeg" width="250"/>
+
+<img src="screenshot/dark_settings.jpeg" width="250"/>  <img src="screenshot/dark_search.jpeg" width="250"/>  <img src="screenshot/dark_category.jpeg" width="250"/>
+
+## Light Theme
+
+<img src="screenshot/light_home.jpeg" width="250"/>  <img src="screenshot/light_movies.jpeg" width="250"/>  <img src="screenshot/light_tv_series.jpeg" width="250"/>
+
+<img src="screenshot/light_watchlist.jpeg" width="250"/>  <img src="screenshot/light_filter.jpeg" width="250"/>  <img src="screenshot/light_details_overview.jpeg" width="250"/>
+
+<img src="screenshot/light_settings.jpeg" width="250"/>  <img src="screenshot/light_search.jpeg" width="250"/>  <img src="screenshot/light_category.jpeg" width="250"/>
+
+
+
 # Tech Stack
 - [Kotlin](https://developer.android.com/kotlin) - Kotlin is a programming language that makes coding concise, cross-platform, and fun. It is Google's preferred language for Android app development.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) -  Android's recommended modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
