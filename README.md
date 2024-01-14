@@ -24,6 +24,7 @@ FilmIo is built following Google Recommended architectural pattern. It includes 
 
 
 
+
 # Tech Stack
 - [Kotlin](https://developer.android.com/kotlin) - Kotlin is a programming language that makes coding concise, cross-platform, and fun. It is Google's preferred language for Android app development.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) -  Android's recommended modern toolkit for building native UI. It simplifies and accelerates UI development on Android.

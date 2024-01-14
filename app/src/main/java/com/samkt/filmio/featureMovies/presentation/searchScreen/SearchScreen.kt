@@ -30,6 +30,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +47,7 @@ fun SearchScreen(
     onBackPressed: () -> Unit = {}
 ) {
     val uiState = viewModel.searchScreenUiState.collectAsState().value
-    var searchTerm by remember {
+    var searchTerm by rememberSaveable {
         mutableStateOf("")
     }
     Scaffold(
@@ -103,7 +104,9 @@ fun SearchScreen(
             }
             uiState.error?.let {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    Button(onClick = { }) {
+                    Button(onClick = {
+                        viewModel.searchMovie(searchTerm)
+                    }) {
                         Text(text = "RETRY")
                     }
                 }
